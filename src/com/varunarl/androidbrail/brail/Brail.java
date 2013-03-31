@@ -44,15 +44,15 @@ public class Brail {
 
 	public static class KeyBoard {
 
-		public static final int NUMERIC_KEY_TYPE = 1;
-		public static final int UPPER_KEY_TYPE = 2;
-		public static final int LOWER_KEY_TYPE = 3;
-		public static final int SPECIAL_KEY_TYPE = 4;
+		public static final int NUMERIC_KEY_TYPE = 1001;
+		public static final int UPPER_KEY_TYPE = 1002;
+		public static final int LOWER_KEY_TYPE = 1003;
+		public static final int SPECIAL_KEY_TYPE = 1004;
 		
 		public static final int LETTER_TYPE = UPPER_KEY_TYPE + LOWER_KEY_TYPE;
-		public static final int ITALIC_DECIMAL_TYPE = 20;
-		public static final int NUMERAL_ACCENT_TYPE = 30;
-		public static final int LITERAL_TYPE = 40;
+		public static final int ITALIC_DECIMAL_TYPE = 1020;
+		public static final int NUMERAL_ACCENT_TYPE = 1030;
+		public static final int LITERAL_TYPE = 1040;
 
 		private Numeric mNumericKeyboard;
 		private Upper mUpperCaseKeyboard;
@@ -71,33 +71,58 @@ public class Brail {
 		public Character get(BrailCharacter c, int type) {
 			Character result = '~';
 			result = mControlKeyboard.get(c);
-			if (result == '~')
+			if (result.equals('~'))
 				switch (type) {
 				case NUMERIC_KEY_TYPE:
 					result = mNumericKeyboard.get(c);
 					result = result >= 48 && result <= 57 ? result : '~';
+					break;
 				case UPPER_KEY_TYPE:
 					result = mUpperCaseKeyboard.get(c);
 					result = result >= 65 && result <= 90 ? result : '~';
+					break;
 				case LOWER_KEY_TYPE:
 					result = mLowerCaseKeyboard.get(c);
 					result = result >= 97 && result <= 122 ? result : '~';
+					break;
 				case SPECIAL_KEY_TYPE:
-				default:
+				default:  
 					result = mSpecialKeyboard.get(c);
+					break;
 				}
 			return result;
 		}
 		
 		public boolean isControlCharacter(BrailCharacter c)
 		{
-			return mControlKeyboard.get(c) != '~' ? true:false;
+			return !mControlKeyboard.get(c).equals('~');
 		}
 
 		public int getControlType(BrailCharacter c)
 		{
 			int _c = mControlKeyboard.get(c);
 			switch (_c) {
+			case '@':
+				return LITERAL_TYPE;
+			case '#':
+				return NUMERIC_KEY_TYPE;
+			case '&':
+				return LETTER_TYPE;
+			case '^':
+				return UPPER_KEY_TYPE;
+			case '$':
+				return NUMERAL_ACCENT_TYPE;
+			case '%':
+				return ITALIC_DECIMAL_TYPE;
+
+			default:
+				return LETTER_TYPE;
+			}
+		}
+		
+		public int getControlType(Character c)
+		{
+			switch (c) {
 			case '@':
 				return LITERAL_TYPE;
 			case '#':
@@ -533,7 +558,7 @@ public class Brail {
 			public Character get(BrailCharacter c) {
 				String pattern = c.pattern();
 				for (Key k : mNumericKeyBoard)
-					if (k.BRAIL_CHARACTER.pattern() == pattern)
+					if (k.BRAIL_CHARACTER.pattern().equals(pattern))
 						return k.ASCII_CHARACTER;
 				return 'E';
 			}
@@ -579,7 +604,7 @@ public class Brail {
 			public Character get(BrailCharacter c) {
 				String pattern = c.pattern();
 				for (Key k : mAlphabeticalKeyBoard)
-					if (k.BRAIL_CHARACTER.pattern() == pattern)
+					if (k.BRAIL_CHARACTER.pattern().equals(pattern))
 						return k.ASCII_CHARACTER;
 				return 'e';
 			}
@@ -625,7 +650,7 @@ public class Brail {
 			public Character get(BrailCharacter c) {
 				String pattern = c.pattern();
 				for (Key k : mAlphabeticalKeyBoard)
-					if (k.BRAIL_CHARACTER.pattern() == pattern)
+					if (k.BRAIL_CHARACTER.pattern().equals(pattern))
 						return k.ASCII_CHARACTER;
 				return 'E';
 			}
@@ -673,9 +698,9 @@ public class Brail {
 			public Character get(BrailCharacter c) {
 				String pattern = c.pattern();
 				for (Key k : mSpecialCharacters)
-					if (k.BRAIL_CHARACTER.pattern() == pattern)
+					if (k.BRAIL_CHARACTER.pattern().equals(pattern))
 						return k.ASCII_CHARACTER;
-				return 'E';
+				return '~';
 			}
 
 		}
@@ -706,9 +731,9 @@ public class Brail {
 			public Character get(BrailCharacter c) {
 				String pattern = c.pattern();
 				for (Key k : mControlCharacters)
-					if (k.BRAIL_CHARACTER.pattern() == pattern)
+					if (k.BRAIL_CHARACTER.pattern().equals(pattern))              
 						return k.ASCII_CHARACTER;
-				return 'E';
+				return '~';
 			}
 		}
 	}

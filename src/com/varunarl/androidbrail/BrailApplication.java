@@ -44,8 +44,14 @@ public class BrailApplication extends Application implements OnInitListener {
 	}
 
 	public void vibrate(long[] pattern) {
-		if (mVibratorService != null)
-			mVibratorService.vibrate(pattern, -1);
+		if (mVibratorService != null) {
+			try {
+				mVibratorService.vibrate(pattern, -1);
+			} catch (Exception e) {
+				// On some devices vibrator would crash. Think its to do with
+				// rooting of the device.
+			}
+		}
 	}
 
 }

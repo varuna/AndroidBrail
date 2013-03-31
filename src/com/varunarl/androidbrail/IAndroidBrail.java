@@ -6,4 +6,6 @@ public interface IAndroidBrail extends OnClickListener{
 
 	void onEnterGesture();
 	void onBackspaceGesture();
+	void onDoubleEnterGesture();
+	void onDoubleBackspaceGesture();
 }
