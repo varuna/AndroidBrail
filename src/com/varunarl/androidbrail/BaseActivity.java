@@ -6,15 +6,17 @@ import java.util.List;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.Toast;
 
 import com.varunarl.androidbrail.brail.Brail;
 import com.varunarl.androidbrail.brail.Brail.KeyBoard;
 import com.varunarl.androidbrail.brail.BrailCharacter;
 
-public abstract class BaseActivity extends Activity implements IAndroidBrail,
+public abstract class BaseActivity extends Activity implements IGestures,
 		IBrailKeyboard {
 
 	private final String TAG = "BaseActivity";
@@ -93,11 +95,10 @@ public abstract class BaseActivity extends Activity implements IAndroidBrail,
 	protected void removeLast() {
 		if (mBuffer.length() > 0)
 			mBuffer.deleteCharAt(mBuffer.length() - 1);
-		else
-			if (mText.length() > 1)
-				mText = mText.substring(0, mText.length() - 2);
-			else if (mText.length() == 1)
-				mText = "";
+		else if (mText.length() > 1)
+			mText = mText.substring(0, mText.length() - 2);
+		else if (mText.length() == 1)
+			mText = "";
 
 	}
 
@@ -105,6 +106,7 @@ public abstract class BaseActivity extends Activity implements IAndroidBrail,
 		String bufferValue = mBuffer.toString();
 		mText += bufferValue;
 		mBuffer.delete(0, mBuffer.length());
+		Toast.makeText(this, mText, Toast.LENGTH_LONG).show();
 		Log.i(TAG, "Current String : " + mText);
 	}
 
@@ -227,9 +229,54 @@ public abstract class BaseActivity extends Activity implements IAndroidBrail,
 		}
 	}
 
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (!event.isTracking()) {
+			event.startTracking();
+			switch (keyCode) {
+			case KeyEvent.KEYCODE_VOLUME_DOWN:
+				onVolumeDownKeyShortPress();
+				return true;
+			case KeyEvent.KEYCODE_VOLUME_UP:
+				onVolumeUpKeyShortPress();
+				return true;
+			case KeyEvent.KEYCODE_POWER:
+				onPowerKeyShortPress();
+				return true;
+
+			default:
+				break;
+			}
+		}
+
+		return super.onKeyDown(keyCode, event);
+	}
+
+	@Override
+	public boolean onKeyLongPress(int keyCode, KeyEvent event) {
+		if (event.isTracking()) {
+			switch (keyCode) {
+			case KeyEvent.KEYCODE_VOLUME_DOWN:
+				onVolumeDownKeyLongPress();
+				return true;
+			case KeyEvent.KEYCODE_VOLUME_UP:
+				onVolumeUpKeyLongPress();
+				return true;
+			case KeyEvent.KEYCODE_POWER:
+				onPowerKeyLongPress();
+				return true;
+
+			default:
+				break;
+			}
+		}
+		return super.onKeyLongPress(keyCode, event);
+	}
+
 	private class Motion {
 		int _action;
 		float _x;
 		float _y;
 	}
+
 }

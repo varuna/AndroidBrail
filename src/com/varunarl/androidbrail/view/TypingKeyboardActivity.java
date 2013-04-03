@@ -96,4 +96,40 @@ public class TypingKeyboardActivity extends BaseActivity {
 
 	}
 
+	@Override
+	public void onVolumeDownKeyShortPress() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onVolumeDownKeyLongPress() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onVolumeUpKeyShortPress() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onVolumeUpKeyLongPress() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onPowerKeyShortPress() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onPowerKeyLongPress() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
