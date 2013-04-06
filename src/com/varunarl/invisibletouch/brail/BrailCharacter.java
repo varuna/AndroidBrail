@@ -1,4 +1,4 @@
-package com.varunarl.androidbrail.brail;
+package com.varunarl.invisibletouch.brail;
 
 public class BrailCharacter {
 	public DOT _one_one;

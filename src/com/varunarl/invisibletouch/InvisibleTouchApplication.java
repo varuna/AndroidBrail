@@ -1,4 +1,4 @@
-package com.varunarl.androidbrail;
+package com.varunarl.invisibletouch;
 
 import android.app.Application;
 import android.content.Context;
@@ -8,13 +8,13 @@ import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.util.Log;
 
-public class BrailApplication extends Application implements OnInitListener {
+public class InvisibleTouchApplication extends Application implements OnInitListener {
 
 	private final String TAG = "BrailApplication";
 	private Vibrator mVibratorService;
 	private TextToSpeech mTTS;
 
-	private static BrailApplication instance;
+	private static InvisibleTouchApplication instance;
 
 	@Override
 	public void onCreate() {
@@ -27,7 +27,7 @@ public class BrailApplication extends Application implements OnInitListener {
 			mTTS = new TextToSpeech(getApplicationContext(), this);
 	}
 
-	public static BrailApplication getInstance() {
+	public static InvisibleTouchApplication getInstance() {
 		return instance;
 	}
 

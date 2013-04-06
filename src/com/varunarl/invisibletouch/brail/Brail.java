@@ -1,4 +1,4 @@
-package com.varunarl.androidbrail.brail;
+package com.varunarl.invisibletouch.brail;
 
 import java.util.ArrayList;
 import java.util.List;

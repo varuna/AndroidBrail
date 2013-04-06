@@ -1,8 +1,10 @@
-package com.varunarl.androidbrail.view;
+package com.varunarl.invisibletouch.view;
 
-import com.varunarl.androidbrail.BaseActivity;
+import android.view.View;
 
-public class MainMenuActivity extends BaseActivity {
+import com.varunarl.invisibletouch.SinglePackActivity;
+
+public class BooleanActivity extends SinglePackActivity {
 
 	@Override
 	public void onEnterGesture() {
@@ -24,6 +26,30 @@ public class MainMenuActivity extends BaseActivity {
 
 	@Override
 	public void onDoubleBackspaceGesture() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onSwipeUp() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onDoubleSwipeUp() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onSwipeDown() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onDoubleSwipeDown() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -71,33 +97,8 @@ public class MainMenuActivity extends BaseActivity {
 	}
 
 	@Override
-	public void onKeyTwo() {
+	protected void onAttachView(int id, View view) {
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public void onKeyThree() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onKeyFour() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onKeyFive() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onKeySix() {
-		// TODO Auto-generated method stub
-		
-	}
-	
 }

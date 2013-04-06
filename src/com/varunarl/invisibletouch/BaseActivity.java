@@ -1,4 +1,4 @@
-package com.varunarl.androidbrail;
+package com.varunarl.invisibletouch;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +12,9 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
 
-import com.varunarl.androidbrail.brail.Brail;
-import com.varunarl.androidbrail.brail.Brail.KeyBoard;
-import com.varunarl.androidbrail.brail.BrailCharacter;
+import com.varunarl.invisibletouch.brail.Brail;
+import com.varunarl.invisibletouch.brail.Brail.KeyBoard;
+import com.varunarl.invisibletouch.brail.BrailCharacter;
 
 public abstract class BaseActivity extends Activity implements IGestures,
 		IBrailKeyboard {
@@ -47,29 +47,7 @@ public abstract class BaseActivity extends Activity implements IGestures,
 		mGestureHistory = new ArrayList<Motion>();
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.activity_main);
-
-		View _one_one = findViewById(R.id.item_one_one);
-		View _one_two = findViewById(R.id.item_one_two);
-		View _one_three = findViewById(R.id.item_one_three);
-		View _two_one = findViewById(R.id.item_two_one);
-		View _two_two = findViewById(R.id.item_two_two);
-		View _two_three = findViewById(R.id.item_two_three);
-
-		_one_one.setClickable(true);
-		_one_two.setClickable(true);
-		_one_three.setClickable(true);
-		_two_one.setClickable(true);
-		_two_two.setClickable(true);
-		_two_three.setClickable(true);
-
-		_one_one.setOnClickListener(this);
-		_one_two.setOnClickListener(this);
-		_one_three.setOnClickListener(this);
-		_two_one.setOnClickListener(this);
-		_two_two.setOnClickListener(this);
-		_two_three.setOnClickListener(this);
-
+		init();
 	}
 
 	protected void buffer(BrailCharacter c) {
@@ -114,6 +92,7 @@ public abstract class BaseActivity extends Activity implements IGestures,
 	public boolean dispatchTouchEvent(MotionEvent ev) {
 		detectGesture(ev);
 		int gesture = getGestureDirection();
+		Log.i(TAG, "Motion "+gesture+" :"+ev.getX()+":"+ev.getY());
 		if (mLastGesture == -1)
 			mLastGesture = gesture;
 
@@ -135,17 +114,17 @@ public abstract class BaseActivity extends Activity implements IGestures,
 			return true;
 		} else if (gesture == SWIPE_UP) {
 			if (mLastGesture == SWIPE_UP)
-				onDoubleBackspaceGesture();
+				onDoubleSwipeUp();
 			else {
 				mLastGesture = SWIPE_UP;
-				onBackspaceGesture();
+				onSwipeUp();
 			}
 		} else if (gesture == SWIPE_DOWN) {
 			if (mLastGesture == SWIPE_DOWN)
-				onDoubleEnterGesture();
+				onDoubleSwipeDown();
 			else {
 				mLastGesture = SWIPE_DOWN;
-				onEnterGesture();
+				onSwipeDown();
 			}
 		}
 
@@ -194,9 +173,9 @@ public abstract class BaseActivity extends Activity implements IGestures,
 				else
 					return SWIPE_RIGHT;
 			} else if (yTranslation > 0)
-				return SWIPE_DOWN;
-			else
 				return SWIPE_UP;
+			else
+				return SWIPE_DOWN;
 		}
 		return getGestures();
 	}
@@ -272,11 +251,19 @@ public abstract class BaseActivity extends Activity implements IGestures,
 		}
 		return super.onKeyLongPress(keyCode, event);
 	}
+	
+	@Override
+	public void onBackPressed() {
+	}
 
 	private class Motion {
 		int _action;
 		float _x;
 		float _y;
 	}
+	
+	protected abstract void init();
+	
+	protected abstract void onAttachView(int id, View view);
 
 }

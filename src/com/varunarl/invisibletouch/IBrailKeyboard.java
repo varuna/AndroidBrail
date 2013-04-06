@@ -1,4 +1,4 @@
-package com.varunarl.androidbrail;
+package com.varunarl.invisibletouch;
 
 public interface IBrailKeyboard {
 

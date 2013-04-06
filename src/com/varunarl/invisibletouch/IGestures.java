@@ -1,4 +1,4 @@
-package com.varunarl.androidbrail;
+package com.varunarl.invisibletouch;
 
 import android.view.View.OnClickListener;
 
@@ -8,6 +8,11 @@ public interface IGestures extends OnClickListener{
 	void onBackspaceGesture();
 	void onDoubleEnterGesture();
 	void onDoubleBackspaceGesture();
+	
+	void onSwipeUp();
+	void onDoubleSwipeUp();
+	void onSwipeDown();
+	void onDoubleSwipeDown();
 	
 	void onVolumeDownKeyShortPress();
 	void onVolumeDownKeyLongPress();

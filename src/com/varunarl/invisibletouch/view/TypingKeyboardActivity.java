@@ -1,14 +1,14 @@
-package com.varunarl.androidbrail.view;
+package com.varunarl.invisibletouch.view;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 
-import com.varunarl.androidbrail.BaseActivity;
-import com.varunarl.androidbrail.BrailApplication;
-import com.varunarl.androidbrail.brail.BrailCharacter;
+import com.varunarl.invisibletouch.InvisibleTouchApplication;
+import com.varunarl.invisibletouch.SixPackActivity;
+import com.varunarl.invisibletouch.brail.BrailCharacter;
 
-public class TypingKeyboardActivity extends BaseActivity {
+public class TypingKeyboardActivity extends SixPackActivity {
 
 	private final String TAG = "MainActivity";
 	private BrailCharacter mCurrentCharacter;
@@ -25,48 +25,44 @@ public class TypingKeyboardActivity extends BaseActivity {
 	}
 
 	@Override
-	public void onBackPressed() {
-	}
-
-	@Override
 	public void onKeyOne() {
 		mCurrentCharacter._one_one.swap();
-		BrailApplication.getInstance().vibrate(
+		InvisibleTouchApplication.getInstance().vibrate(
 				mCurrentCharacter._one_one.getPattern());
 	}
 
 	@Override
 	public void onKeyTwo() {
 		mCurrentCharacter._one_two.swap();
-		BrailApplication.getInstance().vibrate(
+		InvisibleTouchApplication.getInstance().vibrate(
 				mCurrentCharacter._one_two.getPattern());
 	}
 
 	@Override
 	public void onKeyThree() {
 		mCurrentCharacter._one_three.swap();
-		BrailApplication.getInstance().vibrate(
+		InvisibleTouchApplication.getInstance().vibrate(
 				mCurrentCharacter._one_three.getPattern());
 	}
 
 	@Override
 	public void onKeyFour() {
 		mCurrentCharacter._two_one.swap();
-		BrailApplication.getInstance().vibrate(
+		InvisibleTouchApplication.getInstance().vibrate(
 				mCurrentCharacter._two_one.getPattern());
 	}
 
 	@Override
 	public void onKeyFive() {
 		mCurrentCharacter._two_two.swap();
-		BrailApplication.getInstance().vibrate(
+		InvisibleTouchApplication.getInstance().vibrate(
 				mCurrentCharacter._two_two.getPattern());
 	}
 
 	@Override
 	public void onKeySix() {
 		mCurrentCharacter._two_three.swap();
-		BrailApplication.getInstance().vibrate(
+		InvisibleTouchApplication.getInstance().vibrate(
 				mCurrentCharacter._two_three.getPattern());
 	}
 
@@ -128,6 +124,30 @@ public class TypingKeyboardActivity extends BaseActivity {
 
 	@Override
 	public void onPowerKeyLongPress() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onSwipeUp() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onDoubleSwipeUp() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onSwipeDown() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onDoubleSwipeDown() {
 		// TODO Auto-generated method stub
 		
 	}
