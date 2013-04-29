@@ -4,10 +4,10 @@ import android.view.View.OnClickListener;
 
 public interface IGestures extends OnClickListener{
 
-	void onEnterGesture();
-	void onBackspaceGesture();
-	void onDoubleEnterGesture();
-	void onDoubleBackspaceGesture();
+	void onSwipeRight();
+	void onSwipeLeft();
+	void onDoubleSwipeRight();
+	void onDoubleSwipeLeft();
 	
 	void onSwipeUp();
 	void onDoubleSwipeUp();
@@ -20,5 +20,9 @@ public interface IGestures extends OnClickListener{
 	void onVolumeUpKeyLongPress();
 	void onPowerKeyShortPress();
 	void onPowerKeyLongPress();
+	void onCameraKeyShortPress();
+	void onCameraKeyLongPress();
+	
+	void onScreenLongPress();
 	
 }

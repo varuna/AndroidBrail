@@ -67,27 +67,27 @@ public class TypingKeyboardActivity extends SixPackActivity {
 	}
 
 	@Override
-	public void onEnterGesture() {
+	public void onSwipeRight() {
 		Log.i(TAG, "onEnterGesture");
 		buffer(mCurrentCharacter);
 		mCurrentCharacter.reset();
 	}
 
 	@Override
-	public void onBackspaceGesture() {
+	public void onSwipeLeft() {
 		Log.i(TAG, "onBackSpaceGesture");
 		removeLast();
 		mCurrentCharacter.reset();
 	}
 
 	@Override
-	public void onDoubleEnterGesture() {
+	public void onDoubleSwipeRight() {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void onDoubleBackspaceGesture() {
+	public void onDoubleSwipeLeft() {
 		// TODO Auto-generated method stub
 
 	}
@@ -148,6 +148,60 @@ public class TypingKeyboardActivity extends SixPackActivity {
 
 	@Override
 	public void onDoubleSwipeDown() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onCameraKeyShortPress() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onCameraKeyLongPress() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onScreenLongPress() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onLongKeyOne() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onLongKeyTwo() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onLongKeyThree() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onLongKeyFour() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onLongKeyFive() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onLongKeySix() {
 		// TODO Auto-generated method stub
 		
 	}

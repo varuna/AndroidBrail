@@ -21,8 +21,12 @@ public abstract class BaseActivity extends Activity implements IGestures,
 
 	private final String TAG = "BaseActivity";
 
+	private static final int MOVE_DETECTION_THRESHOLD = 20; //in pixels
+	private static final int LONGTIME_DETECTION_THRESHOLD = 100; //in millis
+
 	protected final static int GESTURE_TAP = 0;
-	protected final static int GESTURE_SWIPE = 1;
+	protected final static int GESTURE_LONGTAP = 1;
+	protected final static int GESTURE_SWIPE = 2;
 
 	protected final static int SWIPE_LEFT = 10;
 	protected final static int SWIPE_RIGHT = 11;
@@ -92,24 +96,23 @@ public abstract class BaseActivity extends Activity implements IGestures,
 	public boolean dispatchTouchEvent(MotionEvent ev) {
 		detectGesture(ev);
 		int gesture = getGestureDirection();
-		Log.i(TAG, "Motion "+gesture+" :"+ev.getX()+":"+ev.getY());
 		if (mLastGesture == -1)
 			mLastGesture = gesture;
 
 		if (gesture == SWIPE_LEFT) {
 			if (mLastGesture == SWIPE_LEFT)
-				onDoubleBackspaceGesture();
+				onDoubleSwipeLeft();
 			else {
 				mLastGesture = SWIPE_LEFT;
-				onBackspaceGesture();
+				onSwipeLeft();
 			}
 			return true;
 		} else if (gesture == SWIPE_RIGHT) {
 			if (mLastGesture == SWIPE_RIGHT)
-				onDoubleEnterGesture();
+				onDoubleSwipeRight();
 			else {
 				mLastGesture = SWIPE_RIGHT;
-				onEnterGesture();
+				onSwipeRight();
 			}
 			return true;
 		} else if (gesture == SWIPE_UP) {
@@ -126,6 +129,11 @@ public abstract class BaseActivity extends Activity implements IGestures,
 				mLastGesture = SWIPE_DOWN;
 				onSwipeDown();
 			}
+		} else if (gesture == GESTURE_TAP)
+			mLastGesture = GESTURE_TAP;
+		else if (gesture == GESTURE_LONGTAP){
+			mLastGesture = GESTURE_LONGTAP;
+			onScreenLongPress();
 		}
 
 		return super.dispatchTouchEvent(ev);
@@ -136,6 +144,8 @@ public abstract class BaseActivity extends Activity implements IGestures,
 		m._action = e.getAction();
 		m._x = e.getX();
 		m._y = e.getY();
+		m._time = e.getEventTime();
+		
 		if (e.getAction() == MotionEvent.ACTION_DOWN) {
 			mGestureHistory.clear();
 			mGestureHistory.add(m);
@@ -148,12 +158,41 @@ public abstract class BaseActivity extends Activity implements IGestures,
 		int mGestureHistorySize = mGestureHistory.size();
 		if (mGestureHistorySize > 0)
 			if (mGestureHistory.get(mGestureHistorySize - 1)._action == MotionEvent.ACTION_UP) {
-				if (mGestureHistorySize == 2 || mGestureHistorySize == 3)
-					return GESTURE_TAP;
-				if (mGestureHistorySize > 3)
+				if (didMove())
 					return GESTURE_SWIPE;
+				else if (isLongTimeTakenForEvent())
+					return GESTURE_LONGTAP;
+				else
+					return GESTURE_TAP;
 			}
 		return -1;
+	}
+
+	private boolean didMove() {
+		if (mGestureHistory.size() > 0) {
+			float sX = mGestureHistory.get(0)._x;
+			float sY = mGestureHistory.get(0)._y;
+
+			float fX = mGestureHistory.get(mGestureHistory.size() - 1)._x;
+			float fY = mGestureHistory.get(mGestureHistory.size() - 1)._y;
+
+			if ((Math.abs(sX - fX) > MOVE_DETECTION_THRESHOLD)
+					|| (Math.abs(sY - fY) > MOVE_DETECTION_THRESHOLD))
+				return true;
+		}
+		return false;
+	}
+	
+	private boolean isLongTimeTakenForEvent()
+	{
+		if (mGestureHistory.size() > 0) {
+			float sTime = mGestureHistory.get(0)._time;
+			float fTime = mGestureHistory.get(mGestureHistory.size() - 1)._time;
+
+			if (Math.abs(sTime - fTime) > LONGTIME_DETECTION_THRESHOLD)
+				return true;
+		}
+		return false;
 	}
 
 	private int getGestureDirection() {
@@ -183,24 +222,43 @@ public abstract class BaseActivity extends Activity implements IGestures,
 	@Override
 	public void onClick(View v) {
 		int _id = v.getId();
+		Log.i(TAG, "" + mLastGesture);
 		switch (_id) {
 		case R.id.item_one_one:
-			onKeyOne();
+			if (mLastGesture == GESTURE_TAP)
+				onKeyOne();
+			else if (mLastGesture == GESTURE_LONGTAP)
+				onLongKeyOne();
 			break;
 		case R.id.item_one_two:
-			onKeyTwo();
+			if (mLastGesture == GESTURE_TAP)
+				onKeyTwo();
+			else if (mLastGesture == GESTURE_LONGTAP)
+				onLongKeyTwo();
 			break;
 		case R.id.item_one_three:
-			onKeyThree();
+			if (mLastGesture == GESTURE_TAP)
+				onKeyThree();
+			else if (mLastGesture == GESTURE_LONGTAP)
+				onLongKeyThree();
 			break;
 		case R.id.item_two_one:
-			onKeyFour();
+			if (mLastGesture == GESTURE_TAP)
+				onKeyFour();
+			else if (mLastGesture == GESTURE_LONGTAP)
+				onLongKeyFour();
 			break;
 		case R.id.item_two_two:
-			onKeyFive();
+			if (mLastGesture == GESTURE_TAP)
+				onKeyFive();
+			else if (mLastGesture == GESTURE_LONGTAP)
+				onLongKeyFive();
 			break;
 		case R.id.item_two_three:
-			onKeySix();
+			if (mLastGesture == GESTURE_TAP)
+				onKeySix();
+			else if (mLastGesture == GESTURE_LONGTAP)
+				onLongKeySix();
 			break;
 
 		default:
@@ -221,6 +279,9 @@ public abstract class BaseActivity extends Activity implements IGestures,
 				return true;
 			case KeyEvent.KEYCODE_POWER:
 				onPowerKeyShortPress();
+				return true;
+			case KeyEvent.KEYCODE_CAMERA:
+				onCameraKeyShortPress();
 				return true;
 
 			default:
@@ -244,14 +305,16 @@ public abstract class BaseActivity extends Activity implements IGestures,
 			case KeyEvent.KEYCODE_POWER:
 				onPowerKeyLongPress();
 				return true;
-
+			case KeyEvent.KEYCODE_CAMERA:
+				onCameraKeyLongPress();
+				return true;
 			default:
 				break;
 			}
 		}
 		return super.onKeyLongPress(keyCode, event);
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 	}
@@ -260,10 +323,10 @@ public abstract class BaseActivity extends Activity implements IGestures,
 		int _action;
 		float _x;
 		float _y;
+		float _time;
 	}
-	
-	protected abstract void init();
-	
-	protected abstract void onAttachView(int id, View view);
 
+	protected abstract void init();
+
+	protected abstract void onAttachView(int id, View view);
 }

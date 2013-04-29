@@ -4,31 +4,34 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
-import android.provider.ContactsContract.CommonDataKinds.Phone;
-import android.telephony.TelephonyManager;
+import android.provider.CallLog;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.varunarl.invisibletouch.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.SinglePackActivity;
-import com.varunarl.invisibletouch.utils.IPhoneState;
 
-public class ContactsActivity extends SinglePackActivity implements IPhoneState {
+public class CallLogActivity extends SinglePackActivity {
 
+	private String TAG = "CallLogActivity";
 	private int NAME_VIEW_ID = 1000;
 	private int NUMBER_VIEW_ID = 1001;
+	private int TYPE_VIEW_ID = 1002;
+	private int DURATION_VIEW_ID = 1003;
+	private int DATE_VIEW_ID = 1004;
+
 	private int CALL_REQUEST_CODE = 1;
 
 	private Cursor mContacts;
 	private LinearLayout mRootView;
 
-	private int mLastCallState;
 	private String mCurrentContactName;
 	private String mCurrentContactPhone;
-	private Intent mIntent;
+	private String mCurrentContactType;
+	private String mCurrentContactDuration;
+	private String mCurrentContactDate;
 
 	@Override
 	public void onSwipeUp() {
@@ -59,7 +62,6 @@ public class ContactsActivity extends SinglePackActivity implements IPhoneState 
 
 	@Override
 	public void onSwipeRight() {
-		if (mLastCallState == TelephonyManager.CALL_STATE_IDLE)
 			startActivityForResult(
 					new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
 							+ mCurrentContactPhone)), CALL_REQUEST_CODE);
@@ -117,23 +119,31 @@ public class ContactsActivity extends SinglePackActivity implements IPhoneState 
 
 	@Override
 	protected void init() {
-		mIntent = getIntent();
-		this.mContacts = getContentResolver().query(Phone.CONTENT_URI, null,
-				null, null, null);
+		this.mContacts = getContentResolver().query(CallLog.Calls.CONTENT_URI,
+				null, null, null, null);
 		this.mContacts.moveToFirst();
-		mLastCallState = -1;
 		super.init();
-		InvisibleTouchApplication.getInstance().registerPhoneStateListener(this, mIntent);
 	}
 
 	@Override
 	protected void onAttachView(int id, View view) {
 		TextView name;
 		TextView phone;
+		TextView type;
+		TextView duration;
+		TextView date;
 		if (!mContacts.isAfterLast() || !mContacts.isBeforeFirst()) {
 			int nameFieldColumnIndex = mContacts
-					.getColumnIndex(Phone.DISPLAY_NAME);
-			int numberFieldColumnIndex = mContacts.getColumnIndex(Phone.NUMBER);
+					.getColumnIndex(CallLog.Calls.CACHED_NAME);
+			int numberFieldColumnIndex = mContacts
+					.getColumnIndex(CallLog.Calls.NUMBER);
+			int typeFieldColumnIndex = mContacts
+					.getColumnIndex(CallLog.Calls.TYPE);
+			int durationFieldColumnIndex = mContacts
+					.getColumnIndex(CallLog.Calls.DURATION);
+			int dateFieldColumnIndex = mContacts
+					.getColumnIndex(CallLog.Calls.DATE);
+
 			if (mRootView == null) {
 				mRootView = (LinearLayout) view.getParent();
 				mRootView.removeAllViews();
@@ -142,33 +152,75 @@ public class ContactsActivity extends SinglePackActivity implements IPhoneState 
 				mRootView.setBackgroundColor(Color.BLACK);
 				name = new TextView(this);
 				phone = new TextView(this);
+				type = new TextView(this);
+				duration = new TextView(this);
+				date = new TextView(this);
+
 				name.setGravity(Gravity.CENTER);
 				phone.setGravity(Gravity.CENTER);
+				type.setGravity(Gravity.CENTER);
+				duration.setGravity(Gravity.CENTER);
+				date.setGravity(Gravity.CENTER);
+
 				name.setTextColor(Color.GRAY);
 				phone.setTextColor(Color.GRAY);
+				type.setTextColor(Color.GRAY);
+				duration.setTextColor(Color.GRAY);
+
 				name.setId(NAME_VIEW_ID);
 				phone.setId(NUMBER_VIEW_ID);
+				type.setId(TYPE_VIEW_ID);
+				duration.setId(DURATION_VIEW_ID);
+				date.setId(DATE_VIEW_ID);
+
 				mCurrentContactName = mContacts.getString(nameFieldColumnIndex);
 				mCurrentContactPhone = mContacts
 						.getString(numberFieldColumnIndex);
+				mCurrentContactType = mContacts.getString(typeFieldColumnIndex);
+				mCurrentContactDuration = mContacts
+						.getString(durationFieldColumnIndex);
+				mCurrentContactDate = mContacts.getString(dateFieldColumnIndex);
+
 				name.setText(mCurrentContactName);
 				phone.setText(mCurrentContactPhone);
+				type.setText(mCurrentContactType);
+				duration.setText(mCurrentContactDuration);
+				date.setText(mCurrentContactDate);
 
 				mRootView.addView(name);
 				mRootView.addView(phone);
+				mRootView.addView(type);
+				mRootView.addView(duration);
+				mRootView.addView(date);
+
 			} else {
 				name = (TextView) mRootView.findViewById(NAME_VIEW_ID);
 				phone = (TextView) mRootView.findViewById(NUMBER_VIEW_ID);
+				type = (TextView) mRootView.findViewById(TYPE_VIEW_ID);
+				duration = (TextView) mRootView.findViewById(DURATION_VIEW_ID);
+				date = (TextView) mRootView.findViewById(DATE_VIEW_ID);
+
 				mCurrentContactName = mContacts.getString(nameFieldColumnIndex);
 				mCurrentContactPhone = mContacts
 						.getString(numberFieldColumnIndex);
+				mCurrentContactType = mContacts.getString(typeFieldColumnIndex);
+				mCurrentContactDuration = mContacts
+						.getString(durationFieldColumnIndex);
+				mCurrentContactDate = mContacts.getString(dateFieldColumnIndex);
+
 				name.setText(mCurrentContactName);
 				phone.setText(mCurrentContactPhone);
+				type.setText(mCurrentContactType);
+				duration.setText(mCurrentContactDuration);
+				date.setText(mCurrentContactDate);
 			}
 		} else {
 			if (id != 0)
 				view.setBackgroundColor(Color.GRAY);
 		}
+		Log.i(TAG, "Current contact\n" + mCurrentContactName + "\n"
+				+ mCurrentContactPhone + "\n" + mCurrentContactType + "\n"
+				+ mCurrentContactDuration);
 	}
 
 	@Override
@@ -176,16 +228,6 @@ public class ContactsActivity extends SinglePackActivity implements IPhoneState 
 		if (requestCode == CALL_REQUEST_CODE) {
 			Log.i("Contacts", "Hit");
 		}
-	}
-
-	@Override
-	public void setPhoneState(int state) {
-		this.mLastCallState = state;
-	}
-
-	@Override
-	public int getPhoneState() {
-		return mLastCallState;
 	}
 
 	@Override

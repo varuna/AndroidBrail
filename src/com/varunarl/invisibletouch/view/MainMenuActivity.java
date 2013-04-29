@@ -7,25 +7,25 @@ import com.varunarl.invisibletouch.SixPackActivity;
 public class MainMenuActivity extends SixPackActivity {
 
 	@Override
-	public void onEnterGesture() {
+	public void onSwipeRight() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void onBackspaceGesture() {
+	public void onSwipeLeft() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void onDoubleEnterGesture() {
+	public void onDoubleSwipeRight() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void onDoubleBackspaceGesture() {
+	public void onDoubleSwipeLeft() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -98,8 +98,8 @@ public class MainMenuActivity extends SixPackActivity {
 
 	@Override
 	public void onKeyTwo() {
-		// TODO Auto-generated method stub
-		
+		Intent i = new Intent(this, CallLogActivity.class);
+		startActivity(i);
 	}
 
 	@Override
@@ -118,7 +118,6 @@ public class MainMenuActivity extends SixPackActivity {
 	public void onKeyFive() {
 		Intent i = new Intent(this, ContactsActivity.class);
 		startActivity(i);
-		
 	}
 
 	@Override
@@ -126,5 +125,59 @@ public class MainMenuActivity extends SixPackActivity {
 		// TODO Auto-generated method stub
 		
 	}
-	
+
+	@Override
+	public void onCameraKeyShortPress() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onCameraKeyLongPress() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onScreenLongPress() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onLongKeyOne() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onLongKeyTwo() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onLongKeyThree() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onLongKeyFour() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onLongKeyFive() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onLongKeySix() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

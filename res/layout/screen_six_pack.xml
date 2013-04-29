@@ -11,13 +11,13 @@
         android:layout_height="wrap_content"
         android:layout_weight="1" >
 
-        <View
+        <LinearLayout
             android:id="@+id/item_one_one"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@android:color/black" >
-        </View>
+        </LinearLayout>
 
         <View
             android:layout_width="1dp"
@@ -26,13 +26,13 @@
             android:layout_marginTop="5dp"
             android:background="@android:color/white" />
 
-        <View
+        <LinearLayout
             android:id="@+id/item_two_one"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@android:color/black" >
-        </View>
+        </LinearLayout>
     </LinearLayout>
     <View
             android:layout_width="wrap_content"
@@ -47,13 +47,13 @@
         android:layout_height="wrap_content"
         android:layout_weight="1" >
 
-        <View
+        <LinearLayout
             android:id="@+id/item_one_two"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@android:color/black" >
-        </View>
+        </LinearLayout>
         <View
             android:layout_width="1dp"
             android:layout_height="wrap_content"
@@ -62,13 +62,13 @@
             android:background="@android:color/white" />
         
 
-        <View
+        <LinearLayout
             android:id="@+id/item_two_two"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@android:color/black" >
-        </View>
+        </LinearLayout>
     </LinearLayout>
      <View
             android:layout_width="wrap_content"
@@ -82,13 +82,13 @@
         android:layout_height="wrap_content"
         android:layout_weight="1" >
 
-        <View
+        <LinearLayout
             android:id="@+id/item_one_three"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@android:color/black" >
-        </View>
+        </LinearLayout>
         <View
             android:layout_width="1dp"
             android:layout_height="wrap_content"
@@ -97,13 +97,13 @@
             android:background="@android:color/white" />
         
 
-        <View
+        <LinearLayout
             android:id="@+id/item_two_three"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@android:color/black" >
-        </View>
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
