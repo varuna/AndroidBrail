@@ -1,20 +1,16 @@
 package com.varunarl.invisibletouch.view;
 
-import android.content.SharedPreferences;
-import android.util.Pair;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.varunarl.invisibletouch.R;
 import com.varunarl.invisibletouch.SixPackActivity;
+import com.varunarl.invisibletouch.utils.FavouriteContacts;
 
 public class FavouriteContactsActivity extends SixPackActivity {
 
-	private static final String FAVOURITE_CONTACTS = "FAVOURITE_CONTACTS_INVISIBLE_TOUCH";
-	
 	private FavouriteContacts mFavourites;
 
 	@Override
@@ -87,26 +83,32 @@ public class FavouriteContactsActivity extends SixPackActivity {
 
 	@Override
 	public void onKeyOne() {
+		mFavourites.callFavourite(0);
 	}
 
 	@Override
 	public void onKeyTwo() {
+		mFavourites.callFavourite(1);
 	}
 
 	@Override
 	public void onKeyThree() {
+		mFavourites.callFavourite(2);
 	}
 
 	@Override
 	public void onKeyFour() {
+		mFavourites.callFavourite(3);
 	}
 
 	@Override
 	public void onKeyFive() {
+		mFavourites.callFavourite(4);
 	}
 
 	@Override
 	public void onKeySix() {
+		mFavourites.callFavourite(5);
 	}
 
 	@Override
@@ -135,7 +137,7 @@ public class FavouriteContactsActivity extends SixPackActivity {
 
 	@Override
 	protected void init() {
-		mFavourites = getCurrentFavouriteContacts();
+		mFavourites = FavouriteContacts.getInstance(getApplicationContext());
 		super.init();
 	}
 
@@ -143,118 +145,43 @@ public class FavouriteContactsActivity extends SixPackActivity {
 	protected void onAttachView(int id, View view) {
 		switch (id) {
 		case R.id.item_one_one:
+			setFavouriteView(view, mFavourites.get(0).first, mFavourites.get(0).second);
 		case R.id.item_one_two:
+			setFavouriteView(view, mFavourites.get(1).first, mFavourites.get(1).second);
 		case R.id.item_one_three:
+			setFavouriteView(view, mFavourites.get(2).first, mFavourites.get(2).second);
 		case R.id.item_two_one:
+			setFavouriteView(view, mFavourites.get(3).first, mFavourites.get(3).second);
 		case R.id.item_two_two:
+			setFavouriteView(view, mFavourites.get(4).first, mFavourites.get(4).second);
 		case R.id.item_two_three:
+			setFavouriteView(view, mFavourites.get(5).first, mFavourites.get(5).second);
 			break;
 
 		default:
 			break;
 		}
 	}
-	
-	private void setFavouriteView(View v, String name, int telephone )
-	{
+
+	private void setFavouriteView(View v, String name, int telephone) {
+		LinearLayout top = (LinearLayout)v;
+		top.removeAllViews();
+		top.setOrientation(LinearLayout.HORIZONTAL);
+		
 		if (name == "" || telephone == 0)
 			return;
-		
-		LayoutInflater inflater = (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
-		LinearLayout top = new LinearLayout(this);
-		top.setOrientation(LinearLayout.HORIZONTAL);
+
 		TextView _name = new TextView(this);
 		TextView _telephone = new TextView(this);
-		
+
 		_name.setText(name);
-		_telephone.setText(telephone+"");
-		
+		_telephone.setText(telephone + "");
+
 		top.setGravity(Gravity.CENTER);
 		top.setWeightSum(1);
 		top.addView(_name);
 		top.addView(_telephone);
-		
-		
+
 	}
 
-	private FavouriteContacts getCurrentFavouriteContacts() {
-		SharedPreferences favouritePreference = getSharedPreferences(
-				FAVOURITE_CONTACTS, MODE_PRIVATE);
-		FavouriteContacts contacts = new FavouriteContacts();
-		for (String key : favouritePreference.getAll().keySet()) {
-			int index = Integer.parseInt(""+key.charAt(key.length() -1));
-			String name = key.substring(0, key.length() - 2);
-			int telephone = favouritePreference.getInt(key, 0);
-			if (telephone != 0)
-				contacts.set(index, new Pair<String, Integer>(name, telephone));
-		}
-		return contacts;
-	}
-
-	private void addToFavourite(int index,Pair<String, Integer> favourite) {
-		
-	}
-
-	private class FavouriteContacts {
-		private Pair<String, Integer> favouriteOne;
-		private Pair<String, Integer> favouriteTwo;
-		private Pair<String, Integer> favouriteThree;
-		private Pair<String, Integer> favouriteFour;
-		private Pair<String, Integer> favouriteFive;
-		private Pair<String, Integer> favouriteSix;
-
-		public FavouriteContacts() {
-			this.favouriteOne = new Pair<String, Integer>("",0);
-			this.favouriteTwo = new Pair<String, Integer>("",0);
-			this.favouriteThree = new Pair<String, Integer>("",0);
-			this.favouriteFour = new Pair<String, Integer>("",0);
-			this.favouriteFive = new Pair<String, Integer>("",0);
-			this.favouriteSix = new Pair<String, Integer>("",0);
-		}
-
-		public void set(int index, Pair<String, Integer> favourite) {
-			switch (index) {
-			case 1:
-				favouriteOne = favourite;
-				break;
-			case 2:
-				favouriteTwo = favourite;
-				break;
-			case 3:
-				favouriteThree = favourite;
-				break;
-			case 4:
-				favouriteFour = favourite;
-				break;
-			case 5:
-				favouriteFive = favourite;
-				break;
-			case 6:
-				favouriteSix = favourite;
-				break;
-
-			default:
-				break;
-			}
-		}
-
-		public Pair<String, Integer> get(int index) {
-			switch (index) {
-			case 1:
-				return favouriteOne;
-			case 2:
-				return favouriteTwo;
-			case 3:
-				return favouriteThree;
-			case 4:
-				return favouriteFour;
-			case 5:
-				return favouriteFive;
-			case 6:
-				return favouriteSix;
-			default:
-				return null;
-			}
-		}
-	}
 }

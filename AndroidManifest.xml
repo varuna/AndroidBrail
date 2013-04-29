@@ -28,6 +28,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.CallLogActivity"></activity>
+        <activity android:name=".view.FavouriteContactsActivity"></activity>
     </application>
 
 </manifest>
