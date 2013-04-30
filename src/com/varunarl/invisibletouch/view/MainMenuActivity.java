@@ -92,7 +92,8 @@ public class MainMenuActivity extends SixPackActivity {
 
 	@Override
 	public void onKeyOne() {
-		// TODO Auto-generated method stub
+		Intent i = new Intent(this, FavouriteContactsActivity.class);
+		startActivity(i);
 		
 	}
 

@@ -42,22 +42,22 @@ public class FavouriteContacts {
 
 	public void set(int index, Pair<String, Integer> favourite) {
 		switch (index) {
-		case 1:
+		case 0:
 			favouriteOne = favourite;
 			break;
-		case 2:
+		case 1:
 			favouriteTwo = favourite;
 			break;
-		case 3:
+		case 2:
 			favouriteThree = favourite;
 			break;
-		case 4:
+		case 3:
 			favouriteFour = favourite;
 			break;
-		case 5:
+		case 4:
 			favouriteFive = favourite;
 			break;
-		case 6:
+		case 5:
 			favouriteSix = favourite;
 			break;
 
@@ -68,17 +68,17 @@ public class FavouriteContacts {
 
 	public Pair<String, Integer> get(int index) {
 		switch (index) {
-		case 1:
+		case 0:
 			return favouriteOne;
-		case 2:
+		case 1:
 			return favouriteTwo;
-		case 3:
+		case 2:
 			return favouriteThree;
-		case 4:
+		case 3:
 			return favouriteFour;
-		case 5:
+		case 4:
 			return favouriteFive;
-		case 6:
+		case 5:
 			return favouriteSix;
 		default:
 			return null;

@@ -1,5 +1,6 @@
 package com.varunarl.invisibletouch.view;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -139,6 +140,7 @@ public class FavouriteContactsActivity extends SixPackActivity {
 	protected void init() {
 		mFavourites = FavouriteContacts.getInstance(getApplicationContext());
 		super.init();
+		Log.i("Fav", "init");
 	}
 
 	@Override
