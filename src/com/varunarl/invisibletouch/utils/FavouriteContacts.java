@@ -109,7 +109,12 @@ public class FavouriteContacts {
 		favEditor.apply();
 	}
 
-	public void addToFavourite(String name, String telephone) {
+	public void addToFavourite(String name, String telephone) throws FavouriteExistsException{
+		
+		for(int j = 0;j<6;j++)
+			if (get(j).first.equals(name) && get(j).second.equals(telephone))
+				throw new FavouriteExistsException(get(j));
+		
 		int i =0;
 		for (;i<6;i++)
 		{

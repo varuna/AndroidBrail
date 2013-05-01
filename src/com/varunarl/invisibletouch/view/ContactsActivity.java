@@ -1,6 +1,5 @@
 package com.varunarl.invisibletouch.view;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -14,6 +13,7 @@ import android.view.View;
 import com.varunarl.invisibletouch.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.SixPackActivity;
 import com.varunarl.invisibletouch.utils.FavouriteContacts;
+import com.varunarl.invisibletouch.utils.FavouriteExistsException;
 import com.varunarl.invisibletouch.utils.IPhoneState;
 import com.varunarl.invisibletouch.view.sub.ContactsDetailsActivity;
 
@@ -236,7 +236,11 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
 	public void onKeySix() {
 		FavouriteContacts fav = FavouriteContacts
 				.getInstance(getApplicationContext());
-		fav.addToFavourite(mCurrentContactName, mCurrentContactPhone);
+		try {
+			fav.addToFavourite(mCurrentContactName, mCurrentContactPhone);
+		} catch (FavouriteExistsException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void updateCurrentContact() {
