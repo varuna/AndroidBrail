@@ -1,9 +1,13 @@
 package com.varunarl.invisibletouch;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -15,14 +19,15 @@ import android.widget.Toast;
 import com.varunarl.invisibletouch.brail.Brail;
 import com.varunarl.invisibletouch.brail.Brail.KeyBoard;
 import com.varunarl.invisibletouch.brail.BrailCharacter;
+import com.varunarl.invisibletouch.view.MainMenuActivity;
 
 public abstract class BaseActivity extends Activity implements IGestures,
 		IBrailKeyboard {
 
 	private final String TAG = "BaseActivity";
 
-	private static final int MOVE_DETECTION_THRESHOLD = 20; //in pixels
-	private static final int LONGTIME_DETECTION_THRESHOLD = 200; //in millis
+	private static final int MOVE_DETECTION_THRESHOLD = 20; // in pixels
+	private static final int LONGTIME_DETECTION_THRESHOLD = 200; // in millis
 
 	protected final static int GESTURE_TAP = 0;
 	protected final static int GESTURE_LONGTAP = 1;
@@ -40,6 +45,8 @@ public abstract class BaseActivity extends Activity implements IGestures,
 	private StringBuffer mBuffer;
 	private int mCurrentBufferType;
 	private KeyBoard mKeyBoard;
+
+	private boolean mStoppedFromNewScreen = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +138,7 @@ public abstract class BaseActivity extends Activity implements IGestures,
 			}
 		} else if (gesture == GESTURE_TAP)
 			mLastGesture = GESTURE_TAP;
-		else if (gesture == GESTURE_LONGTAP){
+		else if (gesture == GESTURE_LONGTAP) {
 			mLastGesture = GESTURE_LONGTAP;
 			onScreenLongPress();
 		}
@@ -145,7 +152,7 @@ public abstract class BaseActivity extends Activity implements IGestures,
 		m._x = e.getX();
 		m._y = e.getY();
 		m._time = e.getEventTime();
-		
+
 		if (e.getAction() == MotionEvent.ACTION_DOWN) {
 			mGestureHistory.clear();
 			mGestureHistory.add(m);
@@ -182,9 +189,8 @@ public abstract class BaseActivity extends Activity implements IGestures,
 		}
 		return false;
 	}
-	
-	private boolean isLongTimeTakenForEvent()
-	{
+
+	private boolean isLongTimeTakenForEvent() {
 		if (mGestureHistory.size() > 0) {
 			float sTime = mGestureHistory.get(0)._time;
 			float fTime = mGestureHistory.get(mGestureHistory.size() - 1)._time;
@@ -308,11 +314,39 @@ public abstract class BaseActivity extends Activity implements IGestures,
 			case KeyEvent.KEYCODE_CAMERA:
 				onCameraKeyLongPress();
 				return true;
+			case KeyEvent.KEYCODE_HOME:
+				onHomeKeyPressed();
+				return true;
 			default:
 				break;
 			}
 		}
 		return super.onKeyLongPress(keyCode, event);
+	}
+
+	@Override
+	public void startActivity(Intent intent) {
+		mStoppedFromNewScreen = true;
+		super.startActivity(intent);
+	}
+
+	@Override
+	protected void onStop() {
+		if (!mStoppedFromNewScreen) {
+			Log.w(TAG,
+					"Whoa.. we are losing screen. Install Alarm to start Invisible touch");
+			AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+			Intent i = new Intent(this, MainMenuActivity.class);
+			i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			am.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance()
+					.getTimeInMillis() + 10, PendingIntent.getActivity(this,
+					0, i, PendingIntent.FLAG_CANCEL_CURRENT));
+		}
+		super.onStop();
+	}
+
+	private void onHomeKeyPressed() {
+		Log.i(TAG, "Home pressed");
 	}
 
 	@Override
