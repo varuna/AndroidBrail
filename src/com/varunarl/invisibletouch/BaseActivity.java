@@ -22,7 +22,7 @@ public abstract class BaseActivity extends Activity implements IGestures,
 	private final String TAG = "BaseActivity";
 
 	private static final int MOVE_DETECTION_THRESHOLD = 20; //in pixels
-	private static final int LONGTIME_DETECTION_THRESHOLD = 100; //in millis
+	private static final int LONGTIME_DETECTION_THRESHOLD = 200; //in millis
 
 	protected final static int GESTURE_TAP = 0;
 	protected final static int GESTURE_LONGTAP = 1;

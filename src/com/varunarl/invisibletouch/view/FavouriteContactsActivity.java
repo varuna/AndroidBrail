@@ -6,13 +6,17 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.varunarl.invisibletouch.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.R;
 import com.varunarl.invisibletouch.SixPackActivity;
 import com.varunarl.invisibletouch.utils.FavouriteContacts;
+import com.varunarl.invisibletouch.utils.IPhoneState;
 
-public class FavouriteContactsActivity extends SixPackActivity {
+public class FavouriteContactsActivity extends SixPackActivity implements
+		IPhoneState {
 
 	private FavouriteContacts mFavourites;
+	private int mLastCallState;
 
 	@Override
 	public void onSwipeRight() {
@@ -20,6 +24,7 @@ public class FavouriteContactsActivity extends SixPackActivity {
 
 	@Override
 	public void onSwipeLeft() {
+		this.finish();
 	}
 
 	@Override
@@ -140,50 +145,76 @@ public class FavouriteContactsActivity extends SixPackActivity {
 	protected void init() {
 		mFavourites = FavouriteContacts.getInstance(getApplicationContext());
 		super.init();
-		Log.i("Fav", "init");
+		InvisibleTouchApplication.getInstance().registerPhoneStateListener(
+				this, getIntent());
 	}
 
 	@Override
 	protected void onAttachView(int id, View view) {
+		Log.i("View attaches", id + "");
+		int idx;
 		switch (id) {
 		case R.id.item_one_one:
-			setFavouriteView(view, mFavourites.get(0).first, mFavourites.get(0).second);
+			idx = 0;
+			break;
 		case R.id.item_one_two:
-			setFavouriteView(view, mFavourites.get(1).first, mFavourites.get(1).second);
+			idx = 2;
+			break;
 		case R.id.item_one_three:
-			setFavouriteView(view, mFavourites.get(2).first, mFavourites.get(2).second);
+			idx = 4;
+			break;
 		case R.id.item_two_one:
-			setFavouriteView(view, mFavourites.get(3).first, mFavourites.get(3).second);
+			idx = 1;
+			break;
 		case R.id.item_two_two:
-			setFavouriteView(view, mFavourites.get(4).first, mFavourites.get(4).second);
+			idx = 3;
+			break;
 		case R.id.item_two_three:
-			setFavouriteView(view, mFavourites.get(5).first, mFavourites.get(5).second);
+			idx = 5;
 			break;
 
 		default:
+			idx = 5;
 			break;
 		}
+		setFavouriteView(view, mFavourites.get(idx).first,
+				mFavourites.get(idx).second);
+
 	}
 
-	private void setFavouriteView(View v, String name, int telephone) {
-		LinearLayout top = (LinearLayout)v;
+	private void setFavouriteView(View v, String name, String telephone) {
+		LinearLayout top = (LinearLayout) v;
 		top.removeAllViews();
-		top.setOrientation(LinearLayout.HORIZONTAL);
-		
-		if (name == "" || telephone == 0)
-			return;
-
+		top.setOrientation(LinearLayout.VERTICAL);
 		TextView _name = new TextView(this);
+		top.setGravity(Gravity.CENTER);
+		_name.setGravity(Gravity.CENTER);
+
+		if (name.equals("") || telephone.equals("")) {
+			_name.setText("Empty");
+			top.addView(_name);
+			return;
+		}
+
 		TextView _telephone = new TextView(this);
 
 		_name.setText(name);
-		_telephone.setText(telephone + "");
+		_telephone.setText(telephone);
 
-		top.setGravity(Gravity.CENTER);
-		top.setWeightSum(1);
+		_telephone.setGravity(Gravity.CENTER);
 		top.addView(_name);
 		top.addView(_telephone);
 
+	}
+
+	@Override
+	public void setPhoneState(int state) {
+		mLastCallState = state;
+	}
+
+	@Override
+	public int getPhoneState() {
+		return mLastCallState;
 	}
 
 }

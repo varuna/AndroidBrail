@@ -15,27 +15,52 @@ public abstract class SinglePackActivity extends BaseActivity {
 	
 	@Override
 	public void onKeyTwo() {
-		// Disable keyboard function
+		throw new UnsupportedOperationException("Single pack activities does not support this operation");
 	}
 
 	@Override
 	public void onKeyThree() {
-		// Disable keyboard function
+		throw new UnsupportedOperationException("Single pack activities does not support this operation");
 	}
 
 	@Override
 	public void onKeyFour() {
-		// Disable keyboard function
+		throw new UnsupportedOperationException("Single pack activities does not support this operation");
 	}
 
 	@Override
 	public void onKeyFive() {
-		// Disable keyboard function
+		throw new UnsupportedOperationException("Single pack activities does not support this operation");
 	}
 
 	@Override
 	public void onKeySix() {
-		// Disable keyboard function
+		throw new UnsupportedOperationException("Single pack activities does not support this operation");
+	}
+
+	@Override
+	public void onLongKeyTwo() {
+		throw new UnsupportedOperationException("Single pack activities does not support this operation");		
+	}
+
+	@Override
+	public void onLongKeyThree() {
+		throw new UnsupportedOperationException("Single pack activities does not support this operation");		
+	}
+
+	@Override
+	public void onLongKeyFour() {
+		throw new UnsupportedOperationException("Single pack activities does not support this operation");		
+	}
+
+	@Override
+	public void onLongKeyFive() {
+		throw new UnsupportedOperationException("Single pack activities does not support this operation");		
+	}
+
+	@Override
+	public void onLongKeySix() {
+		throw new UnsupportedOperationException("Single pack activities does not support this operation");		
 	}
 
 }

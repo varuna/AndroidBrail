@@ -1,29 +1,29 @@
 package com.varunarl.invisibletouch.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.provider.ContactsContract.PhoneLookup;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.varunarl.invisibletouch.InvisibleTouchApplication;
-import com.varunarl.invisibletouch.SinglePackActivity;
+import com.varunarl.invisibletouch.SixPackActivity;
+import com.varunarl.invisibletouch.utils.FavouriteContacts;
 import com.varunarl.invisibletouch.utils.IPhoneState;
+import com.varunarl.invisibletouch.view.sub.ContactsDetailsActivity;
 
-public class ContactsActivity extends SinglePackActivity implements IPhoneState {
+public class ContactsActivity extends SixPackActivity implements IPhoneState {
 
-	private int NAME_VIEW_ID = 1000;
-	private int NUMBER_VIEW_ID = 1001;
 	private int CALL_REQUEST_CODE = 1;
+	public static String INTENT_FLAG_CONTACT_NAME = "com.varunarl.invisibletouch.contactsactivity.intent_flag_contact_name";
+	public static String INTENT_FLAG_CONTACT_TELEPHONE = "com.varunarl.invisibletouch.contactsactivity.intent_flag_contact_telephone";
 
 	private Cursor mContacts;
-	private LinearLayout mRootView;
 
 	private int mLastCallState;
 	private String mCurrentContactName;
@@ -34,7 +34,7 @@ public class ContactsActivity extends SinglePackActivity implements IPhoneState 
 	public void onSwipeUp() {
 		if (!mContacts.isLast()) {
 			mContacts.moveToNext();
-			onAttachView(0, mRootView);
+			updateCurrentContact();
 		}
 	}
 
@@ -47,7 +47,7 @@ public class ContactsActivity extends SinglePackActivity implements IPhoneState 
 	public void onSwipeDown() {
 		if (!mContacts.isFirst()) {
 			mContacts.moveToPrevious();
-			onAttachView(0, mRootView);
+			updateCurrentContact();
 		}
 
 	}
@@ -111,11 +111,6 @@ public class ContactsActivity extends SinglePackActivity implements IPhoneState 
 	}
 
 	@Override
-	public void onKeyOne() {
-
-	}
-
-	@Override
 	protected void init() {
 		mIntent = getIntent();
 		this.mContacts = getContentResolver().query(Phone.CONTENT_URI, null,
@@ -123,52 +118,14 @@ public class ContactsActivity extends SinglePackActivity implements IPhoneState 
 		this.mContacts.moveToFirst();
 		mLastCallState = -1;
 		super.init();
-		InvisibleTouchApplication.getInstance().registerPhoneStateListener(this, mIntent);
+		InvisibleTouchApplication.getInstance().registerPhoneStateListener(
+				this, mIntent);
+		updateCurrentContact();
 	}
 
 	@Override
 	protected void onAttachView(int id, View view) {
-		TextView name;
-		TextView phone;
-		if (!mContacts.isAfterLast() || !mContacts.isBeforeFirst()) {
-			int nameFieldColumnIndex = mContacts
-					.getColumnIndex(Phone.DISPLAY_NAME);
-			int numberFieldColumnIndex = mContacts.getColumnIndex(Phone.NUMBER);
-			if (mRootView == null) {
-				mRootView = (LinearLayout) view.getParent();
-				mRootView.removeAllViews();
-				mRootView.setOrientation(LinearLayout.VERTICAL);
-				mRootView.setGravity(Gravity.CENTER);
-				mRootView.setBackgroundColor(Color.BLACK);
-				name = new TextView(this);
-				phone = new TextView(this);
-				name.setGravity(Gravity.CENTER);
-				phone.setGravity(Gravity.CENTER);
-				name.setTextColor(Color.GRAY);
-				phone.setTextColor(Color.GRAY);
-				name.setId(NAME_VIEW_ID);
-				phone.setId(NUMBER_VIEW_ID);
-				mCurrentContactName = mContacts.getString(nameFieldColumnIndex);
-				mCurrentContactPhone = mContacts
-						.getString(numberFieldColumnIndex);
-				name.setText(mCurrentContactName);
-				phone.setText(mCurrentContactPhone);
 
-				mRootView.addView(name);
-				mRootView.addView(phone);
-			} else {
-				name = (TextView) mRootView.findViewById(NAME_VIEW_ID);
-				phone = (TextView) mRootView.findViewById(NUMBER_VIEW_ID);
-				mCurrentContactName = mContacts.getString(nameFieldColumnIndex);
-				mCurrentContactPhone = mContacts
-						.getString(numberFieldColumnIndex);
-				name.setText(mCurrentContactName);
-				phone.setText(mCurrentContactPhone);
-			}
-		} else {
-			if (id != 0)
-				view.setBackgroundColor(Color.GRAY);
-		}
 	}
 
 	@Override
@@ -191,55 +148,124 @@ public class ContactsActivity extends SinglePackActivity implements IPhoneState 
 	@Override
 	public void onCameraKeyShortPress() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onCameraKeyLongPress() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onScreenLongPress() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onLongKeyOne() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onLongKeyTwo() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onLongKeyThree() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onLongKeyFour() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onLongKeyFive() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onLongKeySix() {
 		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onKeyOne() {
+		// TODO edit contact
+	}
+
+	@Override
+	public void onKeyTwo() {
+		// TODO search contact
+
+	}
+
+	@Override
+	public void onKeyThree() {
+		deleteContact(mCurrentContactPhone, mCurrentContactName);
+	}
+
+	@Override
+	public void onKeyFour() {
+		// TODO Add new contact
 		
+	}
+
+	@Override
+	public void onKeyFive() {
+		Log.i("Contacts", "keyFour");
+		Intent i = new Intent(ContactsActivity.this,
+				ContactsDetailsActivity.class);
+		i.putExtra(INTENT_FLAG_CONTACT_NAME, mCurrentContactName);
+		i.putExtra(INTENT_FLAG_CONTACT_TELEPHONE, mCurrentContactPhone);
+		startActivity(i);
+
+	}
+
+	@Override
+	public void onKeySix() {
+		FavouriteContacts fav = FavouriteContacts
+				.getInstance(getApplicationContext());
+		fav.addToFavourite(mCurrentContactName, mCurrentContactPhone);
+	}
+
+	private void updateCurrentContact() {
+		int nameFieldColumnIndex = mContacts.getColumnIndex(Phone.DISPLAY_NAME);
+		int numberFieldColumnIndex = mContacts.getColumnIndex(Phone.NUMBER);
+		mCurrentContactName = mContacts.getString(nameFieldColumnIndex);
+		mCurrentContactPhone = mContacts.getString(numberFieldColumnIndex);
+	}
+	
+	private boolean deleteContact(String phone, String name) {
+	    Uri contactUri = Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phone));
+	    Cursor cur = getContentResolver().query(contactUri, null, null, null, null);
+	    try {
+	        if (cur.moveToFirst()) {
+	            do {
+	                if (cur.getString(cur.getColumnIndex(PhoneLookup.DISPLAY_NAME)).equalsIgnoreCase(name)) {
+	                    String lookupKey = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY));
+	                    Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_LOOKUP_URI, lookupKey);
+	                    getContentResolver().delete(uri, null, null);
+	                    return true;
+	                }
+
+	            } while (cur.moveToNext());
+	        }
+
+	    } catch (Exception e) {
+	        System.out.println(e.getStackTrace());
+	    }
+	    return false;
 	}
 
 }
