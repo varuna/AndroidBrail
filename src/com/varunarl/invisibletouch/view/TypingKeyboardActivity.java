@@ -7,16 +7,19 @@ import android.view.MotionEvent;
 import com.varunarl.invisibletouch.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.SixPackActivity;
 import com.varunarl.invisibletouch.brail.BrailCharacter;
+import com.varunarl.invisibletouch.utils.TextInputManager;
 
 public class TypingKeyboardActivity extends SixPackActivity {
 
 	private final String TAG = "MainActivity";
 	private BrailCharacter mCurrentCharacter;
+	private TextInputManager mInputManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mCurrentCharacter = new BrailCharacter();
+		mInputManager = InvisibleTouchApplication.getInstance().getTextInputManager();
 	}
 
 	@Override
@@ -69,14 +72,14 @@ public class TypingKeyboardActivity extends SixPackActivity {
 	@Override
 	public void onSwipeRight() {
 		Log.i(TAG, "onEnterGesture");
-		buffer(mCurrentCharacter);
+		mInputManager.buffer(mCurrentCharacter);
 		mCurrentCharacter.reset();
 	}
 
 	@Override
 	public void onSwipeLeft() {
 		Log.i(TAG, "onBackSpaceGesture");
-		removeLast();
+		mInputManager.removeLast();
 		mCurrentCharacter.reset();
 	}
 

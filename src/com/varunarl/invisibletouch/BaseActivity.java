@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -14,11 +15,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
-import android.widget.Toast;
 
-import com.varunarl.invisibletouch.brail.Brail;
-import com.varunarl.invisibletouch.brail.Brail.KeyBoard;
-import com.varunarl.invisibletouch.brail.BrailCharacter;
 import com.varunarl.invisibletouch.view.MainMenuActivity;
 
 public abstract class BaseActivity extends Activity implements IGestures,
@@ -38,65 +35,18 @@ public abstract class BaseActivity extends Activity implements IGestures,
 	protected final static int SWIPE_UP = 12;
 	protected final static int SWIPE_DOWN = 13;
 
-	protected String mText;
 	protected int mLastGesture = -1;
 	private List<Motion> mGestureHistory;
-
-	private StringBuffer mBuffer;
-	private int mCurrentBufferType;
-	private KeyBoard mKeyBoard;
 
 	private boolean mStoppedFromNewScreen = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mCurrentBufferType = Brail.KeyBoard.LOWER_KEY_TYPE;
-		mKeyBoard = new KeyBoard();
-		mText = "";
-		mBuffer = new StringBuffer();
 		mGestureHistory = new ArrayList<Motion>();
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		init();
-	}
-
-	protected void buffer(BrailCharacter c) {
-		if (mKeyBoard.isControlCharacter(c)) {
-			int oldType = mCurrentBufferType;
-			mCurrentBufferType = mKeyBoard.getControlType(mKeyBoard.get(c,
-					mCurrentBufferType));
-			if (oldType == Brail.KeyBoard.UPPER_KEY_TYPE
-					&& mCurrentBufferType == Brail.KeyBoard.UPPER_KEY_TYPE)
-				mCurrentBufferType = Brail.KeyBoard.LOWER_KEY_TYPE;
-			processBuffer();
-		} else {
-			mBuffer.append(mKeyBoard.get(c, mCurrentBufferType));
-			Log.i(TAG, mBuffer.toString());
-		}
-	}
-
-	protected void buffer(Character c) {
-		processBuffer();
-		mBuffer.append(c);
-	}
-
-	protected void removeLast() {
-		if (mBuffer.length() > 0)
-			mBuffer.deleteCharAt(mBuffer.length() - 1);
-		else if (mText.length() > 1)
-			mText = mText.substring(0, mText.length() - 2);
-		else if (mText.length() == 1)
-			mText = "";
-
-	}
-
-	private void processBuffer() {
-		String bufferValue = mBuffer.toString();
-		mText += bufferValue;
-		mBuffer.delete(0, mBuffer.length());
-		Toast.makeText(this, mText, Toast.LENGTH_LONG).show();
-		Log.i(TAG, "Current String : " + mText);
 	}
 
 	@Override
@@ -330,6 +280,7 @@ public abstract class BaseActivity extends Activity implements IGestures,
 		super.startActivity(intent);
 	}
 
+	@SuppressLint("InlinedApi")
 	@Override
 	protected void onStop() {
 		if (!mStoppedFromNewScreen) {
@@ -338,6 +289,7 @@ public abstract class BaseActivity extends Activity implements IGestures,
 			AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
 			Intent i = new Intent(this, MainMenuActivity.class);
 			i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 			am.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance()
 					.getTimeInMillis() + 10, PendingIntent.getActivity(this,
 					0, i, PendingIntent.FLAG_CANCEL_CURRENT));

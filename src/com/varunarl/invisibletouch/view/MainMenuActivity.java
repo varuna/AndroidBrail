@@ -111,7 +111,8 @@ public class MainMenuActivity extends SixPackActivity {
 
 	@Override
 	public void onKeyFour() {
-		// TODO Auto-generated method stub
+		Intent in = new Intent(this, TypingKeyboardActivity.class);
+		startActivity(in);
 		
 	}
 

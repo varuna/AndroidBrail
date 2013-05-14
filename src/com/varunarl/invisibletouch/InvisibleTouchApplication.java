@@ -13,6 +13,7 @@ import android.util.Log;
 
 import com.varunarl.invisibletouch.utils.IPhoneState;
 import com.varunarl.invisibletouch.utils.PhoneStateManager;
+import com.varunarl.invisibletouch.utils.TextInputManager;
 
 public class InvisibleTouchApplication extends Application implements
 		OnInitListener {
@@ -21,6 +22,7 @@ public class InvisibleTouchApplication extends Application implements
 	private Vibrator mVibratorService;
 	private TextToSpeech mTTS;
 	private TelephonyManager mTelephonyManager;
+	private TextInputManager mTextInputManager;
 
 	private static InvisibleTouchApplication instance;
 
@@ -28,6 +30,7 @@ public class InvisibleTouchApplication extends Application implements
 	public void onCreate() {
 		super.onCreate();
 		instance = this;
+		mTextInputManager = new TextInputManager(this);
 		mVibratorService = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		mTelephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 		if (mVibratorService != null)
@@ -35,6 +38,10 @@ public class InvisibleTouchApplication extends Application implements
 		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN)
 			mTTS = new TextToSpeech(getApplicationContext(), this);
 
+	}
+
+	public TextInputManager getTextInputManager() {
+		return mTextInputManager;
 	}
 
 	public static InvisibleTouchApplication getInstance() {
@@ -64,8 +71,7 @@ public class InvisibleTouchApplication extends Application implements
 		}
 	}
 
-	public void registerPhoneStateListener(IPhoneState phoneState,
-			Intent intent) {
+	public void registerPhoneStateListener(IPhoneState phoneState, Intent intent) {
 		mTelephonyManager.listen(new PhoneStateManager(intent, phoneState,
 				getApplicationContext()), PhoneStateListener.LISTEN_CALL_STATE);
 	}

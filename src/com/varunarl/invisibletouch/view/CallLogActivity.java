@@ -11,9 +11,9 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.varunarl.invisibletouch.SinglePackActivity;
+import com.varunarl.invisibletouch.SixPackActivity;
 
-public class CallLogActivity extends SinglePackActivity {
+public class CallLogActivity extends SixPackActivity {
 
 	private String TAG = "CallLogActivity";
 	private int NAME_VIEW_ID = 1000;
@@ -280,6 +280,36 @@ public class CallLogActivity extends SinglePackActivity {
 
 	@Override
 	public void onLongKeySix() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onKeyTwo() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onKeyThree() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onKeyFour() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onKeyFive() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onKeySix() {
 		// TODO Auto-generated method stub
 		
 	}
