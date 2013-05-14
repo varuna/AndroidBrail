@@ -5,17 +5,17 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.provider.CallLog;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.varunarl.invisibletouch.SixPackActivity;
+import com.varunarl.invisibletouch.utils.Log;
+import com.varunarl.invisibletouch.utils.Log.Level;
 
 public class CallLogActivity extends SixPackActivity {
 
-	private String TAG = "CallLogActivity";
 	private int NAME_VIEW_ID = 1000;
 	private int NUMBER_VIEW_ID = 1001;
 	private int TYPE_VIEW_ID = 1002;
@@ -218,15 +218,15 @@ public class CallLogActivity extends SixPackActivity {
 			if (id != 0)
 				view.setBackgroundColor(Color.GRAY);
 		}
-		Log.i(TAG, "Current contact\n" + mCurrentContactName + "\n"
+		Log.announce( "Current contact\n" + mCurrentContactName + "\n"
 				+ mCurrentContactPhone + "\n" + mCurrentContactType + "\n"
-				+ mCurrentContactDuration);
+				+ mCurrentContactDuration,Level.INFO);
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == CALL_REQUEST_CODE) {
-			Log.i("Contacts", "Hit");
+			Log.announce("Hit",Level.INFO);
 		}
 	}
 

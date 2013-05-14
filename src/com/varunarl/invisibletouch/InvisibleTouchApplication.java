@@ -9,16 +9,16 @@ import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 
 import com.varunarl.invisibletouch.utils.IPhoneState;
+import com.varunarl.invisibletouch.utils.Log;
+import com.varunarl.invisibletouch.utils.Log.Level;
 import com.varunarl.invisibletouch.utils.PhoneStateManager;
 import com.varunarl.invisibletouch.utils.TextInputManager;
 
 public class InvisibleTouchApplication extends Application implements
 		OnInitListener {
 
-	private final String TAG = "BrailApplication";
 	private Vibrator mVibratorService;
 	private TextToSpeech mTTS;
 	private TelephonyManager mTelephonyManager;
@@ -34,9 +34,11 @@ public class InvisibleTouchApplication extends Application implements
 		mVibratorService = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		mTelephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 		if (mVibratorService != null)
-			Log.i(TAG, "Vibrator service ready");
-		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN)
+			Log.announce("Vibrator service ready",Level.INFO);
+		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN){
 			mTTS = new TextToSpeech(getApplicationContext(), this);
+			Log.announce("TextToSpeech service is ready.",Level.INFO);
+		}
 
 	}
 
@@ -51,9 +53,9 @@ public class InvisibleTouchApplication extends Application implements
 	@Override
 	public void onInit(int status) {
 		if (status == TextToSpeech.SUCCESS) {
-			Log.i(TAG, "TextToSpeech service is ready.");
+			Log.announce("TextToSpeech service is ready.",Level.INFO);
 		} else
-			Log.i(TAG, "TextToSpeech service is broken.");
+			Log.announce("TextToSpeech service is broken.",Level.INFO);
 	}
 
 	public void speak(String speech) {

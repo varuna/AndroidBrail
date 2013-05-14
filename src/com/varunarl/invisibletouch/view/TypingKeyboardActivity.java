@@ -1,17 +1,17 @@
 package com.varunarl.invisibletouch.view;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import com.varunarl.invisibletouch.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.SixPackActivity;
 import com.varunarl.invisibletouch.brail.BrailCharacter;
+import com.varunarl.invisibletouch.utils.Log;
+import com.varunarl.invisibletouch.utils.Log.Level;
 import com.varunarl.invisibletouch.utils.TextInputManager;
 
 public class TypingKeyboardActivity extends SixPackActivity {
 
-	private final String TAG = "MainActivity";
 	private BrailCharacter mCurrentCharacter;
 	private TextInputManager mInputManager;
 
@@ -19,7 +19,8 @@ public class TypingKeyboardActivity extends SixPackActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mCurrentCharacter = new BrailCharacter();
-		mInputManager = InvisibleTouchApplication.getInstance().getTextInputManager();
+		mInputManager = InvisibleTouchApplication.getInstance()
+				.getTextInputManager();
 	}
 
 	@Override
@@ -71,142 +72,142 @@ public class TypingKeyboardActivity extends SixPackActivity {
 
 	@Override
 	public void onSwipeRight() {
-		Log.i(TAG, "onEnterGesture");
+		Log.announce("onEnterGesture", Level.INFO);
 		mInputManager.buffer(mCurrentCharacter);
 		mCurrentCharacter.reset();
 	}
 
 	@Override
 	public void onSwipeLeft() {
-		Log.i(TAG, "onBackSpaceGesture");
+		Log.announce("onBackSpaceGesture", Level.INFO);
 		mInputManager.removeLast();
 		mCurrentCharacter.reset();
 	}
 
 	@Override
 	public void onDoubleSwipeRight() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onDoubleSwipeLeft() {
-		// TODO Auto-generated method stub
-
+		mInputManager.purge();
+		mCurrentCharacter.reset();
+		finish();
 	}
 
 	@Override
 	public void onVolumeDownKeyShortPress() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onVolumeDownKeyLongPress() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onVolumeUpKeyShortPress() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onVolumeUpKeyLongPress() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onPowerKeyShortPress() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onPowerKeyLongPress() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onSwipeUp() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onDoubleSwipeUp() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onSwipeDown() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onDoubleSwipeDown() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onCameraKeyShortPress() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onCameraKeyLongPress() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onScreenLongPress() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onLongKeyOne() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onLongKeyTwo() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onLongKeyThree() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onLongKeyFour() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onLongKeyFive() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onLongKeySix() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

@@ -7,7 +7,6 @@ import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.PhoneLookup;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.View;
 
 import com.varunarl.invisibletouch.InvisibleTouchApplication;
@@ -15,6 +14,8 @@ import com.varunarl.invisibletouch.SixPackActivity;
 import com.varunarl.invisibletouch.utils.FavouriteContacts;
 import com.varunarl.invisibletouch.utils.FavouriteExistsException;
 import com.varunarl.invisibletouch.utils.IPhoneState;
+import com.varunarl.invisibletouch.utils.Log;
+import com.varunarl.invisibletouch.utils.Log.Level;
 import com.varunarl.invisibletouch.view.sub.ContactsDetailsActivity;
 
 public class ContactsActivity extends SixPackActivity implements IPhoneState {
@@ -131,7 +132,7 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == CALL_REQUEST_CODE) {
-			Log.i("Contacts", "Hit");
+			Log.announce("Hit", Level.INFO);
 		}
 	}
 
@@ -218,12 +219,11 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
 	@Override
 	public void onKeyFour() {
 		// TODO Add new contact
-		
+
 	}
 
 	@Override
 	public void onKeyFive() {
-		Log.i("Contacts", "keyFour");
 		Intent i = new Intent(ContactsActivity.this,
 				ContactsDetailsActivity.class);
 		i.putExtra(INTENT_FLAG_CONTACT_NAME, mCurrentContactName);
@@ -249,27 +249,35 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
 		mCurrentContactName = mContacts.getString(nameFieldColumnIndex);
 		mCurrentContactPhone = mContacts.getString(numberFieldColumnIndex);
 	}
-	
+
 	private boolean deleteContact(String phone, String name) {
-	    Uri contactUri = Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phone));
-	    Cursor cur = getContentResolver().query(contactUri, null, null, null, null);
-	    try {
-	        if (cur.moveToFirst()) {
-	            do {
-	                if (cur.getString(cur.getColumnIndex(PhoneLookup.DISPLAY_NAME)).equalsIgnoreCase(name)) {
-	                    String lookupKey = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY));
-	                    Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_LOOKUP_URI, lookupKey);
-	                    getContentResolver().delete(uri, null, null);
-	                    return true;
-	                }
+		Uri contactUri = Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI,
+				Uri.encode(phone));
+		Cursor cur = getContentResolver().query(contactUri, null, null, null,
+				null);
+		try {
+			if (cur.moveToFirst()) {
+				do {
+					if (cur.getString(
+							cur.getColumnIndex(PhoneLookup.DISPLAY_NAME))
+							.equalsIgnoreCase(name)) {
+						String lookupKey = cur
+								.getString(cur
+										.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY));
+						Uri uri = Uri.withAppendedPath(
+								ContactsContract.Contacts.CONTENT_LOOKUP_URI,
+								lookupKey);
+						getContentResolver().delete(uri, null, null);
+						return true;
+					}
 
-	            } while (cur.moveToNext());
-	        }
+				} while (cur.moveToNext());
+			}
 
-	    } catch (Exception e) {
-	        System.out.println(e.getStackTrace());
-	    }
-	    return false;
+		} catch (Exception e) {
+			System.out.println(e.getStackTrace());
+		}
+		return false;
 	}
 
 }

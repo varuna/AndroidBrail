@@ -89,31 +89,37 @@ public class FavouriteContactsActivity extends SixPackActivity implements
 	@Override
 	public void onKeyOne() {
 		mFavourites.callFavourite(0);
+		super.onKeyOne();
 	}
 
 	@Override
 	public void onKeyTwo() {
 		mFavourites.callFavourite(1);
+		super.onKeyTwo();
 	}
 
 	@Override
 	public void onKeyThree() {
 		mFavourites.callFavourite(2);
+		super.onKeyThree();
 	}
 
 	@Override
 	public void onKeyFour() {
 		mFavourites.callFavourite(3);
+		super.onKeyFour();
 	}
 
 	@Override
 	public void onKeyFive() {
 		mFavourites.callFavourite(4);
+		super.onKeyFive();
 	}
 
 	@Override
 	public void onKeySix() {
 		mFavourites.callFavourite(5);
+		super.onKeySix();
 	}
 
 	@Override

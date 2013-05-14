@@ -1,23 +1,21 @@
 package com.varunarl.invisibletouch.utils;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.varunarl.invisibletouch.brail.Brail;
 import com.varunarl.invisibletouch.brail.Brail.KeyBoard;
 import com.varunarl.invisibletouch.brail.BrailCharacter;
+import com.varunarl.invisibletouch.utils.Log.Level;
 
 public class TextInputManager {
-	private static final String TAG = "TextInputManager";
 	private String mText;
 	private int mCurrentBufferType;
 	private KeyBoard mKeyBoard;
 	private StringBuffer mBuffer;
 	private Context mContext;
-	
-	public TextInputManager(Context context)
-	{
+
+	public TextInputManager(Context context) {
 		mContext = context;
 		mCurrentBufferType = Brail.KeyBoard.LOWER_KEY_TYPE;
 		mKeyBoard = new KeyBoard();
@@ -36,7 +34,7 @@ public class TextInputManager {
 			processBuffer();
 		} else {
 			mBuffer.append(mKeyBoard.get(c, mCurrentBufferType));
-			Log.i(TAG, mBuffer.toString());
+			Log.announce(mBuffer.toString(),Level.INFO);
 		}
 	}
 
@@ -55,11 +53,17 @@ public class TextInputManager {
 
 	}
 
+	public void purge() {
+		mBuffer.delete(0, mBuffer.length());
+		mText = "";
+		mCurrentBufferType = Brail.KeyBoard.LOWER_KEY_TYPE;
+	}
+
 	private void processBuffer() {
 		String bufferValue = mBuffer.toString();
 		mText += bufferValue;
 		mBuffer.delete(0, mBuffer.length());
 		Toast.makeText(mContext, mText, Toast.LENGTH_LONG).show();
-		Log.i(TAG, "Current String : " + mText);
+		Log.announce("Current String : " + mText,Level.INFO);
 	}
 }
