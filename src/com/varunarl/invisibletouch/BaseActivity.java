@@ -24,7 +24,7 @@ public abstract class BaseActivity extends Activity implements IGestures,
 
 	protected static String TAG = "BaseActivity";
 
-	private static final int MOVE_DETECTION_THRESHOLD = 20; // in pixels
+	private static final int MOVE_DETECTION_THRESHOLD = 100; // in pixels
 	private static final int LONGTIME_DETECTION_THRESHOLD = 200; // in millis
 
 	protected final static int GESTURE_TAP = 0;
@@ -40,6 +40,8 @@ public abstract class BaseActivity extends Activity implements IGestures,
 	private List<Motion> mGestureHistory;
 
 	private boolean mStoppedFromNewScreen = false;
+	private boolean isFinishing = false;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -288,7 +290,7 @@ public abstract class BaseActivity extends Activity implements IGestures,
 	@SuppressLint("InlinedApi")
 	@Override
 	protected void onStop() {
-		if (!mStoppedFromNewScreen) {
+		if (!mStoppedFromNewScreen && !isFinishing) {
 			Log.announce("Whoa.. we are losing screen. Install Alarm to start Invisible touch",Level.WARNING);
 			AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
 			Intent i = new Intent(this, MainMenuActivity.class);
@@ -307,6 +309,12 @@ public abstract class BaseActivity extends Activity implements IGestures,
 
 	@Override
 	public void onBackPressed() {
+	}
+	
+	@Override
+	public void finish() {
+		isFinishing = true;
+		super.finish();
 	}
 
 	private class Motion {

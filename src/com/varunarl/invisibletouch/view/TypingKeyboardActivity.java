@@ -1,8 +1,5 @@
 package com.varunarl.invisibletouch.view;
 
-import android.os.Bundle;
-import android.view.MotionEvent;
-
 import com.varunarl.invisibletouch.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.SixPackActivity;
 import com.varunarl.invisibletouch.brail.BrailCharacter;
@@ -16,16 +13,11 @@ public class TypingKeyboardActivity extends SixPackActivity {
 	private TextInputManager mInputManager;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	protected void init() {
 		mCurrentCharacter = new BrailCharacter();
 		mInputManager = InvisibleTouchApplication.getInstance()
 				.getTextInputManager();
-	}
-
-	@Override
-	public boolean dispatchTouchEvent(MotionEvent ev) {
-		return super.dispatchTouchEvent(ev);
+		super.init();
 	}
 
 	@Override
@@ -33,6 +25,7 @@ public class TypingKeyboardActivity extends SixPackActivity {
 		mCurrentCharacter._one_one.swap();
 		InvisibleTouchApplication.getInstance().vibrate(
 				mCurrentCharacter._one_one.getPattern());
+		super.onKeyOne();
 	}
 
 	@Override
@@ -40,6 +33,7 @@ public class TypingKeyboardActivity extends SixPackActivity {
 		mCurrentCharacter._one_two.swap();
 		InvisibleTouchApplication.getInstance().vibrate(
 				mCurrentCharacter._one_two.getPattern());
+		super.onKeyTwo();
 	}
 
 	@Override
@@ -47,6 +41,7 @@ public class TypingKeyboardActivity extends SixPackActivity {
 		mCurrentCharacter._one_three.swap();
 		InvisibleTouchApplication.getInstance().vibrate(
 				mCurrentCharacter._one_three.getPattern());
+		super.onKeyThree();
 	}
 
 	@Override
@@ -54,6 +49,7 @@ public class TypingKeyboardActivity extends SixPackActivity {
 		mCurrentCharacter._two_one.swap();
 		InvisibleTouchApplication.getInstance().vibrate(
 				mCurrentCharacter._two_one.getPattern());
+		super.onKeyFour();
 	}
 
 	@Override
@@ -61,6 +57,7 @@ public class TypingKeyboardActivity extends SixPackActivity {
 		mCurrentCharacter._two_two.swap();
 		InvisibleTouchApplication.getInstance().vibrate(
 				mCurrentCharacter._two_two.getPattern());
+		super.onKeyFive();
 	}
 
 	@Override
@@ -68,6 +65,7 @@ public class TypingKeyboardActivity extends SixPackActivity {
 		mCurrentCharacter._two_three.swap();
 		InvisibleTouchApplication.getInstance().vibrate(
 				mCurrentCharacter._two_three.getPattern());
+		super.onKeySix();
 	}
 
 	@Override
@@ -75,6 +73,7 @@ public class TypingKeyboardActivity extends SixPackActivity {
 		Log.announce("onEnterGesture", Level.INFO);
 		mInputManager.buffer(mCurrentCharacter);
 		mCurrentCharacter.reset();
+		resetView();
 	}
 
 	@Override
@@ -82,6 +81,7 @@ public class TypingKeyboardActivity extends SixPackActivity {
 		Log.announce("onBackSpaceGesture", Level.INFO);
 		mInputManager.removeLast();
 		mCurrentCharacter.reset();
+		resetView();
 	}
 
 	@Override

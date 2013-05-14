@@ -10,6 +10,8 @@ import com.varunarl.invisibletouch.R;
 import com.varunarl.invisibletouch.SixPackActivity;
 import com.varunarl.invisibletouch.utils.FavouriteContacts;
 import com.varunarl.invisibletouch.utils.IPhoneState;
+import com.varunarl.invisibletouch.utils.Log;
+import com.varunarl.invisibletouch.utils.Log.Level;
 
 public class FavouriteContactsActivity extends SixPackActivity implements
 		IPhoneState {
@@ -23,7 +25,8 @@ public class FavouriteContactsActivity extends SixPackActivity implements
 
 	@Override
 	public void onSwipeLeft() {
-		this.finish();
+		Log.announce("Left swipe", Level.INFO);
+		finish();
 	}
 
 	@Override
@@ -149,9 +152,9 @@ public class FavouriteContactsActivity extends SixPackActivity implements
 	@Override
 	protected void init() {
 		mFavourites = FavouriteContacts.getInstance(getApplicationContext());
-		super.init();
 		InvisibleTouchApplication.getInstance().registerPhoneStateListener(
 				this, getIntent());
+		super.init();
 	}
 
 	@Override

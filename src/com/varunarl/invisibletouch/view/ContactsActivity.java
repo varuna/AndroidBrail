@@ -279,5 +279,4 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
 		}
 		return false;
 	}
-
 }

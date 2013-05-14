@@ -32,10 +32,13 @@ public class TextInputManager {
 					&& mCurrentBufferType == Brail.KeyBoard.UPPER_KEY_TYPE)
 				mCurrentBufferType = Brail.KeyBoard.LOWER_KEY_TYPE;
 			processBuffer();
-		} else {
-			mBuffer.append(mKeyBoard.get(c, mCurrentBufferType));
-			Log.announce(mBuffer.toString(),Level.INFO);
-		}
+		} else if (!mKeyBoard.isErrorCharacter(c)) {
+			Character asciic = mKeyBoard.get(c, mCurrentBufferType);
+			if (!asciic.equals('~'))
+				mBuffer.append(asciic);
+			Log.announce(mBuffer.toString(), Level.INFO);
+		} else
+			Log.announce("Error character. skipping", Level.WARNING);
 	}
 
 	public void buffer(Character c) {
@@ -64,6 +67,6 @@ public class TextInputManager {
 		mText += bufferValue;
 		mBuffer.delete(0, mBuffer.length());
 		Toast.makeText(mContext, mText, Toast.LENGTH_LONG).show();
-		Log.announce("Current String : " + mText,Level.INFO);
+		Log.announce("Current String : " + mText, Level.INFO);
 	}
 }

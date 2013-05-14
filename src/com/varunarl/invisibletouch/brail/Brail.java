@@ -48,7 +48,7 @@ public class Brail {
 		public static final int UPPER_KEY_TYPE = 1002;
 		public static final int LOWER_KEY_TYPE = 1003;
 		public static final int SPECIAL_KEY_TYPE = 1004;
-		
+
 		public static final int LETTER_TYPE = UPPER_KEY_TYPE + LOWER_KEY_TYPE;
 		public static final int ITALIC_DECIMAL_TYPE = 1020;
 		public static final int NUMERAL_ACCENT_TYPE = 1030;
@@ -86,20 +86,27 @@ public class Brail {
 					result = result >= 97 && result <= 122 ? result : '~';
 					break;
 				case SPECIAL_KEY_TYPE:
-				default:  
+				default:
 					result = mSpecialKeyboard.get(c);
 					break;
 				}
 			return result;
 		}
-		
-		public boolean isControlCharacter(BrailCharacter c)
-		{
+
+		public boolean isControlCharacter(BrailCharacter c) {
 			return !mControlKeyboard.get(c).equals('~');
 		}
 
-		public int getControlType(BrailCharacter c)
-		{
+		public boolean isErrorCharacter(BrailCharacter c) {
+			boolean stage1 = mControlKeyboard.get(c).equals('~');
+			boolean stage2 = mLowerCaseKeyboard.get(c).equals('~');
+			boolean stage3 = mNumericKeyboard.get(c).equals('~');
+			boolean stage4 = mUpperCaseKeyboard.get(c).equals('~');
+			boolean stage5 = mSpecialKeyboard.get(c).equals('~');
+			return stage1 && stage2 && stage3 && stage4 && stage5;
+		}
+
+		public int getControlType(BrailCharacter c) {
 			int _c = mControlKeyboard.get(c);
 			switch (_c) {
 			case '@':
@@ -119,9 +126,8 @@ public class Brail {
 				return LETTER_TYPE;
 			}
 		}
-		
-		public int getControlType(Character c)
-		{
+
+		public int getControlType(Character c) {
 			switch (c) {
 			case '@':
 				return LITERAL_TYPE;
@@ -140,6 +146,7 @@ public class Brail {
 				return LETTER_TYPE;
 			}
 		}
+
 		public static BrailCharacter get(Character c) {
 			BrailCharacter bc = new BrailCharacter();
 			if (Character.isDigit(c)) {
@@ -714,24 +721,24 @@ public class Brail {
 			}
 
 			private void init() {
-				//Numeral
+				// Numeral
 				mControlCharacters.add(Key.get('#'));
-				//Literals
+				// Literals
 				mControlCharacters.add(Key.get('@'));
-				//Italics,decimal
+				// Italics,decimal
 				mControlCharacters.add(Key.get('%'));
-				//Letters
+				// Letters
 				mControlCharacters.add(Key.get('&'));
-				//Capital
+				// Capital
 				mControlCharacters.add(Key.get('^'));
-				//Numerical index, accent
+				// Numerical index, accent
 				mControlCharacters.add(Key.get('$'));
 			}
 
 			public Character get(BrailCharacter c) {
 				String pattern = c.pattern();
 				for (Key k : mControlCharacters)
-					if (k.BRAIL_CHARACTER.pattern().equals(pattern))              
+					if (k.BRAIL_CHARACTER.pattern().equals(pattern))
 						return k.ASCII_CHARACTER;
 				return '~';
 			}
