@@ -14,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 
 import com.varunarl.invisibletouch.utils.Log;
 import com.varunarl.invisibletouch.utils.Log.Level;
@@ -42,16 +43,17 @@ public abstract class BaseActivity extends Activity implements IGestures,
 	private boolean mStoppedFromNewScreen = false;
 	private boolean isFinishing = false;
 
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mGestureHistory = new ArrayList<Motion>();
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		init();
 	}
-	
+
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent ev) {
 		detectGesture(ev);
@@ -108,7 +110,9 @@ public abstract class BaseActivity extends Activity implements IGestures,
 		m._x = e.getX();
 		m._y = e.getY();
 		m._time = e.getEventTime();
-		Log.announce( "Some one is touching me : on x :" + m._x + " y : " + m._y,Level.INFO);
+		Log.announce(
+				"Some one is touching me : on x :" + m._x + " y : " + m._y,
+				Level.INFO);
 		if (e.getAction() == MotionEvent.ACTION_DOWN) {
 			mGestureHistory.clear();
 			mGestureHistory.add(m);
@@ -168,7 +172,7 @@ public abstract class BaseActivity extends Activity implements IGestures,
 			float xTranslation = oldx - newx;
 			float yTranslation = oldy - newy;
 			Log.announce("Gesture Swipe X : " + xTranslation + " Y : "
-					+ yTranslation,Level.INFO);
+					+ yTranslation, Level.INFO);
 			if (Math.abs(xTranslation) > Math.abs(yTranslation)) {
 				if (xTranslation > 0)
 					return SWIPE_LEFT;
@@ -185,7 +189,7 @@ public abstract class BaseActivity extends Activity implements IGestures,
 	@Override
 	public void onClick(View v) {
 		int _id = v.getId();
-		Log.announce(""+ mLastGesture,Level.INFO);
+		Log.announce("" + mLastGesture, Level.INFO);
 		switch (_id) {
 		case R.id.item_one_one:
 			if (mLastGesture == GESTURE_TAP)
@@ -291,7 +295,9 @@ public abstract class BaseActivity extends Activity implements IGestures,
 	@Override
 	protected void onStop() {
 		if (!mStoppedFromNewScreen && !isFinishing) {
-			Log.announce("Whoa.. we are losing screen. Install Alarm to start Invisible touch",Level.WARNING);
+			Log.announce(
+					"Whoa.. we are losing screen. Install Alarm to start Invisible touch",
+					Level.WARNING);
 			AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
 			Intent i = new Intent(this, MainMenuActivity.class);
 			i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -304,13 +310,13 @@ public abstract class BaseActivity extends Activity implements IGestures,
 	}
 
 	private void onHomeKeyPressed() {
-		Log.announce("Home pressed",Level.INFO);
+		Log.announce("Home pressed", Level.INFO);
 	}
 
 	@Override
 	public void onBackPressed() {
 	}
-	
+
 	@Override
 	public void finish() {
 		isFinishing = true;
