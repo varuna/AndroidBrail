@@ -4,7 +4,6 @@ import java.lang.reflect.Method;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.RemoteException;
 import android.telephony.TelephonyManager;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.internal.telephony.ITelephony;
 import com.varunarl.invisibletouch.SinglePackActivity;
 import com.varunarl.invisibletouch.utils.IncommingCallListener;
 import com.varunarl.invisibletouch.utils.Log;
@@ -50,7 +48,7 @@ public class IncommingCallActivity extends SinglePackActivity {
 	public void onSwipeLeft() {
 		try {
 			telephonyService.endCall();
-		} catch (RemoteException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		finish();
@@ -163,7 +161,7 @@ public class IncommingCallActivity extends SinglePackActivity {
 			Class c = Class.forName(tm.getClass().getName());
 			Method m = c.getDeclaredMethod("getITelephony");
 			m.setAccessible(true);
-			telephonyService = (ITelephony) m.invoke(tm);
+			telephonyService = (com.android.internal.telephony.ITelephony) m.invoke(tm);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Log.announce(

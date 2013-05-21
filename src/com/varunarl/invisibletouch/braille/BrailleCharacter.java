@@ -1,6 +1,6 @@
-package com.varunarl.invisibletouch.brail;
+package com.varunarl.invisibletouch.braille;
 
-public class BrailCharacter {
+public class BrailleCharacter {
 	public DOT _one_one;
 	public DOT _one_two;
 	public DOT _one_three;
@@ -8,7 +8,7 @@ public class BrailCharacter {
 	public DOT _two_two;
 	public DOT _two_three;
 
-	public BrailCharacter() {
+	public BrailleCharacter() {
 		_one_one = DOT.off();
 		_one_two = DOT.off();
 		_one_three = DOT.off();

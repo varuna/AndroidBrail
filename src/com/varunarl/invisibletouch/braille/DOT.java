@@ -1,4 +1,4 @@
-package com.varunarl.invisibletouch.brail;
+package com.varunarl.invisibletouch.braille;
 
 public class DOT {
 	boolean _on;

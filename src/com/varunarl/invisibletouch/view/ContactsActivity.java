@@ -148,55 +148,55 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
 
 	@Override
 	public void onCameraKeyShortPress() {
-		// TODO Auto-generated method stub
+		//No action specified.
 
 	}
 
 	@Override
 	public void onCameraKeyLongPress() {
-		// TODO Auto-generated method stub
+        //No action specified.
 
 	}
 
 	@Override
 	public void onScreenLongPress() {
-		// TODO Auto-generated method stub
+        //No action specified.
 
 	}
 
 	@Override
 	public void onLongKeyOne() {
-		// TODO Auto-generated method stub
+        //No action specified.
 
 	}
 
 	@Override
 	public void onLongKeyTwo() {
-		// TODO Auto-generated method stub
+        //No action specified.
 
 	}
 
 	@Override
 	public void onLongKeyThree() {
-		// TODO Auto-generated method stub
+        //No action specified.
 
 	}
 
 	@Override
 	public void onLongKeyFour() {
-		// TODO Auto-generated method stub
+        //No action specified.
 
 	}
 
 	@Override
 	public void onLongKeyFive() {
-		// TODO Auto-generated method stub
+        //No action specified.
 
 	}
 
 	@Override
 	public void onLongKeySix() {
-		// TODO Auto-generated method stub
+        //No action specified.
 
 	}
 
@@ -207,8 +207,9 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
 
 	@Override
 	public void onKeyTwo() {
-		// TODO search contact
-
+		Intent mCallIntent = new Intent(Intent.ACTION_CALL);
+        mCallIntent.setData(Uri.parse("tel:"+mCurrentContactPhone));
+        startActivity(mCallIntent);
 	}
 
 	@Override
@@ -275,7 +276,7 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
 			}
 
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			e.printStackTrace();
 		}
 		return false;
 	}

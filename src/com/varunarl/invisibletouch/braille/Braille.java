@@ -1,14 +1,14 @@
-package com.varunarl.invisibletouch.brail;
+package com.varunarl.invisibletouch.braille;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Brail {
+public class Braille {
 
 	public static class Key {
 		int IDENTIFIER;
 		Character ASCII_CHARACTER;
-		BrailCharacter BRAIL_CHARACTER;
+		BrailleCharacter BRAILLE_CHARACTER;
 
 		@Override
 		public boolean equals(Object o) {
@@ -21,20 +21,20 @@ public class Brail {
 		@Override
 		public String toString() {
 			return "IDENTIFIER : " + IDENTIFIER + " ASCII : " + ASCII_CHARACTER
-					+ " BRAIL" + BRAIL_CHARACTER.toString();
+					+ " BRAIL" + BRAILLE_CHARACTER.toString();
 		}
 
 		public static Key get(Character c) {
 			Key k = new Key();
-			k.BRAIL_CHARACTER = KeyBoard.get(c);
+			k.BRAILLE_CHARACTER = KeyBoard.get(c);
 			k.ASCII_CHARACTER = c;
 			k.IDENTIFIER = c;
 			return k;
 		}
 
-		public static Key get(BrailCharacter c, int type) {
+		public static Key get(BrailleCharacter c, int type) {
 			Key k = new Key();
-			k.BRAIL_CHARACTER = c;
+			k.BRAILLE_CHARACTER = c;
 			k.ASCII_CHARACTER = new KeyBoard().get(c, type);
 			k.IDENTIFIER = k.ASCII_CHARACTER;
 			return k;
@@ -68,8 +68,8 @@ public class Brail {
 			mControlKeyboard = new Control();
 		}
 
-		public Character get(BrailCharacter c, int type) {
-			Character result = '~';
+		public Character get(BrailleCharacter c, int type) {
+			Character result;
 			result = mControlKeyboard.get(c);
 			if (result.equals('~'))
 				switch (type) {
@@ -93,11 +93,11 @@ public class Brail {
 			return result;
 		}
 
-		public boolean isControlCharacter(BrailCharacter c) {
+		public boolean isControlCharacter(BrailleCharacter c) {
 			return !mControlKeyboard.get(c).equals('~');
 		}
 
-		public boolean isErrorCharacter(BrailCharacter c) {
+		public boolean isErrorCharacter(BrailleCharacter c) {
 			boolean stage1 = mControlKeyboard.get(c).equals('~');
 			boolean stage2 = mLowerCaseKeyboard.get(c).equals('~');
 			boolean stage3 = mNumericKeyboard.get(c).equals('~');
@@ -106,7 +106,7 @@ public class Brail {
 			return stage1 && stage2 && stage3 && stage4 && stage5;
 		}
 
-		public int getControlType(BrailCharacter c) {
+		public int getControlType(BrailleCharacter c) {
 			int _c = mControlKeyboard.get(c);
 			switch (_c) {
 			case '@':
@@ -147,8 +147,8 @@ public class Brail {
 			}
 		}
 
-		public static BrailCharacter get(Character c) {
-			BrailCharacter bc = new BrailCharacter();
+		public static BrailleCharacter get(Character c) {
+			BrailleCharacter bc = new BrailleCharacter();
 			if (Character.isDigit(c)) {
 				switch (c) {
 				case 1:
@@ -365,95 +365,6 @@ public class Brail {
 					bc._two_two = DOT.on();
 					bc._two_three = DOT.on();
 					break;
-				case 'Ç':
-					bc._one_one = DOT.on();
-					bc._one_two = DOT.on();
-					bc._one_three = DOT.on();
-					bc._two_one = DOT.on();
-					bc._two_three = DOT.on();
-					break;
-				case 'É':
-					bc._one_one = DOT.on();
-					bc._one_two = DOT.on();
-					bc._one_three = DOT.on();
-					bc._two_one = DOT.on();
-					bc._two_two = DOT.on();
-					bc._two_three = DOT.on();
-					break;
-				case 'À':
-					bc._one_one = DOT.on();
-					bc._one_two = DOT.on();
-					bc._one_three = DOT.on();
-					bc._two_two = DOT.on();
-					bc._two_three = DOT.on();
-					break;
-				case 'È':
-					bc._one_two = DOT.on();
-					bc._one_three = DOT.on();
-					bc._two_one = DOT.on();
-					bc._two_three = DOT.on();
-					break;
-				case 'Ù':
-					bc._one_two = DOT.on();
-					bc._one_three = DOT.on();
-					bc._two_one = DOT.on();
-					bc._two_two = DOT.on();
-					bc._two_three = DOT.on();
-					break;
-				case 'Â':
-					bc._one_one = DOT.on();
-					bc._two_three = DOT.on();
-					break;
-				case 'Ê':
-					bc._one_one = DOT.on();
-					bc._one_two = DOT.on();
-					bc._two_three = DOT.on();
-					break;
-				case 'Î':
-					bc._one_one = DOT.on();
-					bc._two_one = DOT.on();
-					bc._two_three = DOT.on();
-					break;
-				case 'Ô':
-					bc._one_one = DOT.on();
-					bc._two_one = DOT.on();
-					bc._two_two = DOT.on();
-					bc._two_three = DOT.on();
-					break;
-				case 'Û':
-					bc._one_one = DOT.on();
-					bc._two_two = DOT.on();
-					bc._two_three = DOT.on();
-					break;
-				case 'Ë':
-					bc._one_one = DOT.on();
-					bc._one_two = DOT.on();
-					bc._two_one = DOT.on();
-					bc._two_three = DOT.on();
-					break;
-				case 'Ï':
-					bc._one_one = DOT.on();
-					bc._one_two = DOT.on();
-					bc._two_one = DOT.on();
-					bc._two_two = DOT.on();
-					bc._two_three = DOT.on();
-					break;
-				case 'Ü':
-					bc._one_one = DOT.on();
-					bc._one_two = DOT.on();
-					bc._two_two = DOT.on();
-					bc._two_three = DOT.on();
-					break;
-				case 'ì':
-					bc._one_three = DOT.on();
-					bc._two_one = DOT.on();
-					break;
-				case 'ò':
-					bc._one_three = DOT.on();
-					bc._two_one = DOT.on();
-					bc._two_three = DOT.on();
-					break;
-
 				}
 			} else {
 				switch (c) {
@@ -545,7 +456,7 @@ public class Brail {
 			List<Key> mNumericKeyBoard;
 
 			public Numeric() {
-				mNumericKeyBoard = new ArrayList<Brail.Key>();
+				mNumericKeyBoard = new ArrayList<Braille.Key>();
 				init();
 			}
 
@@ -562,10 +473,10 @@ public class Brail {
 				mNumericKeyBoard.add(Key.get('0'));
 			}
 
-			public Character get(BrailCharacter c) {
+			public Character get(BrailleCharacter c) {
 				String pattern = c.pattern();
 				for (Key k : mNumericKeyBoard)
-					if (k.BRAIL_CHARACTER.pattern().equals(pattern))
+					if (k.BRAILLE_CHARACTER.pattern().equals(pattern))
 						return k.ASCII_CHARACTER;
 				return 'E';
 			}
@@ -575,7 +486,7 @@ public class Brail {
 			List<Key> mAlphabeticalKeyBoard;
 
 			public Upper() {
-				mAlphabeticalKeyBoard = new ArrayList<Brail.Key>();
+				mAlphabeticalKeyBoard = new ArrayList<Braille.Key>();
 				init();
 			}
 
@@ -608,10 +519,10 @@ public class Brail {
 				mAlphabeticalKeyBoard.add(Key.get('Z'));
 			}
 
-			public Character get(BrailCharacter c) {
+			public Character get(BrailleCharacter c) {
 				String pattern = c.pattern();
 				for (Key k : mAlphabeticalKeyBoard)
-					if (k.BRAIL_CHARACTER.pattern().equals(pattern))
+					if (k.BRAILLE_CHARACTER.pattern().equals(pattern))
 						return k.ASCII_CHARACTER;
 				return 'e';
 			}
@@ -621,7 +532,7 @@ public class Brail {
 			List<Key> mAlphabeticalKeyBoard;
 
 			public Lower() {
-				mAlphabeticalKeyBoard = new ArrayList<Brail.Key>();
+				mAlphabeticalKeyBoard = new ArrayList<Braille.Key>();
 				init();
 			}
 
@@ -654,10 +565,10 @@ public class Brail {
 				mAlphabeticalKeyBoard.add(Key.get('z'));
 			}
 
-			public Character get(BrailCharacter c) {
+			public Character get(BrailleCharacter c) {
 				String pattern = c.pattern();
 				for (Key k : mAlphabeticalKeyBoard)
-					if (k.BRAIL_CHARACTER.pattern().equals(pattern))
+					if (k.BRAILLE_CHARACTER.pattern().equals(pattern))
 						return k.ASCII_CHARACTER;
 				return 'E';
 			}
@@ -667,7 +578,7 @@ public class Brail {
 			List<Key> mSpecialCharacters;
 
 			public Special() {
-				mSpecialCharacters = new ArrayList<Brail.Key>();
+				mSpecialCharacters = new ArrayList<Braille.Key>();
 				init();
 			}
 
@@ -685,27 +596,27 @@ public class Brail {
 				mSpecialCharacters.add(Key.get('"'));
 				mSpecialCharacters.add(Key.get(','));
 				mSpecialCharacters.add(Key.get('-'));
-				mSpecialCharacters.add(Key.get('Ç'));
-				mSpecialCharacters.add(Key.get('É'));
-				mSpecialCharacters.add(Key.get('À'));
-				mSpecialCharacters.add(Key.get('È'));
-				mSpecialCharacters.add(Key.get('Ù'));
-				mSpecialCharacters.add(Key.get('Â'));
-				mSpecialCharacters.add(Key.get('Ê'));
-				mSpecialCharacters.add(Key.get('Î'));
-				mSpecialCharacters.add(Key.get('Ô'));
-				mSpecialCharacters.add(Key.get('Û'));
-				mSpecialCharacters.add(Key.get('Ï'));
-				mSpecialCharacters.add(Key.get('Ü'));
-				mSpecialCharacters.add(Key.get('ì'));
-				mSpecialCharacters.add(Key.get('ò'));
+				mSpecialCharacters.add(Key.get('ï¿½'));
+				mSpecialCharacters.add(Key.get('ï¿½'));
+				mSpecialCharacters.add(Key.get('ï¿½'));
+				mSpecialCharacters.add(Key.get('ï¿½'));
+				mSpecialCharacters.add(Key.get('ï¿½'));
+				mSpecialCharacters.add(Key.get('ï¿½'));
+				mSpecialCharacters.add(Key.get('ï¿½'));
+				mSpecialCharacters.add(Key.get('ï¿½'));
+				mSpecialCharacters.add(Key.get('ï¿½'));
+				mSpecialCharacters.add(Key.get('ï¿½'));
+				mSpecialCharacters.add(Key.get('ï¿½'));
+				mSpecialCharacters.add(Key.get('ï¿½'));
+				mSpecialCharacters.add(Key.get('ï¿½'));
+				mSpecialCharacters.add(Key.get('ï¿½'));
 
 			}
 
-			public Character get(BrailCharacter c) {
+			public Character get(BrailleCharacter c) {
 				String pattern = c.pattern();
 				for (Key k : mSpecialCharacters)
-					if (k.BRAIL_CHARACTER.pattern().equals(pattern))
+					if (k.BRAILLE_CHARACTER.pattern().equals(pattern))
 						return k.ASCII_CHARACTER;
 				return '~';
 			}
@@ -716,7 +627,7 @@ public class Brail {
 			List<Key> mControlCharacters;
 
 			public Control() {
-				mControlCharacters = new ArrayList<Brail.Key>();
+				mControlCharacters = new ArrayList<Braille.Key>();
 				init();
 			}
 
@@ -735,10 +646,10 @@ public class Brail {
 				mControlCharacters.add(Key.get('$'));
 			}
 
-			public Character get(BrailCharacter c) {
+			public Character get(BrailleCharacter c) {
 				String pattern = c.pattern();
 				for (Key k : mControlCharacters)
-					if (k.BRAIL_CHARACTER.pattern().equals(pattern))
+					if (k.BRAILLE_CHARACTER.pattern().equals(pattern))
 						return k.ASCII_CHARACTER;
 				return '~';
 			}

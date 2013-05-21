@@ -2,20 +2,20 @@ package com.varunarl.invisibletouch.view;
 
 import com.varunarl.invisibletouch.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.SixPackActivity;
-import com.varunarl.invisibletouch.brail.BrailCharacter;
+import com.varunarl.invisibletouch.braille.BrailleCharacter;
+import com.varunarl.invisibletouch.utils.InputManager;
 import com.varunarl.invisibletouch.utils.Log;
 import com.varunarl.invisibletouch.utils.Log.Level;
-import com.varunarl.invisibletouch.utils.TextInputManager;
 
 public class TypingKeyboardActivity extends SixPackActivity {
 
-	private BrailCharacter mCurrentCharacter;
-	private TextInputManager mInputManager;
+	private BrailleCharacter mCurrentCharacter;
+	private InputManager.TextInputManager mTextInputManager;
 
 	@Override
 	protected void init() {
-		mCurrentCharacter = new BrailCharacter();
-		mInputManager = InvisibleTouchApplication.getInstance()
+		mCurrentCharacter = new BrailleCharacter();
+		mTextInputManager = InvisibleTouchApplication.getInstance()
 				.getTextInputManager();
 		super.init();
 	}
@@ -71,7 +71,7 @@ public class TypingKeyboardActivity extends SixPackActivity {
 	@Override
 	public void onSwipeRight() {
 		Log.announce("onEnterGesture", Level.INFO);
-		mInputManager.buffer(mCurrentCharacter);
+		mTextInputManager.buffer(mCurrentCharacter);
 		mCurrentCharacter.reset();
 		resetView();
 	}
@@ -79,7 +79,7 @@ public class TypingKeyboardActivity extends SixPackActivity {
 	@Override
 	public void onSwipeLeft() {
 		Log.announce("onBackSpaceGesture", Level.INFO);
-		mInputManager.removeLast();
+		mTextInputManager.removeLast();
 		mCurrentCharacter.reset();
 		resetView();
 	}
@@ -91,7 +91,7 @@ public class TypingKeyboardActivity extends SixPackActivity {
 
 	@Override
 	public void onDoubleSwipeLeft() {
-		mInputManager.purge();
+		mTextInputManager.purge();
 		mCurrentCharacter.reset();
 		finish();
 	}

@@ -1,6 +1,6 @@
 package com.varunarl.invisibletouch;
 
-public interface IBrailKeyboard {
+public interface IBrailleKeyboard {
 
 	public void onKeyOne();
 	public void onKeyTwo();

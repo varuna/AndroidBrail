@@ -10,20 +10,14 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.*;
 
 import com.varunarl.invisibletouch.utils.Log;
 import com.varunarl.invisibletouch.utils.Log.Level;
 import com.varunarl.invisibletouch.view.MainMenuActivity;
 
 public abstract class BaseActivity extends Activity implements IGestures,
-		IBrailKeyboard {
-
-	protected static String TAG = "BaseActivity";
+        IBrailleKeyboard {
 
 	private static final int MOVE_DETECTION_THRESHOLD = 100; // in pixels
 	private static final int LONGTIME_DETECTION_THRESHOLD = 200; // in millis

@@ -16,7 +16,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/black" >
+            android:background="@android:color/black"
+            android:orientation="vertical" >
+
         </LinearLayout>
 
         <View
@@ -31,7 +33,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/black" >
+            android:background="@android:color/black"
+            android:orientation="vertical" >
+
         </LinearLayout>
     </LinearLayout>
     <View
@@ -51,7 +55,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/black" >
+            android:background="@android:color/black"
+            android:orientation="vertical" >
+
         </LinearLayout>
         <View
             android:layout_width="1dp"
@@ -60,13 +66,14 @@
             android:layout_marginTop="5dp"
             android:background="@android:color/white" />
         
-
         <LinearLayout
             android:id="@+id/item_two_two"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/black" >
+            android:background="@android:color/black"
+            android:orientation="vertical" >
+
         </LinearLayout>
     </LinearLayout>
      <View
@@ -86,7 +93,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/black" >
+            android:background="@android:color/black"
+            android:orientation="vertical" >
+
         </LinearLayout>
         <View
             android:layout_width="1dp"
@@ -95,13 +104,14 @@
             android:layout_marginTop="5dp"
             android:background="@android:color/white" />
         
-
         <LinearLayout
             android:id="@+id/item_two_three"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/black" >
+            android:background="@android:color/black"
+            android:orientation="vertical" >
+
         </LinearLayout>
     </LinearLayout>
 

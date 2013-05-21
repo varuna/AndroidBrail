@@ -11,10 +11,10 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 
 import com.varunarl.invisibletouch.utils.IPhoneState;
+import com.varunarl.invisibletouch.utils.InputManager.TextInputManager;
 import com.varunarl.invisibletouch.utils.Log;
 import com.varunarl.invisibletouch.utils.Log.Level;
 import com.varunarl.invisibletouch.utils.PhoneStateManager;
-import com.varunarl.invisibletouch.utils.TextInputManager;
 
 public class InvisibleTouchApplication extends Application implements
 		OnInitListener {
