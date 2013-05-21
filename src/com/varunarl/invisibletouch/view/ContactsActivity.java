@@ -9,8 +9,8 @@ import android.provider.ContactsContract.PhoneLookup;
 import android.telephony.TelephonyManager;
 import android.view.View;
 
-import com.varunarl.invisibletouch.InvisibleTouchApplication;
-import com.varunarl.invisibletouch.SixPackActivity;
+import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
+import com.varunarl.invisibletouch.internal.SixPackActivity;
 import com.varunarl.invisibletouch.utils.FavouriteContacts;
 import com.varunarl.invisibletouch.utils.FavouriteExistsException;
 import com.varunarl.invisibletouch.utils.IPhoneState;

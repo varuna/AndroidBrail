@@ -2,7 +2,7 @@ package com.varunarl.invisibletouch.utils;
 
 import android.widget.Toast;
 
-import com.varunarl.invisibletouch.InvisibleTouchApplication;
+import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
 
 public class Log {
 	public static void announce(String message,Level l) {

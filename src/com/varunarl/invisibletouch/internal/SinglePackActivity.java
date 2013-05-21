@@ -1,6 +1,7 @@
-package com.varunarl.invisibletouch;
+package com.varunarl.invisibletouch.internal;
 
 import android.view.View;
+import com.varunarl.invisibletouch.R;
 
 public abstract class SinglePackActivity extends BaseActivity {
 

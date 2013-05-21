@@ -2,7 +2,7 @@ package com.varunarl.invisibletouch.view;
 
 import android.view.View;
 
-import com.varunarl.invisibletouch.SinglePackActivity;
+import com.varunarl.invisibletouch.internal.SinglePackActivity;
 
 public class BooleanActivity extends SinglePackActivity {
 

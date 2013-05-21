@@ -1,4 +1,4 @@
-package com.varunarl.invisibletouch;
+package com.varunarl.invisibletouch.internal;
 
 public interface IBrailleKeyboard {
 

@@ -2,15 +2,13 @@ package com.varunarl.invisibletouch.utils;
 
 import android.content.Context;
 import android.widget.Toast;
-
 import com.varunarl.invisibletouch.braille.Braille;
 import com.varunarl.invisibletouch.braille.Braille.KeyBoard;
 import com.varunarl.invisibletouch.braille.BrailleCharacter;
 import com.varunarl.invisibletouch.utils.Log.Level;
 
 public class InputManager {
-    public static class TextInputManager
-    {
+    public static class TextInputManager {
         private String mText;
         private int mCurrentBufferType;
         private KeyBoard mKeyBoard;
@@ -48,6 +46,12 @@ public class InputManager {
             mBuffer.append(c);
         }
 
+        public void buffer(BrailleCharacter c, int type) {
+            Character ascii = mKeyBoard.get(c, type);
+            if (!ascii.equals('~'))
+                mBuffer.append(ascii);
+        }
+
         public void removeLast() {
             if (mBuffer.length() > 0)
                 mBuffer.deleteCharAt(mBuffer.length() - 1);
@@ -70,6 +74,10 @@ public class InputManager {
             mBuffer.delete(0, mBuffer.length());
             Toast.makeText(mContext, mText, Toast.LENGTH_LONG).show();
             Log.announce("Current String : " + mText, Level.INFO);
+        }
+
+        public String getText() {
+            return mText;
         }
     }
 }

@@ -1,15 +1,15 @@
-package com.varunarl.invisibletouch.view;
+package com.varunarl.invisibletouch.internal;
 
-import com.varunarl.invisibletouch.InvisibleTouchApplication;
-import com.varunarl.invisibletouch.SixPackActivity;
+import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
+import com.varunarl.invisibletouch.internal.SixPackActivity;
 import com.varunarl.invisibletouch.braille.BrailleCharacter;
 import com.varunarl.invisibletouch.utils.InputManager;
 import com.varunarl.invisibletouch.utils.Log;
 import com.varunarl.invisibletouch.utils.Log.Level;
 
-public class TypingKeyboardActivity extends SixPackActivity {
+public class KeyboardActivity extends SixPackActivity {
 
-	private BrailleCharacter mCurrentCharacter;
+	protected BrailleCharacter mCurrentCharacter;
 	private InputManager.TextInputManager mTextInputManager;
 
 	@Override
@@ -23,48 +23,36 @@ public class TypingKeyboardActivity extends SixPackActivity {
 	@Override
 	public void onKeyOne() {
 		mCurrentCharacter._one_one.swap();
-		InvisibleTouchApplication.getInstance().vibrate(
-				mCurrentCharacter._one_one.getPattern());
 		super.onKeyOne();
 	}
 
 	@Override
 	public void onKeyTwo() {
 		mCurrentCharacter._one_two.swap();
-		InvisibleTouchApplication.getInstance().vibrate(
-				mCurrentCharacter._one_two.getPattern());
 		super.onKeyTwo();
 	}
 
 	@Override
 	public void onKeyThree() {
 		mCurrentCharacter._one_three.swap();
-		InvisibleTouchApplication.getInstance().vibrate(
-				mCurrentCharacter._one_three.getPattern());
 		super.onKeyThree();
 	}
 
 	@Override
 	public void onKeyFour() {
 		mCurrentCharacter._two_one.swap();
-		InvisibleTouchApplication.getInstance().vibrate(
-				mCurrentCharacter._two_one.getPattern());
 		super.onKeyFour();
 	}
 
 	@Override
 	public void onKeyFive() {
 		mCurrentCharacter._two_two.swap();
-		InvisibleTouchApplication.getInstance().vibrate(
-				mCurrentCharacter._two_two.getPattern());
 		super.onKeyFive();
 	}
 
 	@Override
 	public void onKeySix() {
 		mCurrentCharacter._two_three.swap();
-		InvisibleTouchApplication.getInstance().vibrate(
-				mCurrentCharacter._two_three.getPattern());
 		super.onKeySix();
 	}
 

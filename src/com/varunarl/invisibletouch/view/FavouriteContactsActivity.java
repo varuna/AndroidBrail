@@ -5,9 +5,9 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.varunarl.invisibletouch.InvisibleTouchApplication;
+import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.R;
-import com.varunarl.invisibletouch.SixPackActivity;
+import com.varunarl.invisibletouch.internal.SixPackActivity;
 import com.varunarl.invisibletouch.utils.FavouriteContacts;
 import com.varunarl.invisibletouch.utils.IPhoneState;
 import com.varunarl.invisibletouch.utils.Log;

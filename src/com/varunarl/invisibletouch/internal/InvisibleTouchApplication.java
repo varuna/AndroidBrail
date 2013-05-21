@@ -1,4 +1,4 @@
-package com.varunarl.invisibletouch;
+package com.varunarl.invisibletouch.internal;
 
 import android.app.Application;
 import android.content.Context;

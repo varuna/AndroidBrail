@@ -2,7 +2,8 @@ package com.varunarl.invisibletouch.view;
 
 import android.content.Intent;
 
-import com.varunarl.invisibletouch.SixPackActivity;
+import com.varunarl.invisibletouch.internal.KeyboardActivity;
+import com.varunarl.invisibletouch.internal.SixPackActivity;
 
 public class MainMenuActivity extends SixPackActivity {
 
@@ -112,7 +113,7 @@ public class MainMenuActivity extends SixPackActivity {
 
 	@Override
 	public void onKeyFour() {
-		Intent in = new Intent(this, TypingKeyboardActivity.class);
+		Intent in = new Intent(this, DialPadActivity.class);
 		startActivity(in);
 		super.onKeyFour();
 	}

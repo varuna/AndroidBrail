@@ -1,4 +1,4 @@
-package com.varunarl.invisibletouch;
+package com.varunarl.invisibletouch.internal;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
 
+import com.varunarl.invisibletouch.R;
 import com.varunarl.invisibletouch.utils.Log;
 import com.varunarl.invisibletouch.utils.Log.Level;
 import com.varunarl.invisibletouch.view.MainMenuActivity;

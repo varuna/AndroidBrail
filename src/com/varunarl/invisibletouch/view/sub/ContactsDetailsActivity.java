@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.varunarl.invisibletouch.SinglePackActivity;
+import com.varunarl.invisibletouch.internal.SinglePackActivity;
 import com.varunarl.invisibletouch.view.ContactsActivity;
 
 public class ContactsDetailsActivity extends SinglePackActivity {
