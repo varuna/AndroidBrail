@@ -151,7 +151,7 @@ public class FavouriteContactsActivity extends SixPackActivity implements
 
 	@Override
 	protected void init() {
-		mFavourites = FavouriteContacts.getInstance(getApplicationContext());
+		mFavourites = FavouriteContacts.getInstance(getApplicationContext(),this);
 		InvisibleTouchApplication.getInstance().getCallManager().registerPhoneStateListener(
 				this, getIntent());
 		super.init();

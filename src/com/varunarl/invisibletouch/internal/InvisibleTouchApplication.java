@@ -18,6 +18,7 @@ public class InvisibleTouchApplication extends Application implements OnInitList
     private TextToSpeech mTTS;
     private TextInputManager mTextInputManager;
     private CallManager mCallManager;
+    private boolean incomingCallDetected;
 
     public static InvisibleTouchApplication getInstance() {
         return instance;
@@ -30,7 +31,7 @@ public class InvisibleTouchApplication extends Application implements OnInitList
         mTextInputManager = new TextInputManager(this);
         mVibratorService = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         mCallManager = new CallManager(this);
-
+        incomingCallDetected = false;
         if (mVibratorService != null)
             Log.announce("Vibrator service ready", Level.INFO);
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
@@ -46,6 +47,14 @@ public class InvisibleTouchApplication extends Application implements OnInitList
 
     public CallManager getCallManager() {
         return mCallManager;
+    }
+
+    public boolean isIncomingCallDetected() {
+        return incomingCallDetected;
+    }
+
+    public void setIncomingCallDetected(boolean incomingCallDetected) {
+        this.incomingCallDetected = incomingCallDetected;
     }
 
     @Override

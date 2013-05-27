@@ -1,5 +1,6 @@
 package com.varunarl.invisibletouch.utils;
 
+import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.view.IncomingCallActivity;
 
 import android.content.BroadcastReceiver;
@@ -33,6 +34,8 @@ public class IncommingCallListener extends BroadcastReceiver {
 							null, null, null);
 			if (c.moveToFirst())
 				name = c.getString(c.getColumnIndex(PhoneLookup.DISPLAY_NAME));
+
+            InvisibleTouchApplication.getInstance().setIncomingCallDetected(true);
 			Intent i = new Intent(context, IncomingCallActivity.class);
 			i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

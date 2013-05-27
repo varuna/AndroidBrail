@@ -207,7 +207,7 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
 
 	@Override
 	public void onKeyTwo() {
-		InvisibleTouchApplication.getInstance().getCallManager().makeCall(mCurrentContactPhone);
+		InvisibleTouchApplication.getInstance().getCallManager().makeCall(mCurrentContactPhone,this);
 	}
 
 	@Override
@@ -234,7 +234,7 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
 	@Override
 	public void onKeySix() {
 		FavouriteContacts fav = FavouriteContacts
-				.getInstance(getApplicationContext());
+				.getInstance(getApplicationContext(),this);
 		try {
 			fav.addToFavourite(mCurrentContactName, mCurrentContactPhone);
 		} catch (FavouriteExistsException e) {

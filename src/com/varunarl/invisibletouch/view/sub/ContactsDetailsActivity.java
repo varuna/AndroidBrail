@@ -30,7 +30,7 @@ public class ContactsDetailsActivity extends SinglePackActivity {
 
 	@Override
 	public void onSwipeRight() {
-        InvisibleTouchApplication.getInstance().getCallManager().makeCall(mCurrentContactPhone);
+        InvisibleTouchApplication.getInstance().getCallManager().makeCall(mCurrentContactPhone,this);
 	}
 
 	@Override

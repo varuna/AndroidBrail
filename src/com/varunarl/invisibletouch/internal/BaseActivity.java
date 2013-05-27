@@ -286,7 +286,14 @@ public abstract class BaseActivity extends Activity implements IGestures,
 		super.startActivity(intent);
 	}
 
-	@SuppressLint("InlinedApi")
+    @Override
+    protected void onPause() {
+        if (InvisibleTouchApplication.getInstance().isIncomingCallDetected())
+            mStoppedFromNewScreen = true;
+        super.onPause();
+    }
+
+    @SuppressLint("InlinedApi")
 	@Override
 	protected void onStop() {
 		if (!mStoppedFromNewScreen && !isFinishing) {

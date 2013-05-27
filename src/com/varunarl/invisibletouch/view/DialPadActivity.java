@@ -54,11 +54,11 @@ public class DialPadActivity extends KeyboardActivity {
         }
         if (count == 10 || (!isFirstCharacterZero && count == 9)) {
             if (count == 10) {
-                mCallManager.makeCall(mPhoneNumber);
+                mCallManager.makeCall(mPhoneNumber,this);
             }
             if (count == 9) {
                 mPhoneNumber = "0" + mPhoneNumber;
-                mCallManager.makeCall(mPhoneNumber);
+                mCallManager.makeCall(mPhoneNumber,this);
             }
         }
 

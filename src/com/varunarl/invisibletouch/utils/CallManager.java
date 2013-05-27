@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.view.KeyEvent;
+import com.varunarl.invisibletouch.internal.BaseActivity;
 
 import java.lang.reflect.Method;
 
@@ -19,7 +20,6 @@ public class CallManager {
 
     public CallManager(Context context) {
         mContext = context;
-
         if (mTelephonyService == null) {
             mTelephonyManager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
             try {
@@ -36,19 +36,18 @@ public class CallManager {
         }
     }
 
-    public void makeCall(String phoneNumber) {
+    public void makeCall(String phoneNumber,BaseActivity mActivity) {
         Intent mCallIntent = new Intent(Intent.ACTION_CALL);
         mCallIntent.setData(Uri.parse("tel:" + phoneNumber));
         mCallIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        mContext.startActivity(mCallIntent);
+        mActivity.startActivity(mCallIntent);
     }
 
     public void endCall() throws Exception {
         mTelephonyService.endCall();
     }
 
-    public void answerCall()
-    {
+    public void answerCall() {
         Intent answer = new Intent(Intent.ACTION_MEDIA_BUTTON);
         answer.putExtra(Intent.EXTRA_KEY_EVENT, new KeyEvent(
                 KeyEvent.ACTION_UP, KeyEvent.KEYCODE_HEADSETHOOK));
