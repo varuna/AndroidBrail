@@ -60,7 +60,7 @@
             </intent-filter>
         </receiver>
         <activity
-                android:name=".view.IncommingCallActivity"
+                android:name=".view.IncomingCallActivity"
                 android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -69,6 +69,10 @@
         </activity>
         <activity
                 android:name=".view.DialPadActivity"
+                android:screenOrientation="portrait" >
+        </activity>
+        <activity
+                android:name=".view.SettingsActivity"
                 android:screenOrientation="portrait" >
         </activity>
     </application>

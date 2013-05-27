@@ -119,7 +119,7 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
 		this.mContacts.moveToFirst();
 		mLastCallState = -1;
 		super.init();
-		InvisibleTouchApplication.getInstance().registerPhoneStateListener(
+		InvisibleTouchApplication.getInstance().getCallManager().registerPhoneStateListener(
 				this, mIntent);
 		updateCurrentContact();
 	}
@@ -207,9 +207,7 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
 
 	@Override
 	public void onKeyTwo() {
-		Intent mCallIntent = new Intent(Intent.ACTION_CALL);
-        mCallIntent.setData(Uri.parse("tel:"+mCurrentContactPhone));
-        startActivity(mCallIntent);
+		InvisibleTouchApplication.getInstance().getCallManager().makeCall(mCurrentContactPhone);
 	}
 
 	@Override
@@ -257,7 +255,7 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
 		Cursor cur = getContentResolver().query(contactUri, null, null, null,
 				null);
 		try {
-			if (cur.moveToFirst()) {
+			if (cur != null && cur.moveToFirst()) {
 				do {
 					if (cur.getString(
 							cur.getColumnIndex(PhoneLookup.DISPLAY_NAME))

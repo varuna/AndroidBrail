@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.internal.SinglePackActivity;
 import com.varunarl.invisibletouch.view.ContactsActivity;
 
@@ -29,6 +30,7 @@ public class ContactsDetailsActivity extends SinglePackActivity {
 
 	@Override
 	public void onSwipeRight() {
+        InvisibleTouchApplication.getInstance().getCallManager().makeCall(mCurrentContactPhone);
 	}
 
 	@Override

@@ -35,6 +35,5 @@ public class PhoneStateManager extends PhoneStateListener {
 			break;
 		}
 		mPhoneState.setPhoneState(state);
-
 	}
 }

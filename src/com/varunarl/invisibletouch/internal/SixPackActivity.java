@@ -10,6 +10,8 @@ public abstract class SixPackActivity extends BaseActivity {
     private boolean ONE, TWO, THREE, FOUR, FIVE, SIX;
     private View _one_one, _one_two, _one_three, _two_one, _two_two,
             _two_three;
+    private boolean mIsColorOnKeyboard;
+    private boolean mIsVibrationsOn;
 
     @Override
     protected void init() {
@@ -41,6 +43,10 @@ public abstract class SixPackActivity extends BaseActivity {
         onAttachView(R.id.item_two_one, _two_one);
         onAttachView(R.id.item_two_two, _two_two);
         onAttachView(R.id.item_two_three, _two_three);
+
+        //Setting default Six pack settings
+        mIsColorOnKeyboard = false; //By default the keyboard colors will not appear
+        mIsVibrationsOn = false; //By default the vibrations will not occur
     }
 
     @Override
@@ -50,36 +56,54 @@ public abstract class SixPackActivity extends BaseActivity {
 
     @Override
     public void onKeyOne() {
-        InvisibleTouchApplication.getInstance().vibrate(
-                mTemplateCharacter._one_one.getPattern());
+        if (mIsColorOnKeyboard)
+            toggleColor(0);
+        if (mIsVibrationsOn)
+            InvisibleTouchApplication.getInstance().vibrate(
+                    mTemplateCharacter._one_one.getPattern());
     }
 
     @Override
     public void onKeyTwo() {
-        InvisibleTouchApplication.getInstance().vibrate(
-                mTemplateCharacter._one_two.getPattern());
+        if (mIsColorOnKeyboard)
+            toggleColor(1);
+        if (mIsVibrationsOn)
+            InvisibleTouchApplication.getInstance().vibrate(
+                    mTemplateCharacter._one_two.getPattern());
     }
 
     @Override
     public void onKeyThree() {
+        if (mIsColorOnKeyboard)
+            toggleColor(2);
+        if (mIsVibrationsOn)
         InvisibleTouchApplication.getInstance().vibrate(
                 mTemplateCharacter._one_three.getPattern());
     }
 
     @Override
     public void onKeyFour() {
+        if (mIsColorOnKeyboard)
+            toggleColor(3);
+        if (mIsVibrationsOn)
         InvisibleTouchApplication.getInstance().vibrate(
                 mTemplateCharacter._two_one.getPattern());
     }
 
     @Override
     public void onKeyFive() {
+        if (mIsColorOnKeyboard)
+            toggleColor(4);
+        if (mIsVibrationsOn)
         InvisibleTouchApplication.getInstance().vibrate(
                 mTemplateCharacter._two_two.getPattern());
     }
 
     @Override
     public void onKeySix() {
+        if (mIsColorOnKeyboard)
+            toggleColor(5);
+        if (mIsVibrationsOn)
         InvisibleTouchApplication.getInstance().vibrate(
                 mTemplateCharacter._two_three.getPattern());
 
@@ -106,7 +130,13 @@ public abstract class SixPackActivity extends BaseActivity {
         SIX = false;
     }
 
-    @SuppressWarnings("unused")
+    public void setCharacterVisibility(boolean isVisible) {
+        this.mIsColorOnKeyboard = isVisible;
+    }
+
+    public void setVibrations(boolean turnOn) {
+        this.mIsVibrationsOn = turnOn;
+    }
     private void toggleColor(int index)
 
     {

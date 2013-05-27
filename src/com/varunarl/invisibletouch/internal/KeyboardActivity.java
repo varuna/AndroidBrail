@@ -17,7 +17,8 @@ public class KeyboardActivity extends SixPackActivity {
 		mCurrentCharacter = new BrailleCharacter();
 		mTextInputManager = InvisibleTouchApplication.getInstance()
 				.getTextInputManager();
-		super.init();
+        setCharacterVisibility(true);
+        super.init();
 	}
 
 	@Override

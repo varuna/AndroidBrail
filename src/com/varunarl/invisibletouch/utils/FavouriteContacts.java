@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.util.Pair;
+import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
 
 public class FavouriteContacts {
 
@@ -129,10 +130,7 @@ public class FavouriteContacts {
 	public void callFavourite(int index) {
 		String tele = get(index).second;
 		if (!tele.equals("")){
-			Intent in = new Intent(Intent.ACTION_CALL, Uri
-					.parse("tel:" + tele));
-			in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			appContext.startActivity(in);
+            InvisibleTouchApplication.getInstance().getCallManager().makeCall(tele);
 		}
 	}
 }

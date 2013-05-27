@@ -127,6 +127,8 @@ public class MainMenuActivity extends SixPackActivity {
 
 	@Override
 	public void onKeySix() {
+        Intent i = new Intent(this, SettingsActivity.class);
+        startActivity(i);
 		super.onKeySix();
 	}
 
