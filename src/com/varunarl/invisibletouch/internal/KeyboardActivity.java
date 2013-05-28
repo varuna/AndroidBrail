@@ -18,6 +18,7 @@ public class KeyboardActivity extends SixPackActivity {
 		mTextInputManager = InvisibleTouchApplication.getInstance()
 				.getTextInputManager();
         setCharacterVisibility(true);
+        setVibrations(true);
         super.init();
 	}
 

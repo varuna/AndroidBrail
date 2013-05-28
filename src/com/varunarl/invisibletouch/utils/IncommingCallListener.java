@@ -47,7 +47,7 @@ public class IncommingCallListener extends BroadcastReceiver {
 
             AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
             PendingIntent pi = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
-            am.set(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+1000,pi);
+            am.set(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+200,pi);
 		}
 
 	}
