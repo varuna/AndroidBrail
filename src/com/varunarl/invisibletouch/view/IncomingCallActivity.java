@@ -1,27 +1,27 @@
 package com.varunarl.invisibletouch.view;
 
 import android.graphics.Color;
-import android.telephony.TelephonyManager;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.internal.SinglePackActivity;
+import com.varunarl.invisibletouch.utils.IPhoneState;
 import com.varunarl.invisibletouch.utils.IncommingCallListener;
 import com.varunarl.invisibletouch.utils.Log;
 import com.varunarl.invisibletouch.utils.Log.Level;
 
 import java.lang.reflect.Method;
 
-public class IncomingCallActivity extends SinglePackActivity {
+public class IncomingCallActivity extends SinglePackActivity implements IPhoneState{
 
-    private com.android.internal.telephony.ITelephony telephonyService;
     private String mName = "";
     private String mNumber = "";
     private LinearLayout mRootView;
     private int NAME_VIEW_ID = 1000;
     private int NUMBER_VIEW_ID = 1001;
+    private int mPhoneState;
 
     @Override
     protected void init() {
@@ -31,11 +31,14 @@ public class IncomingCallActivity extends SinglePackActivity {
                 IncommingCallListener.FLAG_RINGING_CALLER_NUMBER);
 
         super.init();
+        InvisibleTouchApplication.getInstance().getCallManager().registerPhoneStateListener(this,getIntent());
+        Log.announce("Current Phone State : "+mPhoneState,false);
     }
 
     @Override
     public void onSwipeRight() {
         InvisibleTouchApplication.getInstance().getCallManager().answerCall();
+        Log.announce("Current Phone State : "+mPhoneState,false);
     }
 
     @Override
@@ -46,6 +49,8 @@ public class IncomingCallActivity extends SinglePackActivity {
             e.printStackTrace();
         }
         finish();
+        Log.announce("Current Phone State : "+mPhoneState,false);
+        InvisibleTouchApplication.getInstance().getCallManager().unregisterPhoneStateListener();
     }
 
     @Override
@@ -145,5 +150,15 @@ public class IncomingCallActivity extends SinglePackActivity {
             name.setText(mName);
             phone.setText(mNumber);
         }
+    }
+
+    @Override
+    public void setPhoneState(int state) {
+        mPhoneState = state;
+    }
+
+    @Override
+    public int getPhoneState() {
+        return mPhoneState;
     }
 }

@@ -2,6 +2,7 @@ package com.varunarl.invisibletouch.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
@@ -34,12 +35,15 @@ public class CallManager {
                         Log.Level.ERROR);
             }
         }
+        IntentFilter intentFilter = new IntentFilter("android.intent.action.PHONE_STATE");
+        mContext.registerReceiver(new IncommingCallListener(), intentFilter, "android.permission.READ_PHONE_STATE", null);
     }
 
-    public void makeCall(String phoneNumber,BaseActivity mActivity) {
+    public void makeCall(String phoneNumber, BaseActivity mActivity) {
         Intent mCallIntent = new Intent(Intent.ACTION_CALL);
         mCallIntent.setData(Uri.parse("tel:" + phoneNumber));
-        mCallIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //mCallIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mCallIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         mActivity.startActivity(mCallIntent);
     }
 
@@ -61,6 +65,11 @@ public class CallManager {
 
     public void unregisterPhoneStateListener() {
         mTelephonyManager.listen(null, PhoneStateListener.LISTEN_CALL_STATE);
+    }
+
+    public void destroy() {
+        unregisterPhoneStateListener();
+        mContext.unregisterReceiver(new IncommingCallListener());
     }
 
 

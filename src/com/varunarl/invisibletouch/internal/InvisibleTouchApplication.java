@@ -79,4 +79,9 @@ public class InvisibleTouchApplication extends Application implements OnInitList
             }
         }
     }
+
+    public void exit()
+    {
+        mCallManager.destroy();
+    }
 }

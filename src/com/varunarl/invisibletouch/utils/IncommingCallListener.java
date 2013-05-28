@@ -1,5 +1,7 @@
 package com.varunarl.invisibletouch.utils;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.view.IncomingCallActivity;
 
@@ -41,7 +43,11 @@ public class IncommingCallListener extends BroadcastReceiver {
 			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			i.putExtra(FLAG_RINGING_CALLER_NUMBER, number);
 			i.putExtra(FLAG_RINGING_CALLER_NAME, name);
-			context.startActivity(i);
+//			context.startActivity(i);
+
+            AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+            PendingIntent pi = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
+            am.set(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+1000,pi);
 		}
 
 	}
