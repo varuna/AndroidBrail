@@ -244,7 +244,7 @@ public class CallLogActivity extends SixPackActivity {
 
 	@Override
 	public void onScreenLongPress() {
-		// TODO Auto-generated method stub
+        Log.announce("In Call log screen",false);
 		
 	}
 

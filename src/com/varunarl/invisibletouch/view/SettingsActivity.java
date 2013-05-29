@@ -1,6 +1,7 @@
 package com.varunarl.invisibletouch.view;
 
 import com.varunarl.invisibletouch.internal.SixPackActivity;
+import com.varunarl.invisibletouch.utils.Log;
 
 /**
  * Created by vlekamwasam on 5/27/13.
@@ -119,6 +120,6 @@ public class SettingsActivity extends SixPackActivity{
 
     @Override
     public void onScreenLongPress() {
-
+        Log.announce("In Settings", false);
     }
 }

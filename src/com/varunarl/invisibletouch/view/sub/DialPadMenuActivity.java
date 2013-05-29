@@ -1,6 +1,7 @@
 package com.varunarl.invisibletouch.view.sub;
 
 import com.varunarl.invisibletouch.internal.SixPackActivity;
+import com.varunarl.invisibletouch.utils.Log;
 
 /**
  * Created by vlekamwasam on 5/21/13.
@@ -68,7 +69,7 @@ public class DialPadMenuActivity extends SixPackActivity {
 
     @Override
     public void onSwipeDown() {
-
+        finish();
     }
 
     @Override
@@ -118,6 +119,6 @@ public class DialPadMenuActivity extends SixPackActivity {
 
     @Override
     public void onScreenLongPress() {
-
+        Log.announce("Dial pad menu",false);
     }
 }

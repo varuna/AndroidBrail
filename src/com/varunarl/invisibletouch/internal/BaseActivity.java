@@ -23,10 +23,9 @@ public abstract class BaseActivity extends Activity implements IGestures,
     protected final static int SWIPE_UP = 12;
     protected final static int SWIPE_DOWN = 13;
     protected int mCurrentGesture = -1;
-
+    private int mLastSwipeDirection = -1;
     private boolean mStoppedFromNewScreen = false;
     private boolean isFinishing = false;
-
     private GestureDetector mGestureDetector;
 
     @Override
@@ -214,6 +213,7 @@ public abstract class BaseActivity extends Activity implements IGestures,
     @Override
     public boolean onSingleTapUp(MotionEvent motionEvent) {
         mCurrentGesture = GESTURE_TAP;
+        mLastSwipeDirection = -1;
         return false;
     }
 
@@ -225,28 +225,46 @@ public abstract class BaseActivity extends Activity implements IGestures,
     @Override
     public void onLongPress(MotionEvent motionEvent) {
         mCurrentGesture = GESTURE_LONGTAP;
+        mLastSwipeDirection = -1;
         onScreenLongPress();
     }
 
     @Override
     public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent2, float velocityX, float velocityY) {
         mCurrentGesture = GESTURE_SWIPE;
-        switch (getFlingDirection(motionEvent, motionEvent2)) {
+        int direction = getFlingDirection(motionEvent, motionEvent2);
+
+        switch (direction) {
             case SWIPE_DOWN:
-                onSwipeDown();
+                if (mLastSwipeDirection == SWIPE_DOWN)
+                    onDoubleSwipeDown();
+                else
+                    onSwipeDown();
                 break;
             case SWIPE_LEFT:
-                onSwipeLeft();
+                if (mLastSwipeDirection == SWIPE_LEFT)
+                    onDoubleSwipeLeft();
+                else
+                    onSwipeLeft();
                 break;
             case SWIPE_RIGHT:
-                onSwipeRight();
+                if (mLastSwipeDirection == SWIPE_RIGHT)
+                    onDoubleSwipeRight();
+                else
+                    onSwipeRight();
                 break;
             case SWIPE_UP:
-                onSwipeUp();
+                if (mLastSwipeDirection == SWIPE_UP)
+                    onDoubleSwipeUp();
+                else
+                    onSwipeUp();
                 break;
             default:
+                mLastSwipeDirection = -1;
                 return false;
         }
+
+        mLastSwipeDirection = direction;
         return true;
     }
 
@@ -267,9 +285,9 @@ public abstract class BaseActivity extends Activity implements IGestures,
                 return SWIPE_LEFT;
         } else {
             if (yT > 0)
-                return SWIPE_UP;
-            else
                 return SWIPE_DOWN;
+            else
+                return SWIPE_UP;
         }
     }
 

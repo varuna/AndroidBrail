@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import com.varunarl.invisibletouch.internal.KeyboardActivity;
 import com.varunarl.invisibletouch.internal.SixPackActivity;
+import com.varunarl.invisibletouch.utils.Log;
 
 public class MainMenuActivity extends SixPackActivity {
 
@@ -146,7 +147,7 @@ public class MainMenuActivity extends SixPackActivity {
 
 	@Override
 	public void onScreenLongPress() {
-		// TODO Auto-generated method stub
+        Log.announce("In Main menu",false);
 
 	}
 

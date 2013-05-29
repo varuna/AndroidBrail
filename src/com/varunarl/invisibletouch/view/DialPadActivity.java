@@ -23,6 +23,12 @@ public class DialPadActivity extends KeyboardActivity {
         InvisibleTouchApplication app = InvisibleTouchApplication.getInstance();
         mTextInputManager = app.getTextInputManager();
         mCallManager = app.getCallManager();
+        setCharacterVisibility(true);
+    }
+
+    @Override
+    public void onScreenLongPress() {
+        Log.announce("In Dial pad" + String.valueOf(mIsColorOnKeyboard), false);
     }
 
     @Override
@@ -40,8 +46,13 @@ public class DialPadActivity extends KeyboardActivity {
         mTextInputManager.buffer(mCurrentCharacter, Braille.KeyBoard.NUMERIC_KEY_TYPE);
         mCurrentCharacter.reset();
         resetView();
+    }
 
+    @Override
+    public void onDoubleSwipeRight() {
+        super.onDoubleSwipeRight();
         mPhoneNumber = mTextInputManager.getText();
+        Log.announce(mPhoneNumber, false);
         int count = 0;
         boolean isFirstCharacterZero = false;
         for (Character c : mPhoneNumber.toCharArray()) {
@@ -54,15 +65,12 @@ public class DialPadActivity extends KeyboardActivity {
         }
         if (count == 10 || (!isFirstCharacterZero && count == 9)) {
             if (count == 10) {
-                mCallManager.makeCall(mPhoneNumber,this);
+                mCallManager.makeCall(mPhoneNumber, this);
             }
             if (count == 9) {
                 mPhoneNumber = "0" + mPhoneNumber;
-                mCallManager.makeCall(mPhoneNumber,this);
+                mCallManager.makeCall(mPhoneNumber, this);
             }
         }
-
-
     }
-
 }

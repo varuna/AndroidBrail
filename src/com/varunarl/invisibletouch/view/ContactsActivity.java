@@ -160,7 +160,7 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
 
 	@Override
 	public void onScreenLongPress() {
-        //No action specified.
+        Log.announce("In Contacts screen",false);
 
 	}
 

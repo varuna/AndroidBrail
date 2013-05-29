@@ -76,7 +76,7 @@ public class KeyboardActivity extends SixPackActivity {
 
 	@Override
 	public void onDoubleSwipeRight() {
-
+        mTextInputManager.processBuffer();
 	}
 
 	@Override

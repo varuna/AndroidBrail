@@ -10,7 +10,7 @@ public abstract class SixPackActivity extends BaseActivity {
     private boolean ONE, TWO, THREE, FOUR, FIVE, SIX;
     private View _one_one, _one_two, _one_three, _two_one, _two_two,
             _two_three;
-    private boolean mIsColorOnKeyboard;
+    protected boolean mIsColorOnKeyboard;
     private boolean mIsVibrationsOn;
 
     @Override
@@ -131,11 +131,11 @@ public abstract class SixPackActivity extends BaseActivity {
     }
 
     public void setCharacterVisibility(boolean isVisible) {
-        this.mIsColorOnKeyboard = isVisible;
+        mIsColorOnKeyboard = isVisible;
     }
 
     public void setVibrations(boolean turnOn) {
-        this.mIsVibrationsOn = turnOn;
+        mIsVibrationsOn = turnOn;
     }
     private void toggleColor(int index)
 

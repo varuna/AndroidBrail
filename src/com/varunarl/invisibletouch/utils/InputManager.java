@@ -31,7 +31,7 @@ public class InputManager {
                 if (oldType == Braille.KeyBoard.UPPER_KEY_TYPE
                         && mCurrentBufferType == Braille.KeyBoard.UPPER_KEY_TYPE)
                     mCurrentBufferType = Braille.KeyBoard.LOWER_KEY_TYPE;
-                processBuffer();
+
             } else if (!mKeyBoard.isErrorCharacter(c)) {
                 Character asciic = mKeyBoard.get(c, mCurrentBufferType);
                 if (!asciic.equals('~'))
@@ -42,7 +42,6 @@ public class InputManager {
         }
 
         public void buffer(Character c) {
-            processBuffer();
             mBuffer.append(c);
         }
 
@@ -68,7 +67,7 @@ public class InputManager {
             mCurrentBufferType = Braille.KeyBoard.LOWER_KEY_TYPE;
         }
 
-        private void processBuffer() {
+        public void processBuffer() {
             String bufferValue = mBuffer.toString();
             mText += bufferValue;
             mBuffer.delete(0, mBuffer.length());
