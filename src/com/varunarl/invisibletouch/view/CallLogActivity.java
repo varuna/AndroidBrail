@@ -10,7 +10,9 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.internal.SixPackActivity;
+import com.varunarl.invisibletouch.utils.CallManager;
 import com.varunarl.invisibletouch.utils.Log;
 import com.varunarl.invisibletouch.utils.Log.Level;
 
@@ -62,9 +64,7 @@ public class CallLogActivity extends SixPackActivity {
 
 	@Override
 	public void onSwipeRight() {
-			startActivityForResult(
-					new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
-							+ mCurrentContactPhone)), CALL_REQUEST_CODE);
+        InvisibleTouchApplication.getInstance().getCallManager().makeCall(mCurrentContactPhone,this);
 	}
 
 	@Override

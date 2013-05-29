@@ -24,6 +24,8 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
 	public static String INTENT_FLAG_CONTACT_NAME = "com.varunarl.invisibletouch.contactsactivity.intent_flag_contact_name";
 	public static String INTENT_FLAG_CONTACT_TELEPHONE = "com.varunarl.invisibletouch.contactsactivity.intent_flag_contact_telephone";
 
+    public static String ACTION_DELETE_CONTACT = "com.varunarl.invisibletouch.contactsactivity.action_delete_contact";
+
 	private Cursor mContacts;
 
 	private int mLastCallState;
@@ -61,9 +63,7 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
 	@Override
 	public void onSwipeRight() {
 		if (mLastCallState == TelephonyManager.CALL_STATE_IDLE)
-			startActivityForResult(
-					new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
-							+ mCurrentContactPhone)), CALL_REQUEST_CODE);
+			InvisibleTouchApplication.getInstance().getCallManager().makeCall(mCurrentContactPhone,this);
 	}
 
 	@Override
@@ -127,13 +127,6 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
 	@Override
 	protected void onAttachView(int id, View view) {
 
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == CALL_REQUEST_CODE) {
-			Log.announce("Hit", Level.INFO);
-		}
 	}
 
 	@Override
@@ -212,7 +205,11 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
 
 	@Override
 	public void onKeyThree() {
-		deleteContact(mCurrentContactPhone, mCurrentContactName);
+        Intent i = new Intent(this,BooleanActivity.class);
+        i.setAction(ACTION_DELETE_CONTACT);
+        i.putExtra(INTENT_FLAG_CONTACT_NAME,mCurrentContactName);
+        i.putExtra(INTENT_FLAG_CONTACT_TELEPHONE,mCurrentContactPhone);
+        startActivity(i);
 	}
 
 	@Override
@@ -249,33 +246,5 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
 		mCurrentContactPhone = mContacts.getString(numberFieldColumnIndex);
 	}
 
-	private boolean deleteContact(String phone, String name) {
-		Uri contactUri = Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI,
-				Uri.encode(phone));
-		Cursor cur = getContentResolver().query(contactUri, null, null, null,
-				null);
-		try {
-			if (cur != null && cur.moveToFirst()) {
-				do {
-					if (cur.getString(
-							cur.getColumnIndex(PhoneLookup.DISPLAY_NAME))
-							.equalsIgnoreCase(name)) {
-						String lookupKey = cur
-								.getString(cur
-										.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY));
-						Uri uri = Uri.withAppendedPath(
-								ContactsContract.Contacts.CONTENT_LOOKUP_URI,
-								lookupKey);
-						getContentResolver().delete(uri, null, null);
-						return true;
-					}
 
-				} while (cur.moveToNext());
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
 }

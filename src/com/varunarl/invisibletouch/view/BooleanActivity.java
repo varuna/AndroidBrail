@@ -1,158 +1,195 @@
 package com.varunarl.invisibletouch.view;
 
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.ContactsContract;
 import android.view.View;
-
 import com.varunarl.invisibletouch.internal.SinglePackActivity;
 
 public class BooleanActivity extends SinglePackActivity {
 
-	@Override
-	public void onSwipeRight() {
-		// TODO Auto-generated method stub
-		
-	}
+    private final int ACTION_DELETE_CONTACT = 0;
+    private int mActionToPerform = -1;
 
-	@Override
-	public void onSwipeLeft() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    protected void init() {
+        booleanAction();
+        super.init();
+    }
 
-	@Override
-	public void onDoubleSwipeRight() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void onSwipeRight() {
+        proceed();
+    }
 
-	@Override
-	public void onDoubleSwipeLeft() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void onSwipeLeft() {
+        finish();
+    }
 
-	@Override
-	public void onSwipeUp() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void onDoubleSwipeRight() {
 
-	@Override
-	public void onDoubleSwipeUp() {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void onSwipeDown() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void onDoubleSwipeLeft() {
 
-	@Override
-	public void onDoubleSwipeDown() {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void onVolumeDownKeyShortPress() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void onSwipeUp() {
 
-	@Override
-	public void onVolumeDownKeyLongPress() {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void onVolumeUpKeyShortPress() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void onDoubleSwipeUp() {
 
-	@Override
-	public void onVolumeUpKeyLongPress() {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void onPowerKeyShortPress() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void onSwipeDown() {
 
-	@Override
-	public void onPowerKeyLongPress() {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void onKeyOne() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void onDoubleSwipeDown() {
 
-	@Override
-	protected void onAttachView(int id, View view) {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void onCameraKeyShortPress() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void onVolumeDownKeyShortPress() {
 
-	@Override
-	public void onCameraKeyLongPress() {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void onScreenLongPress() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void onVolumeDownKeyLongPress() {
 
-	@Override
-	public void onLongKeyOne() {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void onLongKeyTwo() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void onVolumeUpKeyShortPress() {
 
-	@Override
-	public void onLongKeyThree() {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void onLongKeyFour() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void onVolumeUpKeyLongPress() {
 
-	@Override
-	public void onLongKeyFive() {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void onLongKeySix() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void onPowerKeyShortPress() {
+
+    }
+
+    @Override
+    public void onPowerKeyLongPress() {
+
+    }
+
+    @Override
+    public void onKeyOne() {
+
+    }
+
+    @Override
+    protected void onAttachView(int id, View view) {
+
+    }
+
+    @Override
+    public void onCameraKeyShortPress() {
+
+    }
+
+    @Override
+    public void onCameraKeyLongPress() {
+
+    }
+
+    @Override
+    public void onScreenLongPress() {
+
+    }
+
+    @Override
+    public void onLongKeyOne() {
+
+    }
+
+    @Override
+    public void onLongKeyTwo() {
+
+    }
+
+    @Override
+    public void onLongKeyThree() {
+
+    }
+
+    @Override
+    public void onLongKeyFour() {
+
+    }
+
+    @Override
+    public void onLongKeyFive() {
+
+    }
+
+    @Override
+    public void onLongKeySix() {
+
+    }
+
+    private void booleanAction() {
+        String action = getIntent().getAction();
+        if (action.equals(ContactsActivity.ACTION_DELETE_CONTACT))
+            mActionToPerform = ACTION_DELETE_CONTACT;
+    }
+
+    private void proceed() {
+        switch (mActionToPerform) {
+            case ACTION_DELETE_CONTACT:
+                deleteContact();
+                break;
+            default:
+                break;
+        }
+    }
+
+
+
+    private boolean deleteContact() {
+        String name = getIntent().getStringExtra(ContactsActivity.INTENT_FLAG_CONTACT_NAME);
+        String phone = getIntent().getStringExtra(ContactsActivity.INTENT_FLAG_CONTACT_TELEPHONE);
+
+        Uri contactUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
+                Uri.encode(phone));
+        Cursor cur = getContentResolver().query(contactUri, null, null, null,
+                null);
+        try {
+            if (cur != null && cur.moveToFirst()) {
+                do {
+                    if (cur.getString(
+                            cur.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME))
+                            .equalsIgnoreCase(name)) {
+                        String lookupKey = cur
+                                .getString(cur
+                                        .getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY));
+                        Uri uri = Uri.withAppendedPath(
+                                ContactsContract.Contacts.CONTENT_LOOKUP_URI,
+                                lookupKey);
+                        getContentResolver().delete(uri, null, null);
+                        return true;
+                    }
+
+                } while (cur.moveToNext());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
