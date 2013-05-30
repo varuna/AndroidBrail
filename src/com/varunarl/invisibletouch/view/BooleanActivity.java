@@ -1,14 +1,17 @@
 package com.varunarl.invisibletouch.view;
 
-import android.database.Cursor;
-import android.net.Uri;
-import android.provider.ContactsContract;
 import android.view.View;
+
+import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.internal.SinglePackActivity;
+import com.varunarl.invisibletouch.utils.Contact;
+import com.varunarl.invisibletouch.utils.ContactManager;
 
 public class BooleanActivity extends SinglePackActivity {
 
-    private final int ACTION_DELETE_CONTACT = 0;
+    private final int ACTION_ADD_CONTACT = 0;
+    private final int ACTION_UPDATE_CONTACT = 1;
+    private final int ACTION_DELETE_CONTACT = 2;
     private int mActionToPerform = -1;
 
     @Override
@@ -144,52 +147,32 @@ public class BooleanActivity extends SinglePackActivity {
 
     private void booleanAction() {
         String action = getIntent().getAction();
-        if (action.equals(ContactsActivity.ACTION_DELETE_CONTACT))
+        if (action.equals(ContactManager.ACTION_DELETE_CONTACT))
             mActionToPerform = ACTION_DELETE_CONTACT;
+        else if (action.equals(ContactManager.ACTION_NEW_CONTACT))
+            mActionToPerform = ACTION_ADD_CONTACT;
+        else if (action.equals(ContactManager.ACTION_UPDATE_CONTACT))
+            mActionToPerform = ACTION_UPDATE_CONTACT;
+        else
+            finish();
     }
 
     private void proceed() {
+        InvisibleTouchApplication app = InvisibleTouchApplication.getInstance();
+        Contact c = getIntent().getParcelableExtra(Contact.PARCELABLE_CONTACT);
         switch (mActionToPerform) {
-            case ACTION_DELETE_CONTACT:
-                deleteContact();
+            case ACTION_ADD_CONTACT:
+                app.getContactManager().addNewContact(c);
                 break;
+            case ACTION_UPDATE_CONTACT:
+                app.getContactManager().updateContact(c);
+                break;
+            case ACTION_DELETE_CONTACT:
+                app.getContactManager().deleteContact(c);
+                break;
+
             default:
                 break;
         }
-    }
-
-
-
-    private boolean deleteContact() {
-        String name = getIntent().getStringExtra(ContactsActivity.INTENT_FLAG_CONTACT_NAME);
-        String phone = getIntent().getStringExtra(ContactsActivity.INTENT_FLAG_CONTACT_TELEPHONE);
-
-        Uri contactUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
-                Uri.encode(phone));
-        Cursor cur = getContentResolver().query(contactUri, null, null, null,
-                null);
-        try {
-            if (cur != null && cur.moveToFirst()) {
-                do {
-                    if (cur.getString(
-                            cur.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME))
-                            .equalsIgnoreCase(name)) {
-                        String lookupKey = cur
-                                .getString(cur
-                                        .getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY));
-                        Uri uri = Uri.withAppendedPath(
-                                ContactsContract.Contacts.CONTENT_LOOKUP_URI,
-                                lookupKey);
-                        getContentResolver().delete(uri, null, null);
-                        return true;
-                    }
-
-                } while (cur.moveToNext());
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
     }
 }

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.internal.SinglePackActivity;
+import com.varunarl.invisibletouch.utils.ContactManager;
 import com.varunarl.invisibletouch.view.ContactsActivity;
 
 public class ContactsDetailsActivity extends SinglePackActivity {
@@ -23,8 +24,8 @@ public class ContactsDetailsActivity extends SinglePackActivity {
 	@Override
 	protected void init() {
 		Intent i = getIntent();
-		mCurrentContactName = i.getStringExtra(ContactsActivity.INTENT_FLAG_CONTACT_NAME);
-		mCurrentContactPhone = i.getStringExtra(ContactsActivity.INTENT_FLAG_CONTACT_TELEPHONE);
+		mCurrentContactName = i.getStringExtra(ContactManager.INTENT_FLAG_CONTACT_NAME);
+		mCurrentContactPhone = i.getStringExtra(ContactManager.INTENT_FLAG_CONTACT_TELEPHONE);
 		super.init();
 	}
 

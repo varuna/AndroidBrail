@@ -7,6 +7,7 @@ import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import com.varunarl.invisibletouch.utils.CallManager;
+import com.varunarl.invisibletouch.utils.ContactManager;
 import com.varunarl.invisibletouch.utils.InputManager.TextInputManager;
 import com.varunarl.invisibletouch.utils.Log;
 import com.varunarl.invisibletouch.utils.Log.Level;
@@ -18,6 +19,7 @@ public class InvisibleTouchApplication extends Application implements OnInitList
     private TextToSpeech mTTS;
     private TextInputManager mTextInputManager;
     private CallManager mCallManager;
+    private ContactManager mContactManager;
     private boolean incomingCallDetected;
 
     public static InvisibleTouchApplication getInstance() {
@@ -31,6 +33,7 @@ public class InvisibleTouchApplication extends Application implements OnInitList
         mTextInputManager = new TextInputManager(this);
         mVibratorService = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         mCallManager = new CallManager(this);
+        mContactManager = new ContactManager(this);
         incomingCallDetected = false;
         if (mVibratorService != null)
             Log.announce("Vibrator service ready", Level.INFO);
@@ -43,6 +46,10 @@ public class InvisibleTouchApplication extends Application implements OnInitList
 
     public TextInputManager getTextInputManager() {
         return mTextInputManager;
+    }
+
+    public ContactManager getContactManager() {
+        return mContactManager;
     }
 
     public CallManager getCallManager() {

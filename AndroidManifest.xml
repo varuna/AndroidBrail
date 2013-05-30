@@ -53,6 +53,10 @@
                 android:name=".view.sub.ContactsDetailsActivity"
                 android:screenOrientation="portrait">
         </activity>
+        <activity
+                android:name=".view.sub.ContactModifyActivity"
+                android:screenOrientation="portrait">
+        </activity>
         <receiver android:name=".utils.CallStateListener">
             <intent-filter>
                 <action android:name="android.intent.action.PHONE_STATE"/>
