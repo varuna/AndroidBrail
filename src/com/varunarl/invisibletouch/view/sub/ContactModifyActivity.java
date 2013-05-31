@@ -122,7 +122,7 @@ public class ContactModifyActivity extends KeyboardActivity {
             if (requestCode == REQUEST_CONTACT_DELETE) {
                 finish();
                 return;
-            }else if (requestCode == REQUEST_CONTACT_MODIFY_NAME)
+            }else if (requestCode == REQUEST_CONTACT_MODIFY_NAME && getIntent().getAction().equals(ContactManager.ACTION_UPDATE_CONTACT))
             {
                 mStage = Contact.STAGE_NEW_PHONE;
                 mTextInputManager.purge();
