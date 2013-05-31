@@ -10,7 +10,7 @@ import com.varunarl.invisibletouch.utils.Log.Level;
 public class KeyboardActivity extends SixPackActivity {
 
 	protected BrailleCharacter mCurrentCharacter;
-	private InputManager.TextInputManager mTextInputManager;
+	protected InputManager.TextInputManager mTextInputManager;
 
 	@Override
 	protected void init() {

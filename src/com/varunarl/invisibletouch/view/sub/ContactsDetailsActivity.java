@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.internal.SinglePackActivity;
+import com.varunarl.invisibletouch.utils.Contact;
 import com.varunarl.invisibletouch.utils.ContactManager;
 import com.varunarl.invisibletouch.view.ContactsActivity;
 
@@ -17,21 +18,18 @@ public class ContactsDetailsActivity extends SinglePackActivity {
 	private int NAME_VIEW_ID = 1000;
 	private int NUMBER_VIEW_ID = 1001;
 	private LinearLayout mRootView;
-	private String mCurrentContactName;
-	private String mCurrentContactPhone;
-
+    private Contact mContact;
 	
 	@Override
 	protected void init() {
 		Intent i = getIntent();
-		mCurrentContactName = i.getStringExtra(ContactManager.INTENT_FLAG_CONTACT_NAME);
-		mCurrentContactPhone = i.getStringExtra(ContactManager.INTENT_FLAG_CONTACT_TELEPHONE);
+		mContact = i.getParcelableExtra(ContactManager.INTENT_FLAG_CONTACT);
 		super.init();
 	}
 
 	@Override
 	public void onSwipeRight() {
-        InvisibleTouchApplication.getInstance().getCallManager().makeCall(mCurrentContactPhone,this);
+        InvisibleTouchApplication.getInstance().getCallManager().makeCall(mContact.getPhone(),this);
 	}
 
 	@Override
@@ -126,16 +124,16 @@ public class ContactsDetailsActivity extends SinglePackActivity {
 			phone.setTextColor(Color.GRAY);
 			name.setId(NAME_VIEW_ID);
 			phone.setId(NUMBER_VIEW_ID);
-			name.setText(mCurrentContactName);
-			phone.setText(mCurrentContactPhone);
+            name.setText(mContact.getName());
+            phone.setText(mContact.getPhone());
 
 			mRootView.addView(name);
 			mRootView.addView(phone);
 		} else {
 			name = (TextView) mRootView.findViewById(NAME_VIEW_ID);
 			phone = (TextView) mRootView.findViewById(NUMBER_VIEW_ID);
-			name.setText(mCurrentContactName);
-			phone.setText(mCurrentContactPhone);
+            name.setText(mContact.getName());
+            phone.setText(mContact.getPhone());
 		}
 
 	}

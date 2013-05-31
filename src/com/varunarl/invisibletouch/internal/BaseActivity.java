@@ -151,6 +151,12 @@ public abstract class BaseActivity extends Activity implements IGestures,
     }
 
     @Override
+    public void startActivityForResult(Intent intent, int requestCode) {
+        mStoppedFromNewScreen = true;
+        super.startActivityForResult(intent,requestCode);
+    }
+
+    @Override
     protected void onPause() {
         if (InvisibleTouchApplication.getInstance().isIncomingCallDetected())
             mStoppedFromNewScreen = true;

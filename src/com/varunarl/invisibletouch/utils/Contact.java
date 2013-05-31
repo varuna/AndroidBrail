@@ -11,8 +11,16 @@ import java.util.Map;
  */
 public class Contact implements Parcelable {
     public static final String PARCELABLE_CONTACT = "_CONTACT_";
+
     private static final String PARCELABLE_NAME_KEY = "_CONTACT_NAME_";
     private static final String PARCELABLE_PHONE_KEY = "_CONTACT_PHONE_";
+
+    public static final int STAGE_NEW_NAME = 0;
+    public static final int STAGE_NEW_PHONE = 1;
+    public static final int STAGE_UPDATE_NAME = 2;
+    public static final int STAGE_UPDATE_PHONE = 3;
+    public static final int STAGE_COMPLETE_CONTACT = -1;
+
     private String name;
     private String phone;
 
@@ -72,6 +80,10 @@ public class Contact implements Parcelable {
         }
     };
 
+    @Override
+    public String toString() {
+        return "Contact name is "+ getName() + "and Phone number is " +getPhone();
+    }
 
     @Override
     public boolean equals(Object o) {

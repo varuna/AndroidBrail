@@ -177,9 +177,8 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
     @Override
     public void onKeyOne() {
         Intent i = new Intent(this,ContactModifyActivity.class);
-        i.setAction(ContactManager.EDIT_CONTACT);
-        i.putExtra(ContactManager.INTENT_FLAG_CONTACT_NAME,mCurrentContact.getName());
-        i.putExtra(ContactManager.INTENT_FLAG_CONTACT_TELEPHONE,mCurrentContact.getPhone());
+        i.setAction(ContactManager.ACTION_UPDATE_CONTACT);
+        i.putExtra(ContactManager.INTENT_FLAG_CONTACT,mCurrentContact);
         startActivity(i);
     }
 
@@ -192,8 +191,7 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
     public void onKeyThree() {
         Intent i = new Intent(this, BooleanActivity.class);
         i.setAction(ContactManager.ACTION_DELETE_CONTACT);
-        i.putExtra(ContactManager.INTENT_FLAG_CONTACT_NAME, mCurrentContact.getName());
-        i.putExtra(ContactManager.INTENT_FLAG_CONTACT_TELEPHONE, mCurrentContact.getPhone());
+        i.putExtra(ContactManager.INTENT_FLAG_CONTACT,mCurrentContact);
         startActivity(i);
     }
 
@@ -208,8 +206,7 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
     public void onKeyFive() {
         Intent i = new Intent(ContactsActivity.this,
                 ContactsDetailsActivity.class);
-        i.putExtra(ContactManager.INTENT_FLAG_CONTACT_NAME, mCurrentContact.getName());
-        i.putExtra(ContactManager.INTENT_FLAG_CONTACT_TELEPHONE, mCurrentContact.getPhone());
+        i.putExtra(ContactManager.INTENT_FLAG_CONTACT,mCurrentContact);
         startActivity(i);
 
     }

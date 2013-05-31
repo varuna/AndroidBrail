@@ -28,14 +28,12 @@ public class DialPadActivity extends KeyboardActivity {
 
     @Override
     public void onScreenLongPress() {
-        Log.announce("In Dial pad" + String.valueOf(mIsColorOnKeyboard), false);
+        Log.announce("In Dial pad screen", false);
     }
 
     @Override
     public void onSwipeUp() {
-
         mPhoneNumber = mTextInputManager.getText();
-
         Intent menuIntent = new Intent(this, DialPadMenuActivity.class);
         startActivity(menuIntent);
     }

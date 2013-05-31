@@ -1,14 +1,12 @@
 package com.varunarl.invisibletouch.utils;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.provider.ContactsContract;
-
-import java.util.HashMap;
-import java.util.Map;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.provider.ContactsContract.Data;
 
 /**
  * Created by Varuna on 5/30/13.
@@ -16,12 +14,12 @@ import java.util.Map;
 public class ContactManager {
 
     public static final String ACTION_NEW_CONTACT = "com.varunarl.invisibletouch.contact.ACTION_NEW_CONTACT";
+    public static final String ACTION_DELETE_CONTACT = "com.varunarl.invisibletouch.contact.ACTION_DELETE_CONTACT";
+
     public static final String ACTION_UPDATE_CONTACT = "com.varunarl.invisibletouch.contact.ACTION_UPDATE_CONTACT";
-    public static final String NEW_CONTACT_FOR_EXISTING_PHONE = "com.varunarl.invisibletouch.contact.NEW_CONTACT_FOR_EXISTING_PHONE";
-    public static final String EDIT_CONTACT = "com.varunarl.invisibletouch.contact.EDIT_CONTACT";
-    public static String ACTION_DELETE_CONTACT = "com.varunarl.invisibletouch.contactsactivity.ACTION_DELETE_CONTACT";
-    public static String INTENT_FLAG_CONTACT_NAME = "com.varunarl.invisibletouch.contactsactivity.INTENT_FLAG_CONTACT_NAME";
-    public static String INTENT_FLAG_CONTACT_TELEPHONE = "com.varunarl.invisibletouch.contactsactivity.INTENT_FLAG_CONTACT_TELEPHONE";
+
+    public static final String INTENT_FLAG_CONTACT = "com.varunarl.invisibletouch.contactmanager.INTENT_FLAG_CONTACT";
+
     private Cursor mContactsCursor;
     private Context mContext;
 
@@ -76,7 +74,14 @@ public class ContactManager {
         if (find(contact).equals(contact))
             return false;
         else {
-            //TODO add logic
+            ContentValues values = new ContentValues();
+            values.put(Data.RAW_CONTACT_ID, contact.hashCode());
+            values.put(Data.MIMETYPE, Phone.CONTENT_ITEM_TYPE);
+            values.put(Phone.DISPLAY_NAME,contact.getName());
+            values.put(Phone.NUMBER, contact.getPhone());
+            values.put(Phone.TYPE, Phone.TYPE_CUSTOM);
+            mContext.getContentResolver().insert(Data.CONTENT_URI, values);
+
             return true;
         }
     }
