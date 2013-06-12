@@ -1,6 +1,7 @@
 package com.varunarl.invisibletouch.view.sub;
 
 import android.content.Intent;
+import android.widget.Toast;
 import com.varunarl.invisibletouch.braille.Braille;
 import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.internal.KeyboardActivity;
@@ -45,12 +46,86 @@ public class ContactModifyActivity extends KeyboardActivity {
             finish();
             return;
         }
-
+        setCharacterVisibility(true);
         super.init();
     }
 
     @Override
     public void onSwipeRight() {
+        if (mStage == Contact.STAGE_NEW_NAME || mStage == Contact.STAGE_UPDATE_NAME)
+            mTextInputManager.buffer(mCurrentCharacter);
+        else if (mStage == Contact.STAGE_NEW_PHONE || mStage == Contact.STAGE_UPDATE_PHONE)
+            mTextInputManager.buffer(mCurrentCharacter, Braille.KeyBoard.NUMERIC_KEY_TYPE);
+        mCurrentCharacter.reset();
+        resetView();
+    }
+
+    @Override
+    public void onDoubleSwipeRight() {
+        super.onDoubleSwipeRight();
+        String text = mTextInputManager.getText();
+        Intent i = new Intent(this, BooleanActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        int req = -1;
+        if (mStage == Contact.STAGE_NEW_NAME || mStage == Contact.STAGE_UPDATE_NAME) {
+            i.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE, "You have typed " + text + " as contact name");
+            req = REQUEST_CONTACT_ADD_NAME;
+        } else if (mStage == Contact.STAGE_NEW_PHONE || mStage == Contact.STAGE_UPDATE_NAME) {
+            i.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE, "You have typed " + text + " as contact phone number");
+            req = REQUEST_CONTACT_ADD_PHONE;
+        }
+        startActivityForResult(i, req);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        resultCode = InvisibleTouchApplication.getInstance().getResult();
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_CONTACT_ADD_NAME) {
+                mContact.setName(mTextInputManager.getText());
+                mStage = Contact.STAGE_NEW_PHONE;
+            } else if (requestCode == REQUEST_CONTACT_ADD_PHONE) {
+                mContact.setPhone(mTextInputManager.getText());
+                mStage = Contact.STAGE_COMPLETE_CONTACT;
+            } else if (requestCode == REQUEST_CONTACT_COMPLETE) {
+                mContactManager.addNewContact(mContact);
+                finish();
+                return;
+            } else if (requestCode == REQUEST_CONTACT_DELETE) {
+                mContactManager.deleteContact(mContact);
+                finish();
+                return;
+            } else if (requestCode == REQUEST_CONTACT_MODIFY_NAME) {
+                mStage = Contact.STAGE_UPDATE_NAME;
+                mTextInputManager.purge();
+                return;
+            } else if (requestCode == REQUEST_CONTACT_MODIFY_PHONE) {
+                mStage = Contact.STAGE_UPDATE_PHONE;
+                mTextInputManager.purge();
+                return;
+            }
+        } else if (resultCode == RESULT_CANCELED) {
+            if (requestCode == REQUEST_CONTACT_DELETE) {
+                finish();
+                return;
+            } else if (requestCode == REQUEST_CONTACT_MODIFY_NAME && getIntent().getAction().equals(ContactManager.ACTION_UPDATE_CONTACT)) {
+                mStage = Contact.STAGE_NEW_PHONE;
+                mTextInputManager.purge();
+                return;
+            }
+        }
+        mTextInputManager.purge();
+
+        if (mStage == Contact.STAGE_COMPLETE_CONTACT) {
+            Intent i = new Intent(this, BooleanActivity.class);
+            i.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE, "Your contact name is " + mContact.getName() + ", and phone number is " + mContact.getPhone() + ". Is this correct ?");
+            startActivityForResult(i, REQUEST_CONTACT_COMPLETE);
+        }
+    }
+
+    @Override
+    public void onSwipeUp() {
         if (getIntent().getAction().equals(ContactManager.ACTION_DELETE_CONTACT)) {
             Intent i = new Intent(this, BooleanActivity.class);
             i.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE, "Do you want to delete the contact ?" + mContact.toString());
@@ -74,73 +149,6 @@ public class ContactModifyActivity extends KeyboardActivity {
                 resetView();
             }
         }
-    }
-
-    @Override
-    public void onDoubleSwipeRight() {
-        String text = mTextInputManager.getText();
-        Intent i = new Intent(this, BooleanActivity.class);
-        int req = -1;
-        if (mStage == Contact.STAGE_NEW_NAME || mStage == Contact.STAGE_UPDATE_NAME) {
-            i.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE, "You have typed " + text + " as contact name");
-            req = REQUEST_CONTACT_ADD_NAME;
-        } else if (mStage == Contact.STAGE_NEW_PHONE || mStage == Contact.STAGE_UPDATE_NAME) {
-            i.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE, "You have typed " + text + " as contact phone number");
-            req = REQUEST_CONTACT_ADD_PHONE;
-        }
-        startActivityForResult(i, req);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_CONTACT_ADD_NAME) {
-                mContact.setName(mTextInputManager.getText());
-                mStage = Contact.STAGE_NEW_PHONE;
-            } else if (requestCode == REQUEST_CONTACT_ADD_PHONE) {
-                mContact.setPhone(mTextInputManager.getText());
-                mStage = Contact.STAGE_COMPLETE_CONTACT;
-            } else if (requestCode == REQUEST_CONTACT_COMPLETE) {
-                mContactManager.addNewContact(mContact);
-                finish();
-                return;
-            } else if (requestCode == REQUEST_CONTACT_DELETE) {
-                mContactManager.deleteContact(mContact);
-                finish();
-                return;
-            } else if (requestCode == REQUEST_CONTACT_MODIFY_NAME) {
-                mStage = Contact.STAGE_UPDATE_NAME;
-                mTextInputManager.purge();
-                return;
-            }else if (requestCode == REQUEST_CONTACT_MODIFY_PHONE)
-            {
-                mStage = Contact.STAGE_UPDATE_PHONE;
-                mTextInputManager.purge();
-                return;
-            }
-        } else if (resultCode == RESULT_CANCELED) {
-            if (requestCode == REQUEST_CONTACT_DELETE) {
-                finish();
-                return;
-            }else if (requestCode == REQUEST_CONTACT_MODIFY_NAME && getIntent().getAction().equals(ContactManager.ACTION_UPDATE_CONTACT))
-            {
-                mStage = Contact.STAGE_NEW_PHONE;
-                mTextInputManager.purge();
-                return;
-            }
-        }
-        mTextInputManager.purge();
-
-        if (mStage == Contact.STAGE_COMPLETE_CONTACT) {
-            Intent i = new Intent(this, BooleanActivity.class);
-            i.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE, "Your contact name is " + mContact.getName() + ", and phone number is " + mContact.getPhone() + ". Is this correct ?");
-            startActivityForResult(i, REQUEST_CONTACT_COMPLETE);
-        }
-    }
-
-    @Override
-    public void onSwipeUp() {
-        super.onSwipeUp();
     }
 
     @Override

@@ -15,9 +15,7 @@ public class ContactManager {
 
     public static final String ACTION_NEW_CONTACT = "com.varunarl.invisibletouch.contact.ACTION_NEW_CONTACT";
     public static final String ACTION_DELETE_CONTACT = "com.varunarl.invisibletouch.contact.ACTION_DELETE_CONTACT";
-
     public static final String ACTION_UPDATE_CONTACT = "com.varunarl.invisibletouch.contact.ACTION_UPDATE_CONTACT";
-
     public static final String INTENT_FLAG_CONTACT = "com.varunarl.invisibletouch.contactmanager.INTENT_FLAG_CONTACT";
 
     private Cursor mContactsCursor;
@@ -63,9 +61,10 @@ public class ContactManager {
         if (mContactsCursor != null) {
             int nameFieldColumnIndex = mContactsCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
             int numberFieldColumnIndex = mContactsCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-
-            contact.setName(mContactsCursor.getString(nameFieldColumnIndex));
-            contact.setPhone(mContactsCursor.getString(numberFieldColumnIndex));
+            if (nameFieldColumnIndex != -1 && numberFieldColumnIndex != -1) {
+                contact.setName(mContactsCursor.getString(nameFieldColumnIndex));
+                contact.setPhone(mContactsCursor.getString(numberFieldColumnIndex));
+            }
         }
         return contact;
     }
@@ -77,7 +76,7 @@ public class ContactManager {
             ContentValues values = new ContentValues();
             values.put(Data.RAW_CONTACT_ID, contact.hashCode());
             values.put(Data.MIMETYPE, Phone.CONTENT_ITEM_TYPE);
-            values.put(Phone.DISPLAY_NAME,contact.getName());
+            values.put(Phone.DISPLAY_NAME, contact.getName());
             values.put(Phone.NUMBER, contact.getPhone());
             values.put(Phone.TYPE, Phone.TYPE_CUSTOM);
             mContext.getContentResolver().insert(Data.CONTENT_URI, values);

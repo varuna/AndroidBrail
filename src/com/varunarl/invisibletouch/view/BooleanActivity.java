@@ -17,13 +17,13 @@ public class BooleanActivity extends SinglePackActivity {
 
     @Override
     public void onSwipeRight() {
-        setResult(RESULT_OK);
+        setActivityResult(RESULT_OK);
         finish();
     }
 
     @Override
     public void onSwipeLeft() {
-        setResult(RESULT_CANCELED);
+        setActivityResult(RESULT_CANCELED);
         finish();
     }
 

@@ -2,15 +2,12 @@ package com.varunarl.invisibletouch.internal;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
 import com.varunarl.invisibletouch.R;
 import com.varunarl.invisibletouch.utils.Log;
 import com.varunarl.invisibletouch.utils.Log.Level;
-import com.varunarl.invisibletouch.view.MainMenuActivity;
 
 public abstract class BaseActivity extends Activity implements IGestures,
         IBrailleKeyboard, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
@@ -153,7 +150,12 @@ public abstract class BaseActivity extends Activity implements IGestures,
     @Override
     public void startActivityForResult(Intent intent, int requestCode) {
         mStoppedFromNewScreen = true;
-        super.startActivityForResult(intent,requestCode);
+        super.startActivityForResult(intent, requestCode);
+    }
+
+    public void setActivityResult(int result) {
+        InvisibleTouchApplication.getInstance().setResult(result);
+        setResult(RESULT_CANCELED);
     }
 
     @Override
@@ -168,14 +170,10 @@ public abstract class BaseActivity extends Activity implements IGestures,
     protected void onStop() {
         if (!mStoppedFromNewScreen && !isFinishing) {
             Log.announce(
-                    "Whoa.. we are losing screen. Install Alarm to start Invisible touch",
+                    "Whoa.. we are losing screen. Signaling : " + SignalReceiver.HOME_SCREEN_LAUNCHED,
                     Level.WARNING);
-            AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-            Intent i = new Intent(this, MainMenuActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 10, PendingIntent.getActivity(this, 0,
-                    i, PendingIntent.FLAG_CANCEL_CURRENT));
+            Intent i = new Intent(SignalReceiver.HOME_SCREEN_LAUNCHED);
+            sendBroadcast(i);
         }
         super.onStop();
     }

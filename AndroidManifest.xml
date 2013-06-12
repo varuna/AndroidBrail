@@ -21,6 +21,12 @@
             android:icon="@drawable/ic_launcher"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
+        <receiver android:name=".internal.SignalReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="com.varunarl.invisibletouch.HOME_LAUNCHED"/>
+            </intent-filter>
+        </receiver>
         <activity
                 android:name=".view.ContactsActivity"
                 android:screenOrientation="portrait">
@@ -64,6 +70,7 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </receiver>
+        <receiver android:name=".internal.SignalReceiver"/>
         <activity
                 android:name=".view.IncomingCallActivity"
                 android:screenOrientation="portrait">

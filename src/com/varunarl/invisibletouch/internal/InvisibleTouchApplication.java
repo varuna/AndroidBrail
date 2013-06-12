@@ -1,8 +1,10 @@
 package com.varunarl.invisibletouch.internal;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
@@ -21,6 +23,7 @@ public class InvisibleTouchApplication extends Application implements OnInitList
     private CallManager mCallManager;
     private ContactManager mContactManager;
     private boolean incomingCallDetected;
+    private ActivityResults mResultsManager;
 
     public static InvisibleTouchApplication getInstance() {
         return instance;
@@ -35,6 +38,7 @@ public class InvisibleTouchApplication extends Application implements OnInitList
         mCallManager = new CallManager(this);
         mContactManager = new ContactManager(this);
         incomingCallDetected = false;
+        mResultsManager = new ActivityResults();
         if (mVibratorService != null)
             Log.announce("Vibrator service ready", Level.INFO);
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
@@ -87,8 +91,48 @@ public class InvisibleTouchApplication extends Application implements OnInitList
         }
     }
 
-    public void exit()
-    {
+    public void exit() {
         mCallManager.destroy();
+    }
+
+    public Bundle getData() {
+        return mResultsManager.getData();
+    }
+
+    public void setData(Bundle data) {
+        mResultsManager.setData(data);
+    }
+
+    public int getResult() {
+        return mResultsManager.getResult();
+    }
+
+    public void setResult(int result) {
+        mResultsManager.setResult(result);
+    }
+
+    public class ActivityResults {
+        private int mResult = -1;
+        private Bundle mResultsData = null;
+
+        public Bundle getData() {
+            return mResultsData;
+        }
+
+        public void setData(Bundle data) {
+            mResultsData = data;
+        }
+
+        public int getResult() {
+            return mResult;
+        }
+
+        public void setResult(int result) {
+            if (result == Activity.RESULT_CANCELED || result == Activity.RESULT_OK) {
+                mResult = result;
+            }
+        }
+
+
     }
 }
