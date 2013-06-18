@@ -28,7 +28,7 @@ public class DialPadActivity extends KeyboardActivity {
 
     @Override
     public void onScreenLongPress() {
-        Log.announce("In Dial pad screen", false);
+        Log.announce("In Dial pad screen. Current Number " + mTextInputManager.getText(), false);
     }
 
     @Override

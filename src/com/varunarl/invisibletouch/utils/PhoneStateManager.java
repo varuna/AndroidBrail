@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.widget.Toast;
 
 public class PhoneStateManager extends PhoneStateListener {
 
@@ -21,6 +22,7 @@ public class PhoneStateManager extends PhoneStateListener {
 
     @Override
     public void onCallStateChanged(int state, String incomingNumber) {
+        Toast.makeText(mContext,"state : "+state,Toast.LENGTH_LONG).show();
         switch (state) {
             case TelephonyManager.CALL_STATE_IDLE:
                 if (mPhoneState.getPhoneState() == TelephonyManager.CALL_STATE_OFFHOOK) {
@@ -28,6 +30,7 @@ public class PhoneStateManager extends PhoneStateListener {
                 }
                 break;
             case TelephonyManager.CALL_STATE_OFFHOOK:
+
                 break;
             case TelephonyManager.CALL_STATE_RINGING:
                 break;

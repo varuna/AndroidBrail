@@ -100,7 +100,7 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
         InvisibleTouchApplication.getInstance().getCallManager().registerPhoneStateListener(
                 this, mIntent);
 
-        if (mCurrentContact != null) {
+        if (mCurrentContact == null) {
             mCurrentContact = InvisibleTouchApplication.getInstance().getContactManager().getContact();
         }
     }
@@ -134,7 +134,7 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
 
     @Override
     public void onScreenLongPress() {
-        Log.announce("In Contacts screen", false);
+        Log.announce("In Contacts screen. Current contact "+mCurrentContact.toString(), false);
 
     }
 
