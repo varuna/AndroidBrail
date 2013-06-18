@@ -1,10 +1,15 @@
 package com.varunarl.invisibletouch.utils;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.widget.Toast;
+
+import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
+import com.varunarl.invisibletouch.view.OutGoingCallActivity;
 
 public class PhoneStateManager extends PhoneStateListener {
 
@@ -30,6 +35,16 @@ public class PhoneStateManager extends PhoneStateListener {
                 }
                 break;
             case TelephonyManager.CALL_STATE_OFFHOOK:
+                if (InvisibleTouchApplication.getInstance().getCallManager().isOutGoingCall()){
+                    Intent i = new Intent(mContext,OutGoingCallActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    i.putExtra(OutGoingCallActivity.NUMBER,incomingNumber);
+
+                    PendingIntent pi = PendingIntent.getActivity(mContext,0,i,PendingIntent.FLAG_UPDATE_CURRENT);
+                    AlarmManager am = (AlarmManager)mContext.getSystemService(Context.ALARM_SERVICE);
+                    am.set(AlarmManager.RTC_WAKEUP,300,pi);
+                }
 
                 break;
             case TelephonyManager.CALL_STATE_RINGING:

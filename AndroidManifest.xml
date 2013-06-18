@@ -27,6 +27,7 @@
                 <action android:name="com.varunarl.invisibletouch.HOME_LAUNCHED"/>
             </intent-filter>
         </receiver>
+
         <activity
                 android:name=".view.ContactsActivity"
                 android:screenOrientation="portrait">
@@ -63,14 +64,17 @@
                 android:name=".view.sub.ContactModifyActivity"
                 android:screenOrientation="portrait">
         </activity>
+
         <receiver android:name=".utils.CallStateListener">
             <intent-filter>
                 <action android:name="android.intent.action.PHONE_STATE"/>
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL"/>
+
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </receiver>
         <receiver android:name=".internal.SignalReceiver"/>
+
         <activity
                 android:name=".view.IncomingCallActivity"
                 android:screenOrientation="portrait">
@@ -87,6 +91,9 @@
                 android:name=".view.SettingsActivity"
                 android:screenOrientation="portrait">
         </activity>
+        <activity
+                android:name=".view.OutGoingCallActivity"
+                android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

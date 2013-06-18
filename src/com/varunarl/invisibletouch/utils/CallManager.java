@@ -26,6 +26,7 @@ public class CallManager {
     private Context mContext;
     private com.android.internal.telephony.ITelephony mTelephonyService;
     private TelephonyManager mTelephonyManager;
+    private boolean mOutGoingCall;
 
     public CallManager(Context context) {
         mContext = context;
@@ -49,12 +50,15 @@ public class CallManager {
 
         mContext.registerReceiver(new CallStateListener(), intentFilterPhoneState, "android.permission.READ_PHONE_STATE", null);
         mContext.registerReceiver(new CallStateListener(),intentFilterOutGoing, "android.permission.PROCESS_OUTGOING_CALLS",null);
+
+        mOutGoingCall = false;
     }
 
     public void makeCall(String phoneNumber, BaseActivity mActivity) {
         Intent mCallIntent = new Intent(Intent.ACTION_CALL);
         mCallIntent.setData(Uri.parse("tel:" + phoneNumber));
         mCallIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        setIsOutGoingCall(true);
         mActivity.startActivity(mCallIntent);
     }
 
@@ -76,6 +80,14 @@ public class CallManager {
 
     public void removePhoneStateListener() {
         mTelephonyManager.listen(null, PhoneStateListener.LISTEN_CALL_STATE);
+    }
+
+    public boolean isOutGoingCall() {
+        return mOutGoingCall;
+    }
+
+    public void setIsOutGoingCall(boolean isOutGoingCall) {
+        mOutGoingCall = isOutGoingCall;
     }
 
     public static void startTelephoneInterface(Context context,String number, String name)
