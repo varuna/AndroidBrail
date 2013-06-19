@@ -4,7 +4,13 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.*;
+import android.view.GestureDetector;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+
 import com.varunarl.invisibletouch.R;
 import com.varunarl.invisibletouch.utils.Log;
 import com.varunarl.invisibletouch.utils.Log.Level;
@@ -19,6 +25,7 @@ public abstract class BaseActivity extends Activity implements IGestures,
     protected final static int SWIPE_RIGHT = 11;
     protected final static int SWIPE_UP = 12;
     protected final static int SWIPE_DOWN = 13;
+    private final static int FLING_THRESHOLD = 100;
     protected int mCurrentGesture = -1;
     private int mLastSwipeDirection = -1;
     private boolean mStoppedFromNewScreen = false;
@@ -237,39 +244,48 @@ public abstract class BaseActivity extends Activity implements IGestures,
     public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent2, float velocityX, float velocityY) {
         mCurrentGesture = GESTURE_SWIPE;
         int direction = getFlingDirection(motionEvent, motionEvent2);
-
-        switch (direction) {
-            case SWIPE_DOWN:
-                if (mLastSwipeDirection == SWIPE_DOWN)
-                    onDoubleSwipeDown();
-                else
-                    onSwipeDown();
-                break;
-            case SWIPE_LEFT:
-                if (mLastSwipeDirection == SWIPE_LEFT)
-                    onDoubleSwipeLeft();
-                else
-                    onSwipeLeft();
-                break;
-            case SWIPE_RIGHT:
-                if (mLastSwipeDirection == SWIPE_RIGHT)
-                    onDoubleSwipeRight();
-                else
-                    onSwipeRight();
-                break;
-            case SWIPE_UP:
-                if (mLastSwipeDirection == SWIPE_UP)
-                    onDoubleSwipeUp();
-                else
-                    onSwipeUp();
-                break;
-            default:
-                mLastSwipeDirection = -1;
-                return false;
+        boolean isValidFling = validateFling(motionEvent, motionEvent2);
+        if (isValidFling) {
+            switch (direction) {
+                case SWIPE_DOWN:
+                    if (mLastSwipeDirection == SWIPE_DOWN)
+                        onDoubleSwipeDown();
+                    else
+                        onSwipeDown();
+                    break;
+                case SWIPE_LEFT:
+                    if (mLastSwipeDirection == SWIPE_LEFT)
+                        onDoubleSwipeLeft();
+                    else
+                        onSwipeLeft();
+                    break;
+                case SWIPE_RIGHT:
+                    if (mLastSwipeDirection == SWIPE_RIGHT)
+                        onDoubleSwipeRight();
+                    else
+                        onSwipeRight();
+                    break;
+                case SWIPE_UP:
+                    if (mLastSwipeDirection == SWIPE_UP)
+                        onDoubleSwipeUp();
+                    else
+                        onSwipeUp();
+                    break;
+                default:
+                    mLastSwipeDirection = -1;
+                    return false;
+            }
+            mLastSwipeDirection = direction;
+            return true;
+        } else {
+            mLastSwipeDirection = -1;
+            return false;
         }
 
-        mLastSwipeDirection = direction;
-        return true;
+    }
+
+    private boolean validateFling(MotionEvent motionEvent, MotionEvent motionEvent2) {
+        return Math.abs(motionEvent.getX() - motionEvent2.getX()) > FLING_THRESHOLD || Math.abs(motionEvent.getY() - motionEvent2.getY()) > FLING_THRESHOLD;
     }
 
     private int getFlingDirection(MotionEvent event1, MotionEvent event2) {

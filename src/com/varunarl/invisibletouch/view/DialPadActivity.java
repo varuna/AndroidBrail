@@ -50,7 +50,7 @@ public class DialPadActivity extends KeyboardActivity {
     public void onDoubleSwipeRight() {
         super.onDoubleSwipeRight();
         mPhoneNumber = mTextInputManager.getText();
-        Log.announce(mPhoneNumber, false);
+       /* Log.announce(mPhoneNumber, false);
         int count = 0;
         boolean isFirstCharacterZero = false;
         for (Character c : mPhoneNumber.toCharArray()) {
@@ -66,9 +66,9 @@ public class DialPadActivity extends KeyboardActivity {
                 mCallManager.makeCall(mPhoneNumber, this);
             }
             if (count == 9) {
-                mPhoneNumber = "0" + mPhoneNumber;
+                mPhoneNumber = "0" + mPhoneNumber;*/
                 mCallManager.makeCall(mPhoneNumber, this);
-            }
-        }
+         /*   }
+        }*/
     }
 }

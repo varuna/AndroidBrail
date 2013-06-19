@@ -8,6 +8,7 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.widget.Toast;
 
+import com.varunarl.invisibletouch.internal.BaseActivity;
 import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.view.OutGoingCallActivity;
 
@@ -32,6 +33,10 @@ public class PhoneStateManager extends PhoneStateListener {
             case TelephonyManager.CALL_STATE_IDLE:
                 if (mPhoneState.getPhoneState() == TelephonyManager.CALL_STATE_OFFHOOK) {
                     mContext.startActivity(mIntent);
+                    try{
+                        BaseActivity ac = (BaseActivity)mPhoneState;
+                        ac.finish();
+                    }catch (Exception e){}
                 }
                 break;
             case TelephonyManager.CALL_STATE_OFFHOOK:
@@ -43,7 +48,7 @@ public class PhoneStateManager extends PhoneStateListener {
 
                     PendingIntent pi = PendingIntent.getActivity(mContext,0,i,PendingIntent.FLAG_UPDATE_CURRENT);
                     AlarmManager am = (AlarmManager)mContext.getSystemService(Context.ALARM_SERVICE);
-                    am.set(AlarmManager.RTC_WAKEUP,300,pi);
+                    am.set(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+300,pi);
                 }
 
                 break;
