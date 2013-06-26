@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.widget.Toast;
-
 import com.varunarl.invisibletouch.internal.BaseActivity;
 import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.view.OutGoingCallActivity;
@@ -28,27 +27,29 @@ public class PhoneStateManager extends PhoneStateListener {
 
     @Override
     public void onCallStateChanged(int state, String incomingNumber) {
-        Toast.makeText(mContext,"state : "+state,Toast.LENGTH_LONG).show();
+        Toast.makeText(mContext, "state : " + state, Toast.LENGTH_LONG).show();
         switch (state) {
             case TelephonyManager.CALL_STATE_IDLE:
                 if (mPhoneState.getPhoneState() == TelephonyManager.CALL_STATE_OFFHOOK) {
                     mContext.startActivity(mIntent);
-                    try{
-                        BaseActivity ac = (BaseActivity)mPhoneState;
+                    try {
+                        BaseActivity ac = (BaseActivity) mPhoneState;
                         ac.finish();
-                    }catch (Exception e){}
+                    } catch (Exception e) {
+                    }
                 }
                 break;
             case TelephonyManager.CALL_STATE_OFFHOOK:
-                if (InvisibleTouchApplication.getInstance().getCallManager().isOutGoingCall()){
-                    Intent i = new Intent(mContext,OutGoingCallActivity.class);
+                if (InvisibleTouchApplication.getInstance().getCallManager().isOutGoingCall()) {
+                    Toast.makeText(mContext, "Launching the OutGoing Screen", Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(mContext, OutGoingCallActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    i.putExtra(OutGoingCallActivity.NUMBER,incomingNumber);
+                    i.putExtra(OutGoingCallActivity.NUMBER, incomingNumber);
 
-                    PendingIntent pi = PendingIntent.getActivity(mContext,0,i,PendingIntent.FLAG_UPDATE_CURRENT);
-                    AlarmManager am = (AlarmManager)mContext.getSystemService(Context.ALARM_SERVICE);
-                    am.set(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+300,pi);
+                    PendingIntent pi = PendingIntent.getActivity(mContext, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+                    AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+                    am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 300, pi);
                 }
 
                 break;
