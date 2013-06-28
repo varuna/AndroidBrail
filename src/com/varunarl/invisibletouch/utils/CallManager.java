@@ -10,8 +10,11 @@ import android.os.RemoteException;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.view.KeyEvent;
+import android.widget.Toast;
+
 import com.varunarl.invisibletouch.internal.BaseActivity;
 import com.varunarl.invisibletouch.view.IncomingCallActivity;
+import com.varunarl.invisibletouch.view.OutGoingCallActivity;
 
 import java.lang.reflect.Method;
 
@@ -55,10 +58,20 @@ public class CallManager {
     }
 
     public void makeCall(String phoneNumber, BaseActivity mActivity) {
+
+        Toast.makeText(mContext, "Launching the OutGoing Screen", Toast.LENGTH_LONG).show();
+        Intent i = new Intent(mContext, OutGoingCallActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        i.putExtra(OutGoingCallActivity.NUMBER, phoneNumber);
+
+        PendingIntent pi = PendingIntent.getActivity(mContext, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+        am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 300, pi);
+
         Intent mCallIntent = new Intent(Intent.ACTION_CALL);
         mCallIntent.setData(Uri.parse("tel:" + phoneNumber));
         mCallIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        setIsOutGoingCall(true);
         mActivity.startActivity(mCallIntent);
     }
 
@@ -80,14 +93,6 @@ public class CallManager {
 
     public void removePhoneStateListener() {
         mTelephonyManager.listen(null, PhoneStateListener.LISTEN_CALL_STATE);
-    }
-
-    public boolean isOutGoingCall() {
-        return mOutGoingCall;
-    }
-
-    public void setIsOutGoingCall(boolean isOutGoingCall) {
-        mOutGoingCall = isOutGoingCall;
     }
 
     public static void startTelephoneInterface(Context context,String number, String name)
