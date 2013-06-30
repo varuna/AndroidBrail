@@ -5,12 +5,10 @@ import android.os.RemoteException;
 
 import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.internal.SixPackActivity;
-
-/**
- * Created by Varuna on 6/18/13.
- */
+import com.varunarl.invisibletouch.utils.CallManager;
 public class OutGoingCallActivity extends SixPackActivity {
     public static final String NUMBER = "com.varunarl.outgoingcall.number";
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -56,6 +54,7 @@ public class OutGoingCallActivity extends SixPackActivity {
             InvisibleTouchApplication.getInstance().getCallManager().endCall();
             finish();
         } catch (RemoteException e) {
+            e.printStackTrace();
         }
     }
 
@@ -132,5 +131,21 @@ public class OutGoingCallActivity extends SixPackActivity {
     @Override
     public void onScreenLongPress() {
 
+    }
+
+    @Override
+    public void onKeyOne() {
+        InvisibleTouchApplication.getInstance().getCallManager().toggleMicMute();
+        super.onKeyOne();
+    }
+
+    @Override
+    public void onKeyTwo() {
+        CallManager cm = InvisibleTouchApplication.getInstance().getCallManager();
+        if (cm.isSpeakerOn())
+            cm.turnOnSpeaker(false);
+        else
+            cm.turnOnSpeaker(true);
+        super.onKeyTwo();
     }
 }

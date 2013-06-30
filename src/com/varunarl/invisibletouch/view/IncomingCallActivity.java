@@ -5,21 +5,19 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.internal.SinglePackActivity;
 import com.varunarl.invisibletouch.utils.CallManager;
-import com.varunarl.invisibletouch.utils.CallStateListener;
-import com.varunarl.invisibletouch.utils.IPhoneState;
 import com.varunarl.invisibletouch.utils.Log;
 
-public class IncomingCallActivity extends SinglePackActivity implements IPhoneState {
+public class IncomingCallActivity extends SinglePackActivity {
 
     private String mName = "";
     private String mNumber = "";
     private LinearLayout mRootView;
     private int NAME_VIEW_ID = 1000;
     private int NUMBER_VIEW_ID = 1001;
-    private int mPhoneState;
 
     @Override
     protected void init() {
@@ -29,8 +27,6 @@ public class IncomingCallActivity extends SinglePackActivity implements IPhoneSt
                 CallManager.FLAG_RINGING_CALLER_NUMBER);
 
         super.init();
-        InvisibleTouchApplication.getInstance().getCallManager().registerPhoneStateListener(this, getIntent());
-        Log.announce("Current Phone State : " + mPhoneState, false);
     }
 
     @Override
@@ -40,7 +36,6 @@ public class IncomingCallActivity extends SinglePackActivity implements IPhoneSt
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Log.announce("Current Phone State : " + mPhoneState, false);
     }
 
     @Override
@@ -51,8 +46,6 @@ public class IncomingCallActivity extends SinglePackActivity implements IPhoneSt
             e.printStackTrace();
         }
         finish();
-        Log.announce("Current Phone State : " + mPhoneState, false);
-        InvisibleTouchApplication.getInstance().getCallManager().removePhoneStateListener();
     }
 
     @Override
@@ -113,7 +106,7 @@ public class IncomingCallActivity extends SinglePackActivity implements IPhoneSt
 
     @Override
     public void onScreenLongPress() {
-        Log.announce("In Incoming call screen",false);
+        Log.announce("In Incoming call screen", false);
     }
 
     @Override
@@ -153,15 +146,5 @@ public class IncomingCallActivity extends SinglePackActivity implements IPhoneSt
             name.setText(mName);
             phone.setText(mNumber);
         }
-    }
-
-    @Override
-    public int getPhoneState() {
-        return mPhoneState;
-    }
-
-    @Override
-    public void setPhoneState(int state) {
-        mPhoneState = state;
     }
 }

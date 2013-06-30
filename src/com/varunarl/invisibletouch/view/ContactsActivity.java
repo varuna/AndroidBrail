@@ -1,7 +1,6 @@
 package com.varunarl.invisibletouch.view;
 
 import android.content.Intent;
-import android.telephony.TelephonyManager;
 import android.view.View;
 
 import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
@@ -10,17 +9,13 @@ import com.varunarl.invisibletouch.utils.Contact;
 import com.varunarl.invisibletouch.utils.ContactManager;
 import com.varunarl.invisibletouch.utils.FavouriteContacts;
 import com.varunarl.invisibletouch.utils.FavouriteExistsException;
-import com.varunarl.invisibletouch.utils.IPhoneState;
 import com.varunarl.invisibletouch.utils.Log;
 import com.varunarl.invisibletouch.view.sub.ContactModifyActivity;
 import com.varunarl.invisibletouch.view.sub.ContactsDetailsActivity;
 
-public class ContactsActivity extends SixPackActivity implements IPhoneState {
+public class ContactsActivity extends SixPackActivity {
 
-
-    private int mLastCallState;
     private Contact mCurrentContact;
-    private Intent mIntent;
 
     @Override
     public void onSwipeUp() {
@@ -44,8 +39,7 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
 
     @Override
     public void onSwipeRight() {
-        if (mLastCallState == TelephonyManager.CALL_STATE_IDLE)
-            InvisibleTouchApplication.getInstance().getCallManager().makeCall(mCurrentContact.getPhone(), this);
+        InvisibleTouchApplication.getInstance().getCallManager().makeCall(mCurrentContact.getPhone(), this);
     }
 
     @Override
@@ -93,12 +87,7 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
 
     @Override
     protected void init() {
-        mIntent = getIntent();
-
-        mLastCallState = -1;
         super.init();
-        InvisibleTouchApplication.getInstance().getCallManager().registerPhoneStateListener(
-                this, mIntent);
 
         if (mCurrentContact == null) {
             mCurrentContact = InvisibleTouchApplication.getInstance().getContactManager().getContact();
@@ -108,16 +97,6 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
     @Override
     protected void onAttachView(int id, View view) {
 
-    }
-
-    @Override
-    public int getPhoneState() {
-        return mLastCallState;
-    }
-
-    @Override
-    public void setPhoneState(int state) {
-        this.mLastCallState = state;
     }
 
     @Override
@@ -134,7 +113,7 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
 
     @Override
     public void onScreenLongPress() {
-        Log.announce("In Contacts screen. Current contact "+mCurrentContact.toString(), false);
+        Log.announce("In Contacts screen. Current contact " + mCurrentContact.toString(), false);
 
     }
 
@@ -176,9 +155,9 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
 
     @Override
     public void onKeyOne() {
-        Intent i = new Intent(this,ContactModifyActivity.class);
+        Intent i = new Intent(this, ContactModifyActivity.class);
         i.setAction(ContactManager.ACTION_UPDATE_CONTACT);
-        i.putExtra(ContactManager.INTENT_FLAG_CONTACT,mCurrentContact);
+        i.putExtra(ContactManager.INTENT_FLAG_CONTACT, mCurrentContact);
         startActivity(i);
     }
 
@@ -191,7 +170,7 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
     public void onKeyThree() {
         Intent i = new Intent(this, BooleanActivity.class);
         i.setAction(ContactManager.ACTION_DELETE_CONTACT);
-        i.putExtra(ContactManager.INTENT_FLAG_CONTACT,mCurrentContact);
+        i.putExtra(ContactManager.INTENT_FLAG_CONTACT, mCurrentContact);
         startActivity(i);
     }
 
@@ -206,7 +185,7 @@ public class ContactsActivity extends SixPackActivity implements IPhoneState {
     public void onKeyFive() {
         Intent i = new Intent(ContactsActivity.this,
                 ContactsDetailsActivity.class);
-        i.putExtra(ContactManager.INTENT_FLAG_CONTACT,mCurrentContact);
+        i.putExtra(ContactManager.INTENT_FLAG_CONTACT, mCurrentContact);
         startActivity(i);
 
     }
