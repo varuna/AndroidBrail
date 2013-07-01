@@ -13,8 +13,7 @@ import android.telephony.TelephonyManager;
 import android.view.KeyEvent;
 
 import com.varunarl.invisibletouch.internal.BaseActivity;
-import com.varunarl.invisibletouch.view.IncomingCallActivity;
-import com.varunarl.invisibletouch.view.OutGoingCallActivity;
+import com.varunarl.invisibletouch.view.InCallActivity;
 
 import java.lang.reflect.Method;
 
@@ -55,7 +54,7 @@ public class CallManager {
 
     public static void startTelephoneInterface(Context context, String number, String name) {
         Log.announce("Starting UI : " + number, false);
-        Intent i = new Intent(context, IncomingCallActivity.class);
+        Intent i = new Intent(context, InCallActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         i.putExtra(FLAG_RINGING_CALLER_NUMBER, number);
@@ -67,10 +66,10 @@ public class CallManager {
     }
 
     public void makeCall(String phoneNumber, BaseActivity mActivity) {
-        Intent i = new Intent(mContext, OutGoingCallActivity.class);
+        Intent i = new Intent(mContext, InCallActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        i.putExtra(OutGoingCallActivity.NUMBER, phoneNumber);
+        i.putExtra(InCallActivity.NUMBER, phoneNumber);
 
         PendingIntent pi = PendingIntent.getActivity(mContext, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);

@@ -77,10 +77,6 @@
         <receiver android:name=".internal.SignalReceiver"/>
 
         <activity
-                android:name=".view.IncomingCallActivity"
-                android:screenOrientation="portrait">
-        </activity>
-        <activity
                 android:name=".view.sub.DialPadMenuActivity"
                 android:screenOrientation="portrait">
         </activity>
@@ -93,7 +89,7 @@
                 android:screenOrientation="portrait">
         </activity>
         <activity
-                android:name=".view.OutGoingCallActivity"
+                android:name=".view.InCallActivity"
                 android:screenOrientation="portrait"/>
     </application>
 

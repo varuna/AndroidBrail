@@ -1,20 +1,21 @@
 package com.varunarl.invisibletouch.view;
 
-import android.os.Bundle;
+import android.content.Intent;
 import android.os.RemoteException;
 import android.telephony.TelephonyManager;
-import android.widget.Toast;
 
 import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.internal.SixPackActivity;
 import com.varunarl.invisibletouch.utils.CallManager;
 import com.varunarl.invisibletouch.utils.PhoneStateManager;
 
-public class OutGoingCallActivity extends SixPackActivity implements PhoneStateManager.INotify {
-    public static final String NUMBER = "com.varunarl.outgoingcall.number";
+public class InCallActivity extends SixPackActivity implements PhoneStateManager.INotify {
+    public static final String NUMBER = "com.varunarl.call.number";
 
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    @Override
+    protected void init() {
+        InvisibleTouchApplication.getInstance().getCallManager().registerPhoneStateListener(this);
+        super.init();
     }
 
     @Override
@@ -154,8 +155,26 @@ public class OutGoingCallActivity extends SixPackActivity implements PhoneStateM
     }
 
     @Override
+    public void onKeyFive() {
+        try {
+            InvisibleTouchApplication.getInstance().getCallManager().endCall();
+            finish();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        super.onKeyFive();
+    }
+
+    @Override
+    public void onKeySix() {
+        Intent i = new Intent(this, DialPadActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
+        super.onKeySix();
+    }
+
+    @Override
     public void onCallStateChanged(int state, String incomingNumber) {
-        Toast.makeText(this,"State : "+state,Toast.LENGTH_SHORT).show();
         if (state == TelephonyManager.CALL_STATE_IDLE) {
             finish();
             InvisibleTouchApplication.getInstance().getCallManager().unregisterPhoneStateListener();
