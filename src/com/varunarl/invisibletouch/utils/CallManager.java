@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.RemoteException;
+import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.view.KeyEvent;
 
@@ -16,6 +17,7 @@ import com.varunarl.invisibletouch.view.IncomingCallActivity;
 import com.varunarl.invisibletouch.view.OutGoingCallActivity;
 
 import java.lang.reflect.Method;
+
 public class CallManager {
 
     public static final String FLAG_RINGING_CALLER_NUMBER = "com.varunarl.invisibletouch.utils.CallStateListener.RINGING_NUMBER";
@@ -80,8 +82,11 @@ public class CallManager {
         mActivity.startActivity(mCallIntent);
     }
 
+
+
     public void endCall() throws RemoteException {
         mTelephonyService.endCall();
+        unregisterPhoneStateListener();
         if (isSpeakerOn())
             turnOnSpeaker(false);
     }
@@ -114,5 +119,12 @@ public class CallManager {
         mContext.unregisterReceiver(new CallStateListener());
     }
 
+    public void registerPhoneStateListener(PhoneStateManager.INotify callBack) {
+        mTelephonyManager.listen(new PhoneStateManager(callBack), PhoneStateListener.LISTEN_CALL_STATE);
+    }
+
+    public void unregisterPhoneStateListener() {
+        mTelephonyManager.listen(null, PhoneStateListener.LISTEN_CALL_STATE);
+    }
 
 }

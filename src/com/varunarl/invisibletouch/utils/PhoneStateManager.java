@@ -1,52 +1,22 @@
 package com.varunarl.invisibletouch.utils;
 
-import android.content.Context;
-import android.content.Intent;
 import android.telephony.PhoneStateListener;
-import android.telephony.TelephonyManager;
-import android.widget.Toast;
-
-import com.varunarl.invisibletouch.internal.BaseActivity;
 
 public class PhoneStateManager extends PhoneStateListener {
-    private Intent mIntent;
-    private IPhoneState mPhoneState;
-    private Context mContext;
 
-    public PhoneStateManager(Intent intent, IPhoneState phoneState, Context context) {
+    private INotify mCallBack;
+
+    public PhoneStateManager(INotify callBack) {
         super();
-        this.mIntent = intent;
-        this.mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        this.mPhoneState = phoneState;
-        this.mContext = context;
+        mCallBack = callBack;
     }
 
     @Override
     public void onCallStateChanged(int state, String incomingNumber) {
-        Toast.makeText(mContext, "state : " + state, Toast.LENGTH_LONG).show();
-        switch (state) {
-            case TelephonyManager.CALL_STATE_IDLE:
-                if (mPhoneState.getPhoneState() == TelephonyManager.CALL_STATE_OFFHOOK) {
-                    mContext.startActivity(mIntent);
-                    try {
-                        BaseActivity ac = (BaseActivity) mPhoneState;
-                        ac.finish();
-                    } catch (Exception e) {
-                    }
-                }
-                break;
-            case TelephonyManager.CALL_STATE_OFFHOOK:
-
-                break;
-            case TelephonyManager.CALL_STATE_RINGING:
-                break;
-            default:
-                break;
-        }
-        mPhoneState.setPhoneState(state);
+        mCallBack.onCallStateChanged(state, incomingNumber);
     }
 
-    public IPhoneState getCurrentPhoneState() {
-        return mPhoneState;
+    public interface INotify {
+        void onCallStateChanged(int state, String incomingNumber);
     }
 }

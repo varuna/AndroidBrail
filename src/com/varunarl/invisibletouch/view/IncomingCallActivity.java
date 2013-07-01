@@ -1,6 +1,7 @@
 package com.varunarl.invisibletouch.view;
 
 import android.graphics.Color;
+import android.telephony.TelephonyManager;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -10,8 +11,9 @@ import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.internal.SinglePackActivity;
 import com.varunarl.invisibletouch.utils.CallManager;
 import com.varunarl.invisibletouch.utils.Log;
+import com.varunarl.invisibletouch.utils.PhoneStateManager;
 
-public class IncomingCallActivity extends SinglePackActivity {
+public class IncomingCallActivity extends SinglePackActivity implements PhoneStateManager.INotify {
 
     private String mName = "";
     private String mNumber = "";
@@ -25,7 +27,7 @@ public class IncomingCallActivity extends SinglePackActivity {
                 CallManager.FLAG_RINGING_CALLER_NAME);
         mNumber = getIntent().getStringExtra(
                 CallManager.FLAG_RINGING_CALLER_NUMBER);
-
+        InvisibleTouchApplication.getInstance().getCallManager().registerPhoneStateListener(this);
         super.init();
     }
 
@@ -145,6 +147,14 @@ public class IncomingCallActivity extends SinglePackActivity {
             phone = (TextView) mRootView.findViewById(NUMBER_VIEW_ID);
             name.setText(mName);
             phone.setText(mNumber);
+        }
+    }
+
+    @Override
+    public void onCallStateChanged(int state, String incomingNumber) {
+        if (state == TelephonyManager.CALL_STATE_IDLE) {
+            finish();
+            InvisibleTouchApplication.getInstance().getCallManager().unregisterPhoneStateListener();
         }
     }
 }

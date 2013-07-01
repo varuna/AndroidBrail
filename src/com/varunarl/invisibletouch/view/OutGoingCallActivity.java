@@ -2,11 +2,15 @@ package com.varunarl.invisibletouch.view;
 
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.telephony.TelephonyManager;
+import android.widget.Toast;
 
 import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.internal.SixPackActivity;
 import com.varunarl.invisibletouch.utils.CallManager;
-public class OutGoingCallActivity extends SixPackActivity {
+import com.varunarl.invisibletouch.utils.PhoneStateManager;
+
+public class OutGoingCallActivity extends SixPackActivity implements PhoneStateManager.INotify {
     public static final String NUMBER = "com.varunarl.outgoingcall.number";
 
     public void onCreate(Bundle savedInstanceState) {
@@ -147,5 +151,14 @@ public class OutGoingCallActivity extends SixPackActivity {
         else
             cm.turnOnSpeaker(true);
         super.onKeyTwo();
+    }
+
+    @Override
+    public void onCallStateChanged(int state, String incomingNumber) {
+        Toast.makeText(this,"State : "+state,Toast.LENGTH_SHORT).show();
+        if (state == TelephonyManager.CALL_STATE_IDLE) {
+            finish();
+            InvisibleTouchApplication.getInstance().getCallManager().unregisterPhoneStateListener();
+        }
     }
 }
