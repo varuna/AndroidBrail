@@ -114,103 +114,103 @@ public class CallLogActivity extends SixPackActivity {
         super.init();
     }
 
-    @Override
-    protected void onAttachView(int id, View view) {
-        TextView name;
-        TextView phone;
-        TextView type;
-        TextView duration;
-        TextView date;
-        if (!mContacts.isAfterLast() || !mContacts.isBeforeFirst()) {
-            int nameFieldColumnIndex = mContacts
-                    .getColumnIndex(CallLog.Calls.CACHED_NAME);
-            int numberFieldColumnIndex = mContacts
-                    .getColumnIndex(CallLog.Calls.NUMBER);
-            int typeFieldColumnIndex = mContacts
-                    .getColumnIndex(CallLog.Calls.TYPE);
-            int durationFieldColumnIndex = mContacts
-                    .getColumnIndex(CallLog.Calls.DURATION);
-            int dateFieldColumnIndex = mContacts
-                    .getColumnIndex(CallLog.Calls.DATE);
-
-            if (mRootView == null) {
-                mRootView = (LinearLayout) view.getParent();
-                mRootView.removeAllViews();
-                mRootView.setOrientation(LinearLayout.VERTICAL);
-                mRootView.setGravity(Gravity.CENTER);
-                mRootView.setBackgroundColor(Color.BLACK);
-                name = new TextView(this);
-                phone = new TextView(this);
-                type = new TextView(this);
-                duration = new TextView(this);
-                date = new TextView(this);
-
-                name.setGravity(Gravity.CENTER);
-                phone.setGravity(Gravity.CENTER);
-                type.setGravity(Gravity.CENTER);
-                duration.setGravity(Gravity.CENTER);
-                date.setGravity(Gravity.CENTER);
-
-                name.setTextColor(Color.GRAY);
-                phone.setTextColor(Color.GRAY);
-                type.setTextColor(Color.GRAY);
-                duration.setTextColor(Color.GRAY);
-
-                name.setId(NAME_VIEW_ID);
-                phone.setId(NUMBER_VIEW_ID);
-                type.setId(TYPE_VIEW_ID);
-                duration.setId(DURATION_VIEW_ID);
-                date.setId(DATE_VIEW_ID);
-
-                mCurrentContactName = mContacts.getString(nameFieldColumnIndex);
-                mCurrentContactPhone = mContacts
-                        .getString(numberFieldColumnIndex);
-                mCurrentContactType = mContacts.getString(typeFieldColumnIndex);
-                mCurrentContactDuration = mContacts
-                        .getString(durationFieldColumnIndex);
-                mCurrentContactDate = mContacts.getString(dateFieldColumnIndex);
-
-                name.setText(mCurrentContactName);
-                phone.setText(mCurrentContactPhone);
-                type.setText(mCurrentContactType);
-                duration.setText(mCurrentContactDuration);
-                date.setText(mCurrentContactDate);
-
-                mRootView.addView(name);
-                mRootView.addView(phone);
-                mRootView.addView(type);
-                mRootView.addView(duration);
-                mRootView.addView(date);
-
-            } else {
-                name = (TextView) mRootView.findViewById(NAME_VIEW_ID);
-                phone = (TextView) mRootView.findViewById(NUMBER_VIEW_ID);
-                type = (TextView) mRootView.findViewById(TYPE_VIEW_ID);
-                duration = (TextView) mRootView.findViewById(DURATION_VIEW_ID);
-                date = (TextView) mRootView.findViewById(DATE_VIEW_ID);
-
-                mCurrentContactName = mContacts.getString(nameFieldColumnIndex);
-                mCurrentContactPhone = mContacts
-                        .getString(numberFieldColumnIndex);
-                mCurrentContactType = mContacts.getString(typeFieldColumnIndex);
-                mCurrentContactDuration = mContacts
-                        .getString(durationFieldColumnIndex);
-                mCurrentContactDate = mContacts.getString(dateFieldColumnIndex);
-
-                name.setText(mCurrentContactName);
-                phone.setText(mCurrentContactPhone);
-                type.setText(mCurrentContactType);
-                duration.setText(mCurrentContactDuration);
-                date.setText(mCurrentContactDate);
-            }
-        } else {
-            if (id != 0)
-                view.setBackgroundColor(Color.GRAY);
-        }
-        Log.announce("Current contact\n" + mCurrentContactName + "\n"
-                + mCurrentContactPhone + "\n" + mCurrentContactType + "\n"
-                + mCurrentContactDuration, Level.INFO);
-    }
+//    @Override
+//    protected void onAttachView(int id, View view) {
+//        TextView name;
+//        TextView phone;
+//        TextView type;
+//        TextView duration;
+//        TextView date;
+//        if (!mContacts.isAfterLast() || !mContacts.isBeforeFirst()) {
+//            int nameFieldColumnIndex = mContacts
+//                    .getColumnIndex(CallLog.Calls.CACHED_NAME);
+//            int numberFieldColumnIndex = mContacts
+//                    .getColumnIndex(CallLog.Calls.NUMBER);
+//            int typeFieldColumnIndex = mContacts
+//                    .getColumnIndex(CallLog.Calls.TYPE);
+//            int durationFieldColumnIndex = mContacts
+//                    .getColumnIndex(CallLog.Calls.DURATION);
+//            int dateFieldColumnIndex = mContacts
+//                    .getColumnIndex(CallLog.Calls.DATE);
+//
+//            if (mRootView == null) {
+//                mRootView = (LinearLayout) view.getParent();
+//                mRootView.removeAllViews();
+//                mRootView.setOrientation(LinearLayout.VERTICAL);
+//                mRootView.setGravity(Gravity.CENTER);
+//                mRootView.setBackgroundColor(Color.BLACK);
+//                name = new TextView(this);
+//                phone = new TextView(this);
+//                type = new TextView(this);
+//                duration = new TextView(this);
+//                date = new TextView(this);
+//
+//                name.setGravity(Gravity.CENTER);
+//                phone.setGravity(Gravity.CENTER);
+//                type.setGravity(Gravity.CENTER);
+//                duration.setGravity(Gravity.CENTER);
+//                date.setGravity(Gravity.CENTER);
+//
+//                name.setTextColor(Color.GRAY);
+//                phone.setTextColor(Color.GRAY);
+//                type.setTextColor(Color.GRAY);
+//                duration.setTextColor(Color.GRAY);
+//
+//                name.setId(NAME_VIEW_ID);
+//                phone.setId(NUMBER_VIEW_ID);
+//                type.setId(TYPE_VIEW_ID);
+//                duration.setId(DURATION_VIEW_ID);
+//                date.setId(DATE_VIEW_ID);
+//
+//                mCurrentContactName = mContacts.getString(nameFieldColumnIndex);
+//                mCurrentContactPhone = mContacts
+//                        .getString(numberFieldColumnIndex);
+//                mCurrentContactType = mContacts.getString(typeFieldColumnIndex);
+//                mCurrentContactDuration = mContacts
+//                        .getString(durationFieldColumnIndex);
+//                mCurrentContactDate = mContacts.getString(dateFieldColumnIndex);
+//
+//                name.setText(mCurrentContactName);
+//                phone.setText(mCurrentContactPhone);
+//                type.setText(mCurrentContactType);
+//                duration.setText(mCurrentContactDuration);
+//                date.setText(mCurrentContactDate);
+//
+//                mRootView.addView(name);
+//                mRootView.addView(phone);
+//                mRootView.addView(type);
+//                mRootView.addView(duration);
+//                mRootView.addView(date);
+//
+//            } else {
+//                name = (TextView) mRootView.findViewById(NAME_VIEW_ID);
+//                phone = (TextView) mRootView.findViewById(NUMBER_VIEW_ID);
+//                type = (TextView) mRootView.findViewById(TYPE_VIEW_ID);
+//                duration = (TextView) mRootView.findViewById(DURATION_VIEW_ID);
+//                date = (TextView) mRootView.findViewById(DATE_VIEW_ID);
+//
+//                mCurrentContactName = mContacts.getString(nameFieldColumnIndex);
+//                mCurrentContactPhone = mContacts
+//                        .getString(numberFieldColumnIndex);
+//                mCurrentContactType = mContacts.getString(typeFieldColumnIndex);
+//                mCurrentContactDuration = mContacts
+//                        .getString(durationFieldColumnIndex);
+//                mCurrentContactDate = mContacts.getString(dateFieldColumnIndex);
+//
+//                name.setText(mCurrentContactName);
+//                phone.setText(mCurrentContactPhone);
+//                type.setText(mCurrentContactType);
+//                duration.setText(mCurrentContactDuration);
+//                date.setText(mCurrentContactDate);
+//            }
+//        } else {
+//            if (id != 0)
+//                view.setBackgroundColor(Color.GRAY);
+//        }
+//        Log.announce("Current contact\n" + mCurrentContactName + "\n"
+//                + mCurrentContactPhone + "\n" + mCurrentContactType + "\n"
+//                + mCurrentContactDuration, Level.INFO);
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

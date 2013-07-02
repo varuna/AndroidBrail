@@ -11,10 +11,15 @@ import com.varunarl.invisibletouch.utils.PhoneStateManager;
 
 public class InCallActivity extends SixPackActivity implements PhoneStateManager.INotify {
     public static final String NUMBER = "com.varunarl.call.number";
+    private CallStatus mStatus;
 
     @Override
     protected void init() {
         InvisibleTouchApplication.getInstance().getCallManager().registerPhoneStateListener(this);
+        mStatus = new CallStatus();
+        if (getIntent().hasExtra(NUMBER))
+            mStatus.mPhoneNumber = getIntent().getStringExtra(NUMBER);
+
         super.init();
     }
 
@@ -179,5 +184,12 @@ public class InCallActivity extends SixPackActivity implements PhoneStateManager
             finish();
             InvisibleTouchApplication.getInstance().getCallManager().unregisterPhoneStateListener();
         }
+    }
+
+    private class CallStatus
+    {
+        String mPhoneNumber;
+        String mName;
+        Long mDuration;
     }
 }

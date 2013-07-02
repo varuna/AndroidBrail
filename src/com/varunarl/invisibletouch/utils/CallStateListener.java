@@ -20,10 +20,6 @@ public class CallStateListener extends BroadcastReceiver {
             handleIncomingCall(context,intent);
         else if (action.equals(Intent.ACTION_NEW_OUTGOING_CALL))
             handleOutGoingCalls();
-
-
-
-
     }
 
     private void handleOutGoingCalls() {

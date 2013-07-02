@@ -2,6 +2,8 @@ package com.varunarl.invisibletouch.internal;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.GestureDetector;
@@ -14,6 +16,7 @@ import android.view.WindowManager;
 import com.varunarl.invisibletouch.R;
 import com.varunarl.invisibletouch.utils.Log;
 import com.varunarl.invisibletouch.utils.Log.Level;
+import com.varunarl.invisibletouch.view.MainMenuActivity;
 
 public abstract class BaseActivity extends Activity implements IGestures,
         IBrailleKeyboard, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
@@ -26,10 +29,10 @@ public abstract class BaseActivity extends Activity implements IGestures,
     protected final static int SWIPE_UP = 12;
     protected final static int SWIPE_DOWN = 13;
     private final static int FLING_THRESHOLD = 100;
+    protected boolean mStoppedFromNewScreen = false;
     protected int mCurrentGesture = -1;
-    private int mLastSwipeDirection = -1;
-    private boolean mStoppedFromNewScreen = false;
     private boolean isFinishing = false;
+    private int mLastSwipeDirection = -1;
     private GestureDetector mGestureDetector;
 
     @Override
@@ -176,11 +179,17 @@ public abstract class BaseActivity extends Activity implements IGestures,
     @Override
     protected void onStop() {
         if (!mStoppedFromNewScreen && !isFinishing) {
-            Log.announce(
-                    "Whoa.. we are losing screen. Signaling : " + SignalReceiver.HOME_SCREEN_LAUNCHED,
-                    Level.WARNING);
-            Intent i = new Intent(SignalReceiver.HOME_SCREEN_LAUNCHED);
-            sendBroadcast(i);
+//            Log.announce(
+//                    "Whoa.. we are losing screen. Signaling : " + SignalReceiver.HOME_SCREEN_LAUNCHED,
+//                    Level.WARNING);
+//            Intent i = new Intent(SignalReceiver.HOME_SCREEN_LAUNCHED);
+//            sendBroadcast(i);
+            Intent i = new Intent(this, MainMenuActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+            PendingIntent pi = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
+            am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pi);
         }
         super.onStop();
     }

@@ -1,6 +1,7 @@
 package com.varunarl.invisibletouch.view;
 
 import android.content.Intent;
+
 import com.varunarl.invisibletouch.braille.Braille;
 import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.internal.KeyboardActivity;
@@ -50,25 +51,11 @@ public class DialPadActivity extends KeyboardActivity {
     public void onDoubleSwipeRight() {
         super.onDoubleSwipeRight();
         mPhoneNumber = mTextInputManager.getText();
-       /* Log.announce(mPhoneNumber, false);
-        int count = 0;
-        boolean isFirstCharacterZero = false;
-        for (Character c : mPhoneNumber.toCharArray()) {
-            if (!Character.isDigit(c))
-                break;
-            if (count == 0)
-                if (c.equals('0'))
-                    isFirstCharacterZero = true;
-            count++;
+        if (mPhoneNumber.equals("01010001")) {
+            mStoppedFromNewScreen = true;
+            finish();
+        } else {
+            mCallManager.makeCall(mPhoneNumber, this);
         }
-        if (count == 10 || (!isFirstCharacterZero && count == 9)) {
-            if (count == 10) {
-                mCallManager.makeCall(mPhoneNumber, this);
-            }
-            if (count == 9) {
-                mPhoneNumber = "0" + mPhoneNumber;*/
-                mCallManager.makeCall(mPhoneNumber, this);
-         /*   }
-        }*/
     }
 }
