@@ -107,6 +107,6 @@ public class SettingsActivity extends SixPackActivity{
 
     @Override
     public void onScreenLongPress() {
-        Log.announce("In Settings", false);
+        Log.announce("In Settings", true);
     }
 }

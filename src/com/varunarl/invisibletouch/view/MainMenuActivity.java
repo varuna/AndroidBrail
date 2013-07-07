@@ -121,7 +121,7 @@ public class MainMenuActivity extends SixPackActivity {
 
     @Override
     public void onScreenLongPress() {
-        Log.announce("In Main menu", false);
+        Log.announce("In Main menu", true);
 
     }
 

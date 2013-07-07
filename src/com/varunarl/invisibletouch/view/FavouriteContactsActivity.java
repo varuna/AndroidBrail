@@ -75,7 +75,7 @@ public class FavouriteContactsActivity extends SixPackActivity {
 
     @Override
     public void onScreenLongPress() {
-        Log.announce("In Favourite screen", false);
+        Log.announce("In Favourite screen", true);
     }
 
     @Override

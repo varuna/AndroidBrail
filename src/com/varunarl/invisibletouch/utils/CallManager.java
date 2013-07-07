@@ -57,7 +57,7 @@ public class CallManager {
         Intent i = new Intent(context, InCallActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        i.putExtra(FLAG_RINGING_CALLER_NUMBER, number);
+        i.putExtra(InCallActivity.NUMBER, number);
         i.putExtra(FLAG_RINGING_CALLER_NAME, name);
 
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);

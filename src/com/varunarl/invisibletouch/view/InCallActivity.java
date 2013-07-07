@@ -7,6 +7,7 @@ import android.telephony.TelephonyManager;
 import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.internal.SixPackActivity;
 import com.varunarl.invisibletouch.utils.CallManager;
+import com.varunarl.invisibletouch.utils.Log;
 import com.varunarl.invisibletouch.utils.PhoneStateManager;
 
 public class InCallActivity extends SixPackActivity implements PhoneStateManager.INotify {
@@ -55,7 +56,11 @@ public class InCallActivity extends SixPackActivity implements PhoneStateManager
 
     @Override
     public void onSwipeRight() {
-
+        try {
+            InvisibleTouchApplication.getInstance().getCallManager().answerCall();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -130,7 +135,7 @@ public class InCallActivity extends SixPackActivity implements PhoneStateManager
 
     @Override
     public void onScreenLongPress() {
-
+        Log.announce("In Call with " + mStatus.mPhoneNumber, true);
     }
 
     @Override
@@ -176,8 +181,7 @@ public class InCallActivity extends SixPackActivity implements PhoneStateManager
         }
     }
 
-    private class CallStatus
-    {
+    private class CallStatus {
         String mPhoneNumber;
         String mName;
         Long mDuration;

@@ -29,11 +29,15 @@ public class Log {
 	}
 
 	public static void announce(String message, boolean isLoud) {
-		if (isLoud)
+		if (isLoud){
 			InvisibleTouchApplication.getInstance().speak(message);
-		else
+            announce("Speak text : "+message,Level.INFO);
+        }
+		else{
 			Toast.makeText(InvisibleTouchApplication.getInstance(), message,
 					Toast.LENGTH_SHORT).show();
+            announce("Toast message : "+message,Level.VERBOSE);
+        }
 	}
 
 	public enum Level {

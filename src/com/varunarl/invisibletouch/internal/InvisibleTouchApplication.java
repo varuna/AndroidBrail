@@ -2,29 +2,23 @@ package com.varunarl.invisibletouch.internal;
 
 import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
-import android.speech.tts.TextToSpeech.OnInitListener;
 
 import com.varunarl.invisibletouch.utils.CallManager;
 import com.varunarl.invisibletouch.utils.ContactManager;
 import com.varunarl.invisibletouch.utils.InputManager.TextInputManager;
-import com.varunarl.invisibletouch.utils.Log;
-import com.varunarl.invisibletouch.utils.Log.Level;
+import com.varunarl.invisibletouch.utils.SettingsManager;
 
-public class InvisibleTouchApplication extends Application implements OnInitListener {
+public class InvisibleTouchApplication extends Application {
 
     private static InvisibleTouchApplication instance;
-    private Vibrator mVibratorService;
-    private TextToSpeech mTTS;
     private TextInputManager mTextInputManager;
     private CallManager mCallManager;
     private ContactManager mContactManager;
-    private boolean incomingCallDetected;
+    private SettingsManager mSettingsManager;
     private ActivityResults mResultsManager;
+    private boolean incomingCallDetected;
     private boolean _KILL_SIGNAL_ = false;
 
     public static InvisibleTouchApplication getInstance() {
@@ -36,18 +30,11 @@ public class InvisibleTouchApplication extends Application implements OnInitList
         super.onCreate();
         instance = this;
         mTextInputManager = new TextInputManager(this);
-        mVibratorService = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        mSettingsManager = new SettingsManager(this);
         mCallManager = new CallManager(this);
         mContactManager = new ContactManager(this);
         incomingCallDetected = false;
         mResultsManager = new ActivityResults();
-        if (mVibratorService != null)
-            Log.announce("Vibrator service ready", Level.INFO);
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
-            mTTS = new TextToSpeech(getApplicationContext(), this);
-            Log.announce("TextToSpeech service is ready.", Level.INFO);
-        }
-
     }
 
     public TextInputManager getTextInputManager() {
@@ -70,25 +57,17 @@ public class InvisibleTouchApplication extends Application implements OnInitList
         this.incomingCallDetected = incomingCallDetected;
     }
 
-    @Override
-    public void onInit(int status) {
-        if (status == TextToSpeech.SUCCESS) {
-            Log.announce("TextToSpeech service is ready.", Level.INFO);
-        } else
-            Log.announce("TextToSpeech service is broken.", Level.INFO);
-    }
-
     public void speak(String speech) {
-        mTTS.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
+        if (mSettingsManager.isTTSReady())
+            mSettingsManager.getTTSEngine().speak(speech, TextToSpeech.QUEUE_FLUSH, null);
     }
 
     public void vibrate(long[] pattern) {
-        if (mVibratorService != null) {
+        if (mSettingsManager.isVibratorReady()) {
             try {
-                mVibratorService.vibrate(pattern, -1);
+                mSettingsManager.getVibratorService().vibrate(pattern, -1);
             } catch (Exception e) {
-                // On some devices vibrator would crash. Think its to do with
-                // rooting of the device.
+                mSettingsManager.activateVibratorService(false);
             }
         }
     }

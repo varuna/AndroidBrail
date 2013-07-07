@@ -200,7 +200,7 @@ public abstract class BaseActivity extends Activity implements IGestures,
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
             PendingIntent pi = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
-            am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pi);
+            am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+100, pi);
         }
         super.onStop();
     }
