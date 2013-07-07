@@ -1,8 +1,11 @@
 package com.varunarl.invisibletouch.internal;
 
+import android.content.Intent;
 import android.view.View;
 import com.varunarl.invisibletouch.R;
 import com.varunarl.invisibletouch.braille.BrailleCharacter;
+import com.varunarl.invisibletouch.utils.Log;
+import com.varunarl.invisibletouch.view.LockScreenActivity;
 
 public abstract class SixPackActivity extends BaseActivity {
 
@@ -182,6 +185,7 @@ public abstract class SixPackActivity extends BaseActivity {
                 } else {
                     _two_one.setBackgroundColor(getResources().getColor(
                             android.R.color.darker_gray));
+                    FOUR = true;
                 }
                 break;
             case 4:
@@ -212,4 +216,14 @@ public abstract class SixPackActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void onPowerKeyShortPress() {
+        Log.announce("Power short press", Log.Level.INFO);
+        startActivity(new Intent(this, LockScreenActivity.class));
+    }
+
+    @Override
+    public void onPowerKeyLongPress() {
+        Log.announce("Power Long press", Log.Level.INFO);
+    }
 }

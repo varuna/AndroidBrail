@@ -66,14 +66,6 @@ public class FavouriteContactsActivity extends SixPackActivity {
     }
 
     @Override
-    public void onPowerKeyShortPress() {
-    }
-
-    @Override
-    public void onPowerKeyLongPress() {
-    }
-
-    @Override
     public void onCameraKeyShortPress() {
     }
 

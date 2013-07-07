@@ -2,6 +2,7 @@ package com.varunarl.invisibletouch.internal;
 
 import android.view.View;
 import com.varunarl.invisibletouch.R;
+import com.varunarl.invisibletouch.utils.Log;
 
 public abstract class SinglePackActivity extends BaseActivity {
 
@@ -63,5 +64,15 @@ public abstract class SinglePackActivity extends BaseActivity {
 	public void onLongKeySix() {
 		throw new UnsupportedOperationException("Single pack activities does not support this operation");		
 	}
+
+    @Override
+    public void onPowerKeyShortPress() {
+        Log.announce("Power short press", Log.Level.INFO);
+    }
+
+    @Override
+    public void onPowerKeyLongPress() {
+        Log.announce("Power Long press", Log.Level.INFO);
+    }
 
 }

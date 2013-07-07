@@ -91,6 +91,9 @@
         <activity
                 android:name=".view.InCallActivity"
                 android:screenOrientation="portrait"/>
+        <activity
+                android:name=".view.LockScreenActivity"
+                android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

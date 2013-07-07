@@ -2,12 +2,9 @@ package com.varunarl.invisibletouch.view;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.provider.CallLog;
-import android.view.Gravity;
-import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+
 import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.internal.SixPackActivity;
 import com.varunarl.invisibletouch.utils.Log;
@@ -93,16 +90,6 @@ public class CallLogActivity extends SixPackActivity {
 
     @Override
     public void onVolumeUpKeyLongPress() {
-
-    }
-
-    @Override
-    public void onPowerKeyShortPress() {
-
-    }
-
-    @Override
-    public void onPowerKeyLongPress() {
 
     }
 
@@ -238,7 +225,8 @@ public class CallLogActivity extends SixPackActivity {
     }
 
     @Override
-    public void onLongKeyTwo() {    }
+    public void onLongKeyTwo() {
+    }
 
     @Override
     public void onLongKeyThree() {

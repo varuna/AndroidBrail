@@ -119,16 +119,6 @@ public class InCallActivity extends SixPackActivity implements PhoneStateManager
     }
 
     @Override
-    public void onPowerKeyShortPress() {
-
-    }
-
-    @Override
-    public void onPowerKeyLongPress() {
-
-    }
-
-    @Override
     public void onCameraKeyShortPress() {
 
     }

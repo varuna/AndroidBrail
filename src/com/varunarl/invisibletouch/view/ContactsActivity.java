@@ -76,16 +76,6 @@ public class ContactsActivity extends SixPackActivity {
     }
 
     @Override
-    public void onPowerKeyShortPress() {
-
-    }
-
-    @Override
-    public void onPowerKeyLongPress() {
-
-    }
-
-    @Override
     protected void init() {
         super.init();
 

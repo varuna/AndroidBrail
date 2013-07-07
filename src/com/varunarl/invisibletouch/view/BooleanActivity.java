@@ -78,16 +78,6 @@ public class BooleanActivity extends SinglePackActivity {
     }
 
     @Override
-    public void onPowerKeyShortPress() {
-
-    }
-
-    @Override
-    public void onPowerKeyLongPress() {
-
-    }
-
-    @Override
     public void onKeyOne() {
 
     }

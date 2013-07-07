@@ -11,131 +11,122 @@ import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.internal.SinglePackActivity;
 import com.varunarl.invisibletouch.utils.Contact;
 import com.varunarl.invisibletouch.utils.ContactManager;
-import com.varunarl.invisibletouch.view.ContactsActivity;
 
 public class ContactsDetailsActivity extends SinglePackActivity {
 
-	private int NAME_VIEW_ID = 1000;
-	private int NUMBER_VIEW_ID = 1001;
-	private LinearLayout mRootView;
+    private int NAME_VIEW_ID = 1000;
+    private int NUMBER_VIEW_ID = 1001;
+    private LinearLayout mRootView;
     private Contact mContact;
-	
-	@Override
-	protected void init() {
-		Intent i = getIntent();
-		mContact = i.getParcelableExtra(ContactManager.INTENT_FLAG_CONTACT);
-		super.init();
-	}
 
-	@Override
-	public void onSwipeRight() {
-        InvisibleTouchApplication.getInstance().getCallManager().makeCall(mContact.getPhone(),this);
-	}
+    @Override
+    protected void init() {
+        Intent i = getIntent();
+        mContact = i.getParcelableExtra(ContactManager.INTENT_FLAG_CONTACT);
+        super.init();
+    }
 
-	@Override
-	public void onSwipeLeft() {
-		this.finish();
-	}
+    @Override
+    public void onSwipeRight() {
+        InvisibleTouchApplication.getInstance().getCallManager().makeCall(mContact.getPhone(), this);
+    }
 
-	@Override
-	public void onDoubleSwipeRight() {
-	}
+    @Override
+    public void onSwipeLeft() {
+        this.finish();
+    }
 
-	@Override
-	public void onDoubleSwipeLeft() {
-	}
+    @Override
+    public void onDoubleSwipeRight() {
+    }
 
-	@Override
-	public void onSwipeUp() {
-	}
+    @Override
+    public void onDoubleSwipeLeft() {
+    }
 
-	@Override
-	public void onDoubleSwipeUp() {
-	}
+    @Override
+    public void onSwipeUp() {
+    }
 
-	@Override
-	public void onSwipeDown() {
-	}
+    @Override
+    public void onDoubleSwipeUp() {
+    }
 
-	@Override
-	public void onDoubleSwipeDown() {
-	}
+    @Override
+    public void onSwipeDown() {
+    }
 
-	@Override
-	public void onVolumeDownKeyShortPress() {
-	}
+    @Override
+    public void onDoubleSwipeDown() {
+    }
 
-	@Override
-	public void onVolumeDownKeyLongPress() {
-	}
+    @Override
+    public void onVolumeDownKeyShortPress() {
+    }
 
-	@Override
-	public void onVolumeUpKeyShortPress() {
-	}
+    @Override
+    public void onVolumeDownKeyLongPress() {
+    }
 
-	@Override
-	public void onVolumeUpKeyLongPress() {
-	}
+    @Override
+    public void onVolumeUpKeyShortPress() {
+    }
 
-	@Override
-	public void onPowerKeyShortPress() {
-	}
+    @Override
+    public void onVolumeUpKeyLongPress() {
+    }
 
-	@Override
-	public void onPowerKeyLongPress() {
-	}
+    @Override
+    public void onCameraKeyShortPress() {
+    }
 
-	@Override
-	public void onCameraKeyShortPress() {
-	}
+    @Override
+    public void onCameraKeyLongPress() {
+    }
 
-	@Override
-	public void onCameraKeyLongPress() {
-	}
+    @Override
+    public void onScreenLongPress() {
+    }
 
-	@Override
-	public void onScreenLongPress() {
-	}
+    @Override
+    public void onKeyOne() {
+    }
 
-	@Override
-	public void onKeyOne() {
-	}
+    @Override
+    public void onLongKeyOne() {
 
-	@Override
-	public void onLongKeyOne() {
+    }
 
-	}
-
-	@Override
-	protected void onAttachView(int id, View view) {
-		TextView name;
-		TextView phone;
-		if (mRootView == null) {
-			mRootView = (LinearLayout) view.getParent();
-			mRootView.removeAllViews();
-			mRootView.setOrientation(LinearLayout.VERTICAL);
-			mRootView.setGravity(Gravity.CENTER);
-			mRootView.setBackgroundColor(Color.BLACK);
-			name = new TextView(this);
-			phone = new TextView(this);
-			name.setGravity(Gravity.CENTER);
-			phone.setGravity(Gravity.CENTER);
-			name.setTextColor(Color.GRAY);
-			phone.setTextColor(Color.GRAY);
-			name.setId(NAME_VIEW_ID);
-			phone.setId(NUMBER_VIEW_ID);
+    @Override
+    protected void onAttachView(int id, View view) {
+        TextView name;
+        TextView phone;
+        if (mRootView == null) {
+            mRootView = (LinearLayout) view.getParent();
+            mRootView.removeAllViews();
+            mRootView.setOrientation(LinearLayout.VERTICAL);
+            mRootView.setGravity(Gravity.CENTER);
+            mRootView.setBackgroundColor(Color.BLACK);
+            name = new TextView(this);
+            phone = new TextView(this);
+            name.setGravity(Gravity.CENTER);
+            phone.setGravity(Gravity.CENTER);
+            name.setTextColor(Color.GRAY);
+            phone.setTextColor(Color.GRAY);
+            name.setId(NAME_VIEW_ID);
+            phone.setId(NUMBER_VIEW_ID);
             name.setText(mContact.getName());
             phone.setText(mContact.getPhone());
 
-			mRootView.addView(name);
-			mRootView.addView(phone);
-		} else {
-			name = (TextView) mRootView.findViewById(NAME_VIEW_ID);
-			phone = (TextView) mRootView.findViewById(NUMBER_VIEW_ID);
+            mRootView.addView(name);
+            mRootView.addView(phone);
+        } else {
+            name = (TextView) mRootView.findViewById(NAME_VIEW_ID);
+            phone = (TextView) mRootView.findViewById(NUMBER_VIEW_ID);
             name.setText(mContact.getName());
             phone.setText(mContact.getPhone());
-		}
+        }
 
-	}
+    }
 
 }

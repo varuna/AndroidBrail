@@ -10,9 +10,6 @@ import com.varunarl.invisibletouch.utils.InputManager;
 import com.varunarl.invisibletouch.utils.Log;
 import com.varunarl.invisibletouch.view.sub.DialPadMenuActivity;
 
-/**
- * Created by vlekamwasam on 5/21/13.
- */
 public class DialPadActivity extends KeyboardActivity {
     private String mPhoneNumber;
     private InputManager.TextInputManager mTextInputManager;
@@ -53,9 +50,11 @@ public class DialPadActivity extends KeyboardActivity {
         mPhoneNumber = mTextInputManager.getText();
         if (mPhoneNumber.equals("01010001")) {
             mStoppedFromNewScreen = true;
-            finish();
+            InvisibleTouchApplication.getInstance().forceQuitApp(this);
         } else {
             mCallManager.makeCall(mPhoneNumber, this);
         }
+        mTextInputManager.purge();
+        mCurrentCharacter.reset();
     }
 }

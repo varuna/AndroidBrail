@@ -44,6 +44,9 @@ public abstract class BaseActivity extends Activity implements IGestures,
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+
         init();
     }
 
@@ -104,6 +107,7 @@ public abstract class BaseActivity extends Activity implements IGestures,
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Log.announce("KeyCode : " + keyCode, Level.INFO);
         if (!event.isTracking()) {
             event.startTracking();
             switch (keyCode) {
@@ -166,6 +170,13 @@ public abstract class BaseActivity extends Activity implements IGestures,
     public void setActivityResult(int result) {
         InvisibleTouchApplication.getInstance().setResult(result);
         setResult(RESULT_CANCELED);
+    }
+
+    @Override
+    protected void onResume() {
+        if (InvisibleTouchApplication.getInstance().shouldKillApp())
+            this.finish();
+        super.onResume();
     }
 
     @Override

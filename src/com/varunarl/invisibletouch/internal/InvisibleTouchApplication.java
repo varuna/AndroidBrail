@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
+
 import com.varunarl.invisibletouch.utils.CallManager;
 import com.varunarl.invisibletouch.utils.ContactManager;
 import com.varunarl.invisibletouch.utils.InputManager.TextInputManager;
@@ -24,6 +25,7 @@ public class InvisibleTouchApplication extends Application implements OnInitList
     private ContactManager mContactManager;
     private boolean incomingCallDetected;
     private ActivityResults mResultsManager;
+    private boolean _KILL_SIGNAL_ = false;
 
     public static InvisibleTouchApplication getInstance() {
         return instance;
@@ -91,10 +93,6 @@ public class InvisibleTouchApplication extends Application implements OnInitList
         }
     }
 
-    public void exit() {
-        mCallManager.destroy();
-    }
-
     public Bundle getData() {
         return mResultsManager.getData();
     }
@@ -109,6 +107,19 @@ public class InvisibleTouchApplication extends Application implements OnInitList
 
     public void setResult(int result) {
         mResultsManager.setResult(result);
+    }
+
+    public void forceQuitApp(BaseActivity context) {
+        context.finish();
+        _KILL_SIGNAL_ = true;
+    }
+
+    public boolean shouldKillApp() {
+        return _KILL_SIGNAL_;
+    }
+
+    public void killed() {
+        _KILL_SIGNAL_ = false;
     }
 
     public class ActivityResults {

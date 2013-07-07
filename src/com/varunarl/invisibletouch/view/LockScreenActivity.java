@@ -1,42 +1,30 @@
-package com.varunarl.invisibletouch.view.sub;
+package com.varunarl.invisibletouch.view;
 
-import com.varunarl.invisibletouch.internal.SixPackActivity;
-import com.varunarl.invisibletouch.utils.Log;
+import android.view.View;
+import android.view.WindowManager;
 
-public class DialPadMenuActivity extends SixPackActivity {
+import com.varunarl.invisibletouch.internal.SinglePackActivity;
+
+public class LockScreenActivity extends SinglePackActivity {
+
+    @Override
+    protected void onAttachView(int id, View view) {
+
+    }
+
+    @Override
+    public void onKeyOne() {
+
+    }
+
     @Override
     public void onLongKeyOne() {
 
     }
 
     @Override
-    public void onLongKeyTwo() {
-
-    }
-
-    @Override
-    public void onLongKeyThree() {
-
-    }
-
-    @Override
-    public void onLongKeyFour() {
-
-    }
-
-    @Override
-    public void onLongKeyFive() {
-
-    }
-
-    @Override
-    public void onLongKeySix() {
-
-    }
-
-    @Override
     public void onSwipeRight() {
-
+        finish();
     }
 
     @Override
@@ -66,7 +54,7 @@ public class DialPadMenuActivity extends SixPackActivity {
 
     @Override
     public void onSwipeDown() {
-        finish();
+
     }
 
     @Override
@@ -106,6 +94,12 @@ public class DialPadMenuActivity extends SixPackActivity {
 
     @Override
     public void onScreenLongPress() {
-        Log.announce("Dial pad menu",false);
+
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
     }
 }

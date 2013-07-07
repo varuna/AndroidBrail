@@ -86,115 +86,86 @@ public class KeyboardActivity extends SixPackActivity {
 
     @Override
     public void onVolumeDownKeyShortPress() {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void onVolumeDownKeyLongPress() {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void onVolumeUpKeyShortPress() {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void onVolumeUpKeyLongPress() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void onPowerKeyShortPress() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void onPowerKeyLongPress() {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void onSwipeUp() {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void onDoubleSwipeUp() {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void onSwipeDown() {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void onDoubleSwipeDown() {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void onCameraKeyShortPress() {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void onCameraKeyLongPress() {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void onScreenLongPress() {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void onLongKeyOne() {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void onLongKeyTwo() {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void onLongKeyThree() {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void onLongKeyFour() {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void onLongKeyFive() {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void onLongKeySix() {
-        // TODO Auto-generated method stub
 
     }
 
