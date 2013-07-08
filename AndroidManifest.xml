@@ -25,7 +25,6 @@
         <receiver android:name=".internal.SignalReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="com.varunarl.invisibletouch.HOME_LAUNCHED"/>
             </intent-filter>
         </receiver>
 

@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.varunarl.invisibletouch.R;
 import com.varunarl.invisibletouch.utils.Log;
@@ -123,7 +124,9 @@ public abstract class BaseActivity extends Activity implements IGestures,
                 case KeyEvent.KEYCODE_CAMERA:
                     onCameraKeyShortPress();
                     return true;
-
+                case KeyEvent.KEYCODE_HEADSETHOOK:
+                    Toast.makeText(this,"Headset",Toast.LENGTH_SHORT).show();
+                    return true;
                 default:
                     break;
             }
