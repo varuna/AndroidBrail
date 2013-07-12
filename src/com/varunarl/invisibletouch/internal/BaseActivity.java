@@ -167,6 +167,7 @@ public abstract class BaseActivity extends Activity implements IGestures,
     @Override
     public void startActivityForResult(Intent intent, int requestCode) {
         mStoppedFromNewScreen = true;
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         super.startActivityForResult(intent, requestCode);
     }
 

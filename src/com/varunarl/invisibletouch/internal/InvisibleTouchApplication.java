@@ -49,6 +49,10 @@ public class InvisibleTouchApplication extends Application {
         return mCallManager;
     }
 
+    public SettingsManager getSettingsManager() {
+        return mSettingsManager;
+    }
+
     public boolean isIncomingCallDetected() {
         return incomingCallDetected;
     }
