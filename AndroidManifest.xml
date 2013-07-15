@@ -93,6 +93,10 @@
         <activity
                 android:name=".view.LockScreenActivity"
                 android:screenOrientation="portrait"/>
+        <activity
+                android:name=".view.sub.AccessibilitySettingsActivity"
+                android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

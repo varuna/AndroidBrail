@@ -20,6 +20,7 @@ public class SettingsManager implements TextToSpeech.OnInitListener {
     public static final String PREF_KEY_TTS_ENABLE = "com.varunarl.invisibletouch.USER_PREFERENCE.ENABLE_TTS";
     public static final String PREF_KEY_TTS_VOLUME = "com.varunarl.invisibletouch.USER_PREFERENCE.TTS_VOLUME";
     public static final String PREF_KEY_TTS_SPEED = "com.varunarl.invisibletouch.USER_PREFERENCE.TTS_SPEED";
+    public static final String PREF_KEY_TTS_PITCH = "com.varunarl.invisibletouch.USER_PREFERENCE.TTS_PITCH";
     public static final String PREF_KEY_VIBRATION_ENABLE = "com.varunarl.invisibletouch.USER_PREFERENCE.ENABLE_VIBRATION";
     public static final String PREF_KEY_RECOVER_SYSTEM = "com.varunarl.invisibletouch.USER_PREFERENCE.RECOVER_SYSTEM";
     private static final String PREFERENCE_INTERNAL = "com.varunarl.invisibletouch.INTERNAL_PREFERENCE";
@@ -39,10 +40,10 @@ public class SettingsManager implements TextToSpeech.OnInitListener {
         if (!isVibratorReady())
             requestVibratorService();
 
-        restorFacotryDefaults();
+        restoreFactoryDefaults();
     }
 
-    public static void writeToPreference(String preferenceId, String preference, Object value) {
+    private static void writeToPreference(String preferenceId, String preference, Object value) {
         Context ctx = InvisibleTouchApplication.getInstance();
         SharedPreferences pref = ctx.getSharedPreferences(preferenceId, Context.MODE_PRIVATE);
         SharedPreferences.Editor prefEdit = pref.edit();
@@ -60,25 +61,28 @@ public class SettingsManager implements TextToSpeech.OnInitListener {
         prefEdit.commit();
     }
 
-    public static Object readFromPreference(String preferenceId, String preference) {
+    private static Object readFromPreference(String preferenceId, String preference) {
         Context ctx = InvisibleTouchApplication.getInstance();
         SharedPreferences pref = ctx.getSharedPreferences(preferenceId, Context.MODE_PRIVATE);
         return pref.getAll().get(preference);
     }
 
-    public static SharedPreferences readFromPreference(String preferenceId) {
+    private static SharedPreferences readFromPreference(String preferenceId) {
         Context ctx = InvisibleTouchApplication.getInstance();
         return ctx.getSharedPreferences(preferenceId, Context.MODE_PRIVATE);
     }
 
-    public void restorFacotryDefaults() {
+    public void restoreFactoryDefaults() {
         writeToPreference(PREFERENCE_INTERNAL, PREF_KEY_INTERNAL_RECOVER_SYSTEM, true);
         writeToPreference(PREFERENCE_USER, PREF_KEY_RECOVER_SYSTEM, true);
         writeToPreference(PREFERENCE_USER, PREF_KEY_TTS_ENABLE, false);
         writeToPreference(PREFERENCE_USER, PREF_KEY_VIBRATION_ENABLE, true);
         AudioManager am = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
         getSettings().setTTSVolume(am.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
-        getSettings().setTTSSpeed(1.0f);
+        if (isTTSReady()) {
+            getSettings().setTTSSpeed(1.0f);
+            getSettings().setTTSPitch(1.0f);
+        }
     }
 
     public boolean isTTSReady() {
@@ -89,21 +93,21 @@ public class SettingsManager implements TextToSpeech.OnInitListener {
         return this._VIBRATOR_SERVICE_READY_;
     }
 
-    public void activateVibratorService(boolean flag) {
+    private void activateVibratorService(boolean flag) {
         if (flag)
             if (!isVibratorReady())
                 requestVibratorService();
         this._VIBRATOR_SERVICE_READY_ = flag;
     }
 
-    public void activateTextToSpeechEngine(boolean flag) {
+    private void activateTextToSpeechEngine(boolean flag) {
         if (flag)
             if (!isTTSReady())
                 requestTTSService();
         this._TTS_SERVICE_READY_ = flag;
     }
 
-    public void requestVibratorService() {
+    private void requestVibratorService() {
         if (!this._VIBRATOR_SERVICE_READY_) {
             if (mVibrator == null)
                 mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
@@ -114,7 +118,7 @@ public class SettingsManager implements TextToSpeech.OnInitListener {
         }
     }
 
-    public void requestTTSService() {
+    private void requestTTSService() {
         if (!this._TTS_SERVICE_READY_ || mTTS == null) {
             mTTS = new TextToSpeech(mContext, this);
         }
@@ -184,39 +188,58 @@ public class SettingsManager implements TextToSpeech.OnInitListener {
             mSharedPreference = readFromPreference(PREFERENCE_USER);
         }
 
+        public boolean getTTSEnabled() {
+            return mSharedPreference.getBoolean(PREF_KEY_TTS_ENABLE, true);
+        }
+
+        public void setTTSEnabled(Boolean value) {
+            activateTextToSpeechEngine(value);
+            writeToPreference(PREFERENCE_USER, PREF_KEY_TTS_ENABLE, value);
+        }
+
         public int getTTSVolume() {
             return mSharedPreference.getInt(PREF_KEY_TTS_VOLUME, 0);
+        }
+
+        public void setTTSVolume(Integer value) {
+            AudioManager am = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+            am.setStreamVolume(AudioManager.STREAM_MUSIC, value, 0);
+            writeToPreference(PREFERENCE_USER, PREF_KEY_TTS_VOLUME, value);
         }
 
         public Float getTTSSpeed() {
             return mSharedPreference.getFloat(PREF_KEY_TTS_SPEED, 1);
         }
 
+        public void setTTSSpeed(Float value) {
+            getTTSEngine().setSpeechRate(value);
+            writeToPreference(PREFERENCE_USER, PREF_KEY_TTS_SPEED, value);
+        }
+
         public boolean getVibrationEnabled() {
             return mSharedPreference.getBoolean(PREF_KEY_VIBRATION_ENABLE, true);
+        }
+
+        public void setVibrationEnabled(Boolean value) {
+            activateVibratorService(value);
+            writeToPreference(PREFERENCE_USER, PREF_KEY_VIBRATION_ENABLE, value);
         }
 
         public boolean getSystemRecovery() {
             return mSharedPreference.getBoolean(PREF_KEY_RECOVER_SYSTEM, true);
         }
 
-        public void setTTSVolume(Integer value) {
-            AudioManager am = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
-            am.setStreamVolume(AudioManager.STREAM_MUSIC, value, 0);
-            writeToPreference(PREFERENCE_USER,PREF_KEY_TTS_VOLUME,value);
-        }
-
-        public void setTTSSpeed(Float value) {
-            getTTSEngine().setSpeechRate(value);
-            writeToPreference(PREFERENCE_USER,PREF_KEY_TTS_SPEED,value);
-        }
-
-        public void setVibrationEnabled(Boolean value) {
-            writeToPreference(PREFERENCE_USER,PREF_KEY_VIBRATION_ENABLE,value);
-        }
-
         public void setSystemRecovery(Boolean value) {
-            writeToPreference(PREFERENCE_USER,PREF_KEY_RECOVER_SYSTEM,value);
+            writeToPreference(PREFERENCE_USER, PREF_KEY_RECOVER_SYSTEM, value);
+        }
+
+        public Float getTTSPitch() {
+            return mSharedPreference.getFloat(PREF_KEY_TTS_PITCH, 1.0f);
+        }
+
+        public void setTTSPitch(Float value) {
+            getTTSEngine().setPitch(value);
+            writeToPreference(PREFERENCE_USER, PREF_KEY_TTS_PITCH, value);
         }
 
     }

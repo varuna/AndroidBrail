@@ -71,7 +71,7 @@ public class InvisibleTouchApplication extends Application {
             try {
                 mSettingsManager.getVibratorService().vibrate(pattern, -1);
             } catch (Exception e) {
-                mSettingsManager.activateVibratorService(false);
+                mSettingsManager.getSettings().setVibrationEnabled(false);
             }
         }
     }

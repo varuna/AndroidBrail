@@ -6,6 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.varunarl.invisibletouch.R;
+import com.varunarl.invisibletouch.internal.ScreenHelper;
 import com.varunarl.invisibletouch.internal.SixPackActivity;
 import com.varunarl.invisibletouch.utils.FavouriteContacts;
 import com.varunarl.invisibletouch.utils.Log;
@@ -21,7 +22,6 @@ public class FavouriteContactsActivity extends SixPackActivity {
 
     @Override
     public void onSwipeLeft() {
-        Log.announce("Left swipe", Level.INFO);
         finish();
     }
 
@@ -75,7 +75,7 @@ public class FavouriteContactsActivity extends SixPackActivity {
 
     @Override
     public void onScreenLongPress() {
-        Log.announce("In Favourite screen", true);
+        Log.announce(ScreenHelper.FAVOURITE_SCREEN_HELPER, true);
     }
 
     @Override

@@ -6,6 +6,7 @@ import android.provider.CallLog;
 import android.widget.LinearLayout;
 
 import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
+import com.varunarl.invisibletouch.internal.ScreenHelper;
 import com.varunarl.invisibletouch.internal.SixPackActivity;
 import com.varunarl.invisibletouch.utils.Log;
 import com.varunarl.invisibletouch.utils.Log.Level;
@@ -216,7 +217,7 @@ public class CallLogActivity extends SixPackActivity {
 
     @Override
     public void onScreenLongPress() {
-        Log.announce("In Call log screen", false);
+        Log.announce(ScreenHelper.CALL_LOG_SCREEN_HELPER, true);
 
     }
 

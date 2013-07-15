@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.View;
 
 import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
+import com.varunarl.invisibletouch.internal.ScreenHelper;
 import com.varunarl.invisibletouch.internal.SixPackActivity;
 import com.varunarl.invisibletouch.utils.Contact;
 import com.varunarl.invisibletouch.utils.ContactManager;
@@ -103,7 +104,7 @@ public class ContactsActivity extends SixPackActivity {
 
     @Override
     public void onScreenLongPress() {
-        Log.announce("In Contacts screen. Current contact " + mCurrentContact.toString(), false);
+        Log.announce(ScreenHelper.getContactDetailsActivityScreenHelper(mCurrentContact), false);
 
     }
 

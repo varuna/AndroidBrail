@@ -1,15 +1,18 @@
 package com.varunarl.invisibletouch.view;
 
+import android.content.Intent;
+
 import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
+import com.varunarl.invisibletouch.internal.ScreenHelper;
 import com.varunarl.invisibletouch.internal.SixPackActivity;
 import com.varunarl.invisibletouch.utils.Log;
 import com.varunarl.invisibletouch.utils.SettingsManager;
+import com.varunarl.invisibletouch.view.sub.AccessibilitySettingsActivity;
 
 public class SettingsActivity extends SixPackActivity {
 
-    private SettingsManager mSettingsManager;
-    private boolean FLAG_EDIT_TTS_VOLUME = false;
-    private boolean FLAG_EDIT_TTS_SPEED = false;
+    protected SettingsManager mSettingsManager;
+
 
     @Override
     protected void init() {
@@ -19,22 +22,22 @@ public class SettingsActivity extends SixPackActivity {
 
     @Override
     public void onLongKeyOne() {
-
+        Log.announce(ScreenHelper.SETTINGS_ACCESSIBILITY,true);
     }
 
     @Override
     public void onLongKeyTwo() {
-
+        Log.announce(ScreenHelper.SETTINGS_VIBRATION_TOGGLE,true);
     }
 
     @Override
     public void onLongKeyThree() {
-
+        Log.announce(ScreenHelper.SETTINGS_RESET_FACTORY_DEFAULTS,true);
     }
 
     @Override
     public void onLongKeyFour() {
-
+        Log.announce(ScreenHelper.SETTINGS_SYSTEM_RECOVERY,true);
     }
 
     @Override
@@ -44,7 +47,7 @@ public class SettingsActivity extends SixPackActivity {
 
     @Override
     public void onLongKeySix() {
-
+        Log.announce(ScreenHelper.SETTINGS_MORE,true);
     }
 
     @Override
@@ -54,7 +57,7 @@ public class SettingsActivity extends SixPackActivity {
 
     @Override
     public void onSwipeLeft() {
-
+        finish();
     }
 
     @Override
@@ -89,12 +92,6 @@ public class SettingsActivity extends SixPackActivity {
 
     @Override
     public void onVolumeDownKeyShortPress() {
-        SettingsManager settingsManager = InvisibleTouchApplication.getInstance().getSettingsManager();
-        if (FLAG_EDIT_TTS_VOLUME)
-            settingsManager.getSettings().setTTSVolume(settingsManager.getSettings().getTTSVolume() - 1);
-        else if (FLAG_EDIT_TTS_SPEED)
-            settingsManager.getSettings().setTTSSpeed(settingsManager.getSettings().getTTSSpeed() - 0.2f);
-
     }
 
     @Override
@@ -104,12 +101,6 @@ public class SettingsActivity extends SixPackActivity {
 
     @Override
     public void onVolumeUpKeyShortPress() {
-        SettingsManager settingsManager = InvisibleTouchApplication.getInstance().getSettingsManager();
-        if (FLAG_EDIT_TTS_VOLUME)
-            settingsManager.getSettings().setTTSVolume(settingsManager.getSettings().getTTSVolume() + 1);
-        else if (FLAG_EDIT_TTS_SPEED)
-            settingsManager.getSettings().setTTSSpeed(settingsManager.getSettings().getTTSSpeed() + 0.2f);
-
     }
 
     @Override
@@ -129,41 +120,43 @@ public class SettingsActivity extends SixPackActivity {
 
     @Override
     public void onScreenLongPress() {
-        Log.announce("In Settings", true);
+        Log.announce(ScreenHelper.SETTINGS_SCREEN_HELPER, true);
     }
 
     @Override
     public void onKeyOne() {
         super.onKeyOne();
-        FLAG_EDIT_TTS_VOLUME = true;
-        FLAG_EDIT_TTS_SPEED = false;
+        Intent accessibilityIntent = new Intent(this, AccessibilitySettingsActivity.class);
+        startActivity(accessibilityIntent);
     }
 
     @Override
     public void onKeyTwo() {
         super.onKeyTwo();
-        FLAG_EDIT_TTS_VOLUME = false;
-        FLAG_EDIT_TTS_SPEED = true;
+        mSettingsManager.getSettings().setVibrationEnabled(!mSettingsManager.getSettings().getVibrationEnabled());
     }
 
     @Override
     public void onKeyThree() {
         super.onKeyThree();
+        InvisibleTouchApplication.getInstance().getSettingsManager().restoreFactoryDefaults();
     }
 
     @Override
     public void onKeyFour() {
         super.onKeyFour();
+        mSettingsManager.getSettings().setSystemRecovery(!mSettingsManager.getSettings().getSystemRecovery());
     }
 
     @Override
     public void onKeyFive() {
         super.onKeyFive();
+        //free slot
     }
 
     @Override
     public void onKeySix() {
         super.onKeySix();
-        InvisibleTouchApplication.getInstance().getSettingsManager().restorFacotryDefaults();
+        //Reserved for more settings.
     }
 }

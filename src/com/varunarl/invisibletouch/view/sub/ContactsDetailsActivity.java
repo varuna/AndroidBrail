@@ -8,9 +8,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
+import com.varunarl.invisibletouch.internal.ScreenHelper;
 import com.varunarl.invisibletouch.internal.SinglePackActivity;
 import com.varunarl.invisibletouch.utils.Contact;
 import com.varunarl.invisibletouch.utils.ContactManager;
+import com.varunarl.invisibletouch.utils.Log;
 
 public class ContactsDetailsActivity extends SinglePackActivity {
 
@@ -86,6 +88,7 @@ public class ContactsDetailsActivity extends SinglePackActivity {
 
     @Override
     public void onScreenLongPress() {
+        Log.announce(ScreenHelper.getContactDetailsActivityScreenHelper(mContact),false);
     }
 
     @Override

@@ -3,7 +3,9 @@ package com.varunarl.invisibletouch.view;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.varunarl.invisibletouch.internal.ScreenHelper;
 import com.varunarl.invisibletouch.internal.SinglePackActivity;
+import com.varunarl.invisibletouch.utils.Log;
 
 public class LockScreenActivity extends SinglePackActivity {
 
@@ -94,7 +96,7 @@ public class LockScreenActivity extends SinglePackActivity {
 
     @Override
     public void onScreenLongPress() {
-
+        Log.announce(ScreenHelper.LOCK_SCREEN_HELPER,true);
     }
 
     @Override

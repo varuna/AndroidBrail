@@ -5,6 +5,7 @@ import android.os.RemoteException;
 import android.telephony.TelephonyManager;
 
 import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
+import com.varunarl.invisibletouch.internal.ScreenHelper;
 import com.varunarl.invisibletouch.internal.SixPackActivity;
 import com.varunarl.invisibletouch.utils.CallManager;
 import com.varunarl.invisibletouch.utils.Log;
@@ -135,7 +136,7 @@ public class InCallActivity extends SixPackActivity implements PhoneStateManager
 
     @Override
     public void onScreenLongPress() {
-        Log.announce("In Call with " + mStatus.mPhoneNumber, true);
+        Log.announce(ScreenHelper.getInCallActivityScreenHelper(mStatus.mPhoneNumber), true);
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.content.Intent;
 import com.varunarl.invisibletouch.braille.Braille;
 import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.internal.KeyboardActivity;
+import com.varunarl.invisibletouch.internal.ScreenHelper;
 import com.varunarl.invisibletouch.utils.CallManager;
 import com.varunarl.invisibletouch.utils.InputManager;
 import com.varunarl.invisibletouch.utils.Log;
@@ -26,7 +27,7 @@ public class DialPadActivity extends KeyboardActivity {
 
     @Override
     public void onScreenLongPress() {
-        Log.announce("In Dial pad screen. Current Number " + mTextInputManager.getText(), false);
+        Log.announce(ScreenHelper.DIAL_PAD_SCREEN_HELPER, false);
     }
 
     @Override

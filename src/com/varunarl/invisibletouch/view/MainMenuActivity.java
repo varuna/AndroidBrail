@@ -3,6 +3,7 @@ package com.varunarl.invisibletouch.view;
 import android.content.Intent;
 
 import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
+import com.varunarl.invisibletouch.internal.ScreenHelper;
 import com.varunarl.invisibletouch.internal.SixPackActivity;
 import com.varunarl.invisibletouch.utils.Log;
 
@@ -121,7 +122,7 @@ public class MainMenuActivity extends SixPackActivity {
 
     @Override
     public void onScreenLongPress() {
-        Log.announce("In Main menu", true);
+        Log.announce(ScreenHelper.MAIN_MENU_SCREEN_HELPER, true);
 
     }
 
