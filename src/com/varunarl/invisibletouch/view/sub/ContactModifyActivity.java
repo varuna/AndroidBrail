@@ -1,7 +1,7 @@
 package com.varunarl.invisibletouch.view.sub;
 
 import android.content.Intent;
-import android.widget.Toast;
+
 import com.varunarl.invisibletouch.braille.Braille;
 import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.internal.KeyboardActivity;
@@ -158,6 +158,7 @@ public class ContactModifyActivity extends KeyboardActivity {
 
     @Override
     public void onScreenLongPress() {
-        Log.announce(mContact.toString(), false);
+        if (mContact != null)
+            Log.announce(mContact.toString(), false);
     }
 }

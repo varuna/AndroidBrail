@@ -10,6 +10,8 @@ import com.varunarl.invisibletouch.utils.ContactManager;
 import com.varunarl.invisibletouch.utils.InputManager.TextInputManager;
 import com.varunarl.invisibletouch.utils.SettingsManager;
 
+import java.util.HashMap;
+
 public class InvisibleTouchApplication extends Application {
 
     private static InvisibleTouchApplication instance;
@@ -64,6 +66,11 @@ public class InvisibleTouchApplication extends Application {
     public void speak(String speech) {
         if (mSettingsManager.isTTSReady())
             mSettingsManager.getTTSEngine().speak(speech, TextToSpeech.QUEUE_FLUSH, null);
+    }
+
+    public void speak(String speech, HashMap<String,String> params) {
+        if (mSettingsManager.isTTSReady())
+            mSettingsManager.getTTSEngine().speak(speech, TextToSpeech.QUEUE_FLUSH, params);
     }
 
     public void vibrate(long[] pattern) {

@@ -88,7 +88,7 @@ public class ContactsDetailsActivity extends SinglePackActivity {
 
     @Override
     public void onScreenLongPress() {
-        Log.announce(ScreenHelper.getContactDetailsActivityScreenHelper(mContact),false);
+        Log.announce(ScreenHelper.getContactDetailsActivityScreenHelper(mContact),true);
     }
 
     @Override

@@ -4,6 +4,8 @@ import android.widget.Toast;
 
 import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
 
+import java.util.HashMap;
+
 public class Log {
 	public static void announce(String message,Level l) {
 		switch (l) {
@@ -39,6 +41,18 @@ public class Log {
             announce("Toast message : "+message,Level.VERBOSE);
         }
 	}
+
+    public static void announce(String message, boolean isLoud, HashMap<String,String> audioParams) {
+        if (isLoud){
+            InvisibleTouchApplication.getInstance().speak(message,audioParams);
+            announce("Speak text : "+message,Level.INFO);
+        }
+        else{
+            Toast.makeText(InvisibleTouchApplication.getInstance(), message,
+                    Toast.LENGTH_SHORT).show();
+            announce("Toast message : "+message,Level.VERBOSE);
+        }
+    }
 
 	public enum Level {
 		INFO, VERBOSE, WARNING, ERROR, DEBUG;

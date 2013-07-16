@@ -1,7 +1,9 @@
 package com.varunarl.invisibletouch.view;
 
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.RemoteException;
+import android.speech.tts.TextToSpeech;
 import android.telephony.TelephonyManager;
 
 import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
@@ -10,6 +12,8 @@ import com.varunarl.invisibletouch.internal.SixPackActivity;
 import com.varunarl.invisibletouch.utils.CallManager;
 import com.varunarl.invisibletouch.utils.Log;
 import com.varunarl.invisibletouch.utils.PhoneStateManager;
+
+import java.util.HashMap;
 
 public class InCallActivity extends SixPackActivity implements PhoneStateManager.INotify {
     public static final String NUMBER = "com.varunarl.call.number";
@@ -136,7 +140,10 @@ public class InCallActivity extends SixPackActivity implements PhoneStateManager
 
     @Override
     public void onScreenLongPress() {
-        Log.announce(ScreenHelper.getInCallActivityScreenHelper(mStatus.mPhoneNumber), true);
+        HashMap<String, String> params = new HashMap<String, String>(1);
+        params.put(TextToSpeech.Engine.KEY_PARAM_STREAM,
+                String.valueOf(AudioManager.STREAM_VOICE_CALL));
+        Log.announce(ScreenHelper.getInCallActivityScreenHelper(mStatus.mPhoneNumber), true, params);
     }
 
     @Override

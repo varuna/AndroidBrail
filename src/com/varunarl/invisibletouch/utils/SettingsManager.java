@@ -28,19 +28,22 @@ public class SettingsManager implements TextToSpeech.OnInitListener {
     private Context mContext;
     private TextToSpeech mTTS;
     private Vibrator mVibrator;
-    private UserSettings mUserSettings;
     private boolean _TTS_SERVICE_READY_ = false;
     private boolean _VIBRATOR_SERVICE_READY_ = false;
 
 
     public SettingsManager(Context context) {
         this.mContext = context;
-        if (!isTTSReady())
-            requestTTSService();
-        if (!isVibratorReady())
-            requestVibratorService();
+        UserSettings settings = getSettings();
 
-        restoreFactoryDefaults();
+        settings.setVibrationEnabled(settings.getVibrationEnabled());
+        settings.setSystemRecovery(settings.getSystemRecovery());
+        settings.setTTSVolume(settings.getTTSVolume());
+        settings.setTTSEnabled(settings.getTTSEnabled());
+        if (isTTSReady()) {
+            settings.setTTSPitch(settings.getTTSPitch());
+            settings.setTTSSpeed(settings.getTTSSpeed());
+        }
     }
 
     private static void writeToPreference(String preferenceId, String preference, Object value) {
@@ -177,7 +180,6 @@ public class SettingsManager implements TextToSpeech.OnInitListener {
     }
 
     public UserSettings getSettings() {
-        mUserSettings = null;
         return new UserSettings();
     }
 

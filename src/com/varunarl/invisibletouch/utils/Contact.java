@@ -10,10 +10,10 @@ import java.util.Map;
  * Created by Varuna on 5/30/13.
  */
 public class Contact implements Parcelable {
-    public static final String PARCELABLE_CONTACT = "_CONTACT_";
+    public static final String PARCELABLE_CONTACT = "com.varunarl.invisibletouch.utils._CONTACT_";
 
-    private static final String PARCELABLE_NAME_KEY = "_CONTACT_NAME_";
-    private static final String PARCELABLE_PHONE_KEY = "_CONTACT_PHONE_";
+    private static final String PARCELABLE_NAME_KEY = "com.varunarl.invisibletouch.utils._CONTACT_NAME_";
+    private static final String PARCELABLE_PHONE_KEY = "com.varunarl.invisibletouch.utils._CONTACT_PHONE_";
 
     public static final int STAGE_NEW_NAME = 0;
     public static final int STAGE_NEW_PHONE = 1;
