@@ -107,6 +107,11 @@ public class AccessibilitySettingsActivity extends SettingsActivity {
     }
 
     @Override
-    public void onScreenLongPress() {
+    protected void init() {
+        super.init();
+        setViewText(0,"Text to speech","enable/disable TTS feature");
+        setViewText(1,"Volume","Increase or decrease TTS volume");
+        setViewText(2,"Speed","Increase or decrease TTS speed");
+        setViewText(3,"Pitch","Increase or decrease TTS pitch");
     }
 }

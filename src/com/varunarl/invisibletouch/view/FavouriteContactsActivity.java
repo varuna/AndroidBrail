@@ -10,7 +10,6 @@ import com.varunarl.invisibletouch.internal.ScreenHelper;
 import com.varunarl.invisibletouch.internal.SixPackActivity;
 import com.varunarl.invisibletouch.utils.FavouriteContacts;
 import com.varunarl.invisibletouch.utils.Log;
-import com.varunarl.invisibletouch.utils.Log.Level;
 
 public class FavouriteContactsActivity extends SixPackActivity {
 
@@ -142,61 +141,12 @@ public class FavouriteContactsActivity extends SixPackActivity {
     protected void init() {
         mFavourites = FavouriteContacts.getInstance(getApplicationContext(), this);
         super.init();
-    }
 
-    @Override
-    protected void onAttachView(int id, View view) {
-        int idx;
-        switch (id) {
-            case R.id.item_one_one:
-                idx = 0;
-                break;
-            case R.id.item_one_two:
-                idx = 2;
-                break;
-            case R.id.item_one_three:
-                idx = 4;
-                break;
-            case R.id.item_two_one:
-                idx = 1;
-                break;
-            case R.id.item_two_two:
-                idx = 3;
-                break;
-            case R.id.item_two_three:
-                idx = 5;
-                break;
-
-            default:
-                idx = 5;
-                break;
-        }
-        setFavouriteView(view, mFavourites.get(idx).first,
-                mFavourites.get(idx).second);
-
-    }
-
-    private void setFavouriteView(View v, String name, String telephone) {
-        LinearLayout top = (LinearLayout) v;
-        top.removeAllViews();
-        top.setOrientation(LinearLayout.VERTICAL);
-        TextView _name = new TextView(this);
-        top.setGravity(Gravity.CENTER);
-        _name.setGravity(Gravity.CENTER);
-
-        if (name.equals("") || telephone.equals("")) {
-            _name.setText("Empty");
-            top.addView(_name);
-            return;
-        }
-
-        TextView _telephone = new TextView(this);
-
-        _name.setText(name);
-        _telephone.setText(telephone);
-
-        _telephone.setGravity(Gravity.CENTER);
-        top.addView(_name);
-        top.addView(_telephone);
+        setViewText(0, mFavourites.get(0).first.isEmpty() ? "Empty" : mFavourites.get(0).first, mFavourites.get(0).second.isEmpty() ? "" : mFavourites.get(0).second);
+        setViewText(3, mFavourites.get(1).first.isEmpty() ? "Empty" : mFavourites.get(1).first, mFavourites.get(1).second.isEmpty() ? "" : mFavourites.get(1).second);
+        setViewText(1, mFavourites.get(2).first.isEmpty() ? "Empty" : mFavourites.get(2).first, mFavourites.get(2).second.isEmpty() ? "" : mFavourites.get(2).second);
+        setViewText(4, mFavourites.get(3).first.isEmpty() ? "Empty" : mFavourites.get(3).first, mFavourites.get(3).second.isEmpty() ? "" : mFavourites.get(3).second);
+        setViewText(2, mFavourites.get(4).first.isEmpty() ? "Empty" : mFavourites.get(4).first, mFavourites.get(4).second.isEmpty() ? "" : mFavourites.get(4).second);
+        setViewText(5, mFavourites.get(5).first.isEmpty() ? "Empty" : mFavourites.get(5).first, mFavourites.get(5).second.isEmpty() ? "" : mFavourites.get(5).second);
     }
 }

@@ -18,6 +18,9 @@ public class SettingsActivity extends SixPackActivity {
     protected void init() {
         super.init();
         mSettingsManager = InvisibleTouchApplication.getInstance().getSettingsManager();
+        setViewText(0,"Accessibility",null);
+        setViewText(1,"Vibrations","enable/disable vibrations");
+        setViewText(2,"Recovery","enable/disable system recovery");
     }
 
     @Override

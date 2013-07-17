@@ -21,6 +21,7 @@ public class ContactsActivity extends SixPackActivity {
     @Override
     public void onSwipeUp() {
         mCurrentContact = InvisibleTouchApplication.getInstance().getContactManager().nextContact();
+        setViewData();
     }
 
     @Override
@@ -31,6 +32,7 @@ public class ContactsActivity extends SixPackActivity {
     @Override
     public void onSwipeDown() {
         mCurrentContact = InvisibleTouchApplication.getInstance().getContactManager().previousContact();
+        setViewData();
     }
 
     @Override
@@ -83,6 +85,7 @@ public class ContactsActivity extends SixPackActivity {
         if (mCurrentContact == null) {
             mCurrentContact = InvisibleTouchApplication.getInstance().getContactManager().getContact();
         }
+        setViewData();
     }
 
     @Override
@@ -190,5 +193,14 @@ public class ContactsActivity extends SixPackActivity {
         } catch (FavouriteExistsException e) {
             e.printStackTrace();
         }
+    }
+
+    private void setViewData(){
+        setViewText(0,"Update contact",mCurrentContact.getName());
+        setViewText(1,"Call contact",mCurrentContact.getPhone());
+        setViewText(2,"Delete contact",null);
+        setViewText(3,"New contact",null);
+        setViewText(4,"Show details",null);
+        setViewText(5,"Add to favourite",null);
     }
 }

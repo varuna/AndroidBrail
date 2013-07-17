@@ -1,117 +1,236 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/LinearLayout1"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity" >
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/LinearLayout1"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context=".MainActivity">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" >
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
         <LinearLayout
-            android:id="@+id/item_one_one"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@android:color/black"
-            android:orientation="vertical" >
+                android:id="@+id/item_one_one"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/black"
+                android:orientation="vertical"
+                android:gravity="center">
 
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Title"
+                    android:textColor="@android:color/white"
+                    android:id="@+id/item_one_one_title"
+                    android:layout_gravity="center"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Summary"
+                    android:textColor="@android:color/white"
+                    android:id="@+id/item_one_one_summary"
+                    android:gravity="center"
+                    android:layout_gravity="center"/>
         </LinearLayout>
 
         <View
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:background="@android:color/white" />
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@android:color/white"/>
 
         <LinearLayout
-            android:id="@+id/item_two_one"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@android:color/black"
-            android:orientation="vertical" >
+                android:id="@+id/item_two_one"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/black"
+                android:orientation="vertical"
+                android:gravity="center">
 
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Title"
+                    android:textColor="@android:color/white"
+                    android:id="@+id/item_two_one_title"
+                    android:layout_gravity="center"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Summary"
+                    android:textColor="@android:color/white"
+                    android:id="@+id/item_two_one_summary"
+                    android:gravity="center"
+                    android:layout_gravity="center"/>
         </LinearLayout>
     </LinearLayout>
+
     <View
             android:layout_width="wrap_content"
             android:layout_height="1dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:background="@android:color/white" />
-    
+            android:background="@android:color/white"/>
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.75" >
-
-        <LinearLayout
-            android:id="@+id/item_one_two"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@android:color/black"
-            android:orientation="vertical" >
-
-        </LinearLayout>
-        <View
-            android:layout_width="1dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:background="@android:color/white" />
-        
-        <LinearLayout
-            android:id="@+id/item_two_two"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@android:color/black"
-            android:orientation="vertical" >
+            android:layout_weight="0.75">
 
+        <LinearLayout
+                android:id="@+id/item_one_two"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/black"
+                android:orientation="vertical"
+                android:gravity="center">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Title"
+                    android:textColor="@android:color/white"
+                    android:id="@+id/item_one_two_title"
+                    android:layout_gravity="center"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Summary"
+                    android:textColor="@android:color/white"
+                    android:id="@+id/item_one_two_summary"
+                    android:gravity="center"
+                    android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <View
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@android:color/white"/>
+
+        <LinearLayout
+                android:id="@+id/item_two_two"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/black"
+                android:orientation="vertical"
+                android:gravity="center">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Title"
+                    android:textColor="@android:color/white"
+                    android:id="@+id/item_two_two_title"
+                    android:layout_gravity="center"
+                    />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Summary"
+                    android:textColor="@android:color/white"
+                    android:id="@+id/item_two_two_summary"
+                    android:gravity="center"
+                    android:layout_gravity="center"/>
         </LinearLayout>
     </LinearLayout>
-     <View
+
+    <View
             android:layout_width="wrap_content"
             android:layout_height="1dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:background="@android:color/white" />
+            android:background="@android:color/white"/>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1.1" >
-
-        <LinearLayout
-            android:id="@+id/item_one_three"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@android:color/black"
-            android:orientation="vertical" >
-
-        </LinearLayout>
-        <View
-            android:layout_width="1dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:background="@android:color/white" />
-        
-        <LinearLayout
-            android:id="@+id/item_two_three"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@android:color/black"
-            android:orientation="vertical" >
+            android:layout_weight="1.1">
 
+        <LinearLayout
+                android:id="@+id/item_one_three"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/black"
+                android:orientation="vertical"
+                android:gravity="center">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Title"
+                    android:textColor="@android:color/white"
+                    android:id="@+id/item_one_three_title"
+                    android:layout_gravity="center"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Summary"
+                    android:textColor="@android:color/white"
+                    android:id="@+id/item_one_three_summary"
+                    android:gravity="center"
+                    android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <View
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@android:color/white"/>
+
+        <LinearLayout
+                android:id="@+id/item_two_three"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/black"
+                android:orientation="vertical"
+                android:gravity="center">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Title"
+                    android:textColor="@android:color/white"
+                    android:id="@+id/item_two_three_title"
+                    android:layout_gravity="center"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Summary"
+                    android:textColor="@android:color/white"
+                    android:id="@+id/item_two_three_summary"
+                    android:gravity="center"
+                    android:layout_gravity="center"/>
         </LinearLayout>
     </LinearLayout>
 

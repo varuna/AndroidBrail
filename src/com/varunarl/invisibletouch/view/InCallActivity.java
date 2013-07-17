@@ -27,6 +27,10 @@ public class InCallActivity extends SixPackActivity implements PhoneStateManager
             mStatus.mPhoneNumber = getIntent().getStringExtra(NUMBER);
 
         super.init();
+        setViewText(0,"Mute",null);
+        setViewText(1,"Speaker",null);
+        setViewText(4,"End call",null);
+        setViewText(5,"Dial pad",null);
     }
 
     @Override

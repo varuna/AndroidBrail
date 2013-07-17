@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.provider.CallLog;
 import android.text.format.DateUtils;
+import android.widget.Toast;
 
 import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.internal.ScreenHelper;
@@ -39,6 +40,7 @@ public class CallLogActivity extends SixPackActivity {
             mContacts.moveToNext();
             mCurrentLog = readContact(mContacts);
         }
+        setViewData();
     }
 
     @Override
@@ -52,6 +54,7 @@ public class CallLogActivity extends SixPackActivity {
             mContacts.moveToPrevious();
             mCurrentLog = readContact(mContacts);
         }
+        setViewData();
 
     }
 
@@ -105,6 +108,7 @@ public class CallLogActivity extends SixPackActivity {
         this.mContacts.moveToFirst();
         mCurrentLog = readContact(mContacts);
         super.init();
+        setViewData();
     }
 
     @Override
@@ -165,12 +169,12 @@ public class CallLogActivity extends SixPackActivity {
 
     @Override
     public void onKeyThree() {
-        Log.announce(mCurrentLog.durationInString(), true);
+        Log.announce(mCurrentLog.typeInString(), true);
     }
 
     @Override
     public void onKeyFour() {
-        Log.announce(mCurrentLog.timeInString(),true);
+        Log.announce(mCurrentLog.timeInString(), true);
     }
 
     @Override
@@ -183,10 +187,20 @@ public class CallLogActivity extends SixPackActivity {
         //Delete record
     }
 
+    private void setViewData()
+    {
+        setViewText(0,"Name",mCurrentLog.getName());
+        setViewText(1,"Phone",mCurrentLog.getPhone());
+        setViewText(2,"Type",mCurrentLog.typeInString());
+        setViewText(3,"Time",mCurrentLog.timeInString());
+        setViewText(4,"Redial",null);
+        setViewText(5,"Remove record",null);
+    }
+
     class CallLogContact extends Contact {
-        int type;
-        long duration;
-        long timePassed;
+        Integer type;
+        Long duration;
+        Long timePassed;
 
         int getType() {
             return type;
@@ -213,11 +227,29 @@ public class CallLogActivity extends SixPackActivity {
         }
 
         String durationInString() {
-            return DateUtils.formatElapsedTime(duration);
+            if (duration != null)
+                return DateUtils.formatElapsedTime(duration);
+            else
+                return "";
         }
 
         String timeInString() {
-            return (String)DateUtils.getRelativeTimeSpanString(timePassed);
+            if (timePassed != null){
+                return (String) DateUtils.getRelativeTimeSpanString(timePassed,System.currentTimeMillis(),DateUtils.MINUTE_IN_MILLIS);
+            }else
+                return "";
+        }
+
+        String typeInString(){
+            switch (type){
+                case CallLog.Calls.INCOMING_TYPE:
+                    return "Incomming call";
+                case CallLog.Calls.MISSED_TYPE:
+                    return "Missed call";
+                case CallLog.Calls.OUTGOING_TYPE:
+                    return "Outgoing call";
+            }
+            return null;
         }
 
     }

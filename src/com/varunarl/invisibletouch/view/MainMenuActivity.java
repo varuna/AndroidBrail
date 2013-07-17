@@ -1,6 +1,7 @@
 package com.varunarl.invisibletouch.view;
 
 import android.content.Intent;
+import android.view.View;
 
 import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.internal.ScreenHelper;
@@ -160,5 +161,16 @@ public class MainMenuActivity extends SixPackActivity {
         super.onResume();
         if (InvisibleTouchApplication.getInstance().shouldKillApp())
             InvisibleTouchApplication.getInstance().killed();
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        setViewText(0,"Favourites",null);
+        setViewText(1,"Call log",null);
+        setViewText(2,null,null);
+        setViewText(3,"Dial pad",null);
+        setViewText(4,"Contacts",null);
+        setViewText(5,"Settings",null);
     }
 }

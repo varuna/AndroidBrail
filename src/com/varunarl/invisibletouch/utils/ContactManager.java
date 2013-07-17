@@ -41,13 +41,13 @@ public class ContactManager {
     }
 
     public Contact nextContact() {
-        if (mContactsCursor != null)
+        if (mContactsCursor != null && !mContactsCursor.isLast())
             mContactsCursor.moveToNext();
         return getContact();
     }
 
     public Contact previousContact() {
-        if (mContactsCursor != null)
+        if (mContactsCursor != null && !mContactsCursor.isFirst())
             mContactsCursor.moveToPrevious();
         return getContact();
     }

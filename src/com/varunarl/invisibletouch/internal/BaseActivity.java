@@ -173,7 +173,7 @@ public abstract class BaseActivity extends Activity implements IGestures,
 
     public void setActivityResult(int result) {
         InvisibleTouchApplication.getInstance().setResult(result);
-        setResult(RESULT_CANCELED);
+        setResult(result);
     }
 
     @Override

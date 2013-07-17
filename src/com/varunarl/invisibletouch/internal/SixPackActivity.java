@@ -2,6 +2,8 @@ package com.varunarl.invisibletouch.internal;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.TextView;
+
 import com.varunarl.invisibletouch.R;
 import com.varunarl.invisibletouch.braille.BrailleCharacter;
 import com.varunarl.invisibletouch.utils.Log;
@@ -10,10 +12,12 @@ import com.varunarl.invisibletouch.view.LockScreenActivity;
 public abstract class SixPackActivity extends BaseActivity {
 
     private final BrailleCharacter mTemplateCharacter = new BrailleCharacter();
+    protected boolean mIsColorOnKeyboard;
     private boolean ONE, TWO, THREE, FOUR, FIVE, SIX;
     private View _one_one, _one_two, _one_three, _two_one, _two_two,
             _two_three;
-    protected boolean mIsColorOnKeyboard;
+    private TextView _one_one_title, _one_two_title, _one_three_title, _two_one_title, _two_two_title, _two_three_title;
+    private TextView _one_one_summary, _one_two_summary, _one_three_summary, _two_one_summary, _two_two_summary, _two_three_summary;
     private boolean mIsVibrationsOn;
 
     @Override
@@ -25,6 +29,34 @@ public abstract class SixPackActivity extends BaseActivity {
         _two_one = findViewById(R.id.item_two_one);
         _two_two = findViewById(R.id.item_two_two);
         _two_three = findViewById(R.id.item_two_three);
+
+        _one_one_title = (TextView) findViewById(R.id.item_one_one_title);
+        _one_two_title = (TextView) findViewById(R.id.item_one_two_title);
+        _one_three_title = (TextView) findViewById(R.id.item_one_three_title);
+        _two_one_title = (TextView) findViewById(R.id.item_two_one_title);
+        _two_two_title = (TextView) findViewById(R.id.item_two_two_title);
+        _two_three_title = (TextView) findViewById(R.id.item_two_three_title);
+
+        _one_one_summary = (TextView) findViewById(R.id.item_one_one_summary);
+        _one_two_summary = (TextView) findViewById(R.id.item_one_two_summary);
+        _one_three_summary = (TextView) findViewById(R.id.item_one_three_summary);
+        _two_one_summary = (TextView) findViewById(R.id.item_two_one_summary);
+        _two_two_summary = (TextView) findViewById(R.id.item_two_two_summary);
+        _two_three_summary = (TextView) findViewById(R.id.item_two_three_summary);
+
+        _one_one_title.setVisibility(View.INVISIBLE);
+        _one_two_title.setVisibility(View.INVISIBLE);
+        _one_three_title.setVisibility(View.INVISIBLE);
+        _two_one_title.setVisibility(View.INVISIBLE);
+        _two_two_title.setVisibility(View.INVISIBLE);
+        _two_three_title.setVisibility(View.INVISIBLE);
+
+        _one_one_summary.setVisibility(View.INVISIBLE);
+        _one_two_summary.setVisibility(View.INVISIBLE);
+        _one_three_summary.setVisibility(View.INVISIBLE);
+        _two_one_summary.setVisibility(View.INVISIBLE);
+        _two_two_summary.setVisibility(View.INVISIBLE);
+        _two_three_summary.setVisibility(View.INVISIBLE);
 
         _one_one.setClickable(true);
         _one_two.setClickable(true);
@@ -80,8 +112,8 @@ public abstract class SixPackActivity extends BaseActivity {
         if (mIsColorOnKeyboard)
             toggleColor(2);
         if (mIsVibrationsOn)
-        InvisibleTouchApplication.getInstance().vibrate(
-                mTemplateCharacter._one_three.getPattern());
+            InvisibleTouchApplication.getInstance().vibrate(
+                    mTemplateCharacter._one_three.getPattern());
     }
 
     @Override
@@ -89,8 +121,8 @@ public abstract class SixPackActivity extends BaseActivity {
         if (mIsColorOnKeyboard)
             toggleColor(3);
         if (mIsVibrationsOn)
-        InvisibleTouchApplication.getInstance().vibrate(
-                mTemplateCharacter._two_one.getPattern());
+            InvisibleTouchApplication.getInstance().vibrate(
+                    mTemplateCharacter._two_one.getPattern());
     }
 
     @Override
@@ -98,8 +130,8 @@ public abstract class SixPackActivity extends BaseActivity {
         if (mIsColorOnKeyboard)
             toggleColor(4);
         if (mIsVibrationsOn)
-        InvisibleTouchApplication.getInstance().vibrate(
-                mTemplateCharacter._two_two.getPattern());
+            InvisibleTouchApplication.getInstance().vibrate(
+                    mTemplateCharacter._two_two.getPattern());
     }
 
     @Override
@@ -107,8 +139,8 @@ public abstract class SixPackActivity extends BaseActivity {
         if (mIsColorOnKeyboard)
             toggleColor(5);
         if (mIsVibrationsOn)
-        InvisibleTouchApplication.getInstance().vibrate(
-                mTemplateCharacter._two_three.getPattern());
+            InvisibleTouchApplication.getInstance().vibrate(
+                    mTemplateCharacter._two_three.getPattern());
 
     }
 
@@ -140,6 +172,7 @@ public abstract class SixPackActivity extends BaseActivity {
     public void setVibrations(boolean turnOn) {
         mIsVibrationsOn = turnOn;
     }
+
     private void toggleColor(int index)
 
     {
@@ -225,5 +258,64 @@ public abstract class SixPackActivity extends BaseActivity {
     @Override
     public void onPowerKeyLongPress() {
         Log.announce("Power Long press", Log.Level.INFO);
+    }
+
+    public void setViewText(int index, String title, String summary) {
+        if (title != null && !title.equals(""))
+            switch (index) {
+                case 0:
+                    _one_one_title.setText(title);
+                    _one_one_title.setVisibility(View.VISIBLE);
+                    break;
+                case 1:
+                    _one_two_title.setText(title);
+                    _one_two_title.setVisibility(View.VISIBLE);
+
+                    break;
+                case 2:
+                    _one_three_title.setText(title);
+                    _one_three_title.setVisibility(View.VISIBLE);
+                    break;
+                case 3:
+                    _two_one_title.setText(title);
+                    _two_one_title.setVisibility(View.VISIBLE);
+                    break;
+                case 4:
+                    _two_two_title.setText(title);
+                    _two_two_title.setVisibility(View.VISIBLE);
+                    break;
+                case 5:
+                    _two_three_title.setText(title);
+                    _two_three_title.setVisibility(View.VISIBLE);
+                    break;
+            }
+        if (summary != null && !summary.equals(""))
+            switch (index) {
+                case 0:
+                    _one_one_summary.setText(summary);
+                    _one_one_summary.setVisibility(View.VISIBLE);
+                    break;
+                case 1:
+                    _one_two_summary.setText(summary);
+                    _one_two_summary.setVisibility(View.VISIBLE);
+
+                    break;
+                case 2:
+                    _one_three_summary.setText(summary);
+                    _one_three_summary.setVisibility(View.VISIBLE);
+                    break;
+                case 3:
+                    _two_one_summary.setText(summary);
+                    _two_one_summary.setVisibility(View.VISIBLE);
+                    break;
+                case 4:
+                    _two_two_summary.setText(summary);
+                    _two_two_summary.setVisibility(View.VISIBLE);
+                    break;
+                case 5:
+                    _two_three_summary.setText(summary);
+                    _two_three_summary.setVisibility(View.VISIBLE);
+                    break;
+            }
     }
 }
