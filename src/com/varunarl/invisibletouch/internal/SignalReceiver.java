@@ -10,7 +10,7 @@ import com.varunarl.invisibletouch.utils.Log;
 import com.varunarl.invisibletouch.view.MainMenuActivity;
 
 /**
- * Created by vlekamwasam on 6/10/13.
+ * Created by Shahan Achira Perera.
  */
 public class SignalReceiver extends BroadcastReceiver {
 

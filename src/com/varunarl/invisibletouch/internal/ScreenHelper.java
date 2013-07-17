@@ -5,14 +5,14 @@ import com.varunarl.invisibletouch.utils.Contact;
 public class ScreenHelper {
 
     //SCREEN LONG PRESS HELPER STRINGS
-    public static String MAIN_MENU_SCREEN_HELPER = "You are now in main menu.";
-    public static String FAVOURITE_SCREEN_HELPER = "You are now in favourite contacts screen.";
-    public static String CALL_LOG_SCREEN_HELPER = "You are now in call log screen.";
-    public static String CONTACTS_SCREEN_HELPER = "You are now in contacts screen.";
-    public static String DIAL_PAD_SCREEN_HELPER = "You are now in dial pad screen.";
-    public static String LOCK_SCREEN_HELPER = "You are now in lock screen.";
-    public static String SETTINGS_SCREEN_HELPER = "You are now in settings screen.";
-    public static String ACCESSIBILITY_SETTINGS_SCREEN_HELPER = "You are now in accessibility settings screen.";
+    public static String MAIN_MENU_SCREEN_HELPER = "Main menu.";
+    public static String FAVOURITE_SCREEN_HELPER = "Favourite contacts.";
+    public static String CALL_LOG_SCREEN_HELPER = "Call log.";
+    public static String CONTACTS_SCREEN_HELPER = "Contacts.";
+    public static String DIAL_PAD_SCREEN_HELPER = "Dial pad.";
+    public static String LOCK_SCREEN_HELPER = "Lock screen.";
+    public static String SETTINGS_SCREEN_HELPER = "Settings.";
+    public static String ACCESSIBILITY_SETTINGS_SCREEN_HELPER = "Accessibility settings.";
 
     //BUTTON LONG PRESS HELPER STRINGS
     public static String SETTINGS_TEXT_TO_SPEECH_TOGGLE = "Tap on this will enable or disable the text to speech feature.";
