@@ -9,9 +9,6 @@ import android.content.Intent;
 import com.varunarl.invisibletouch.utils.Log;
 import com.varunarl.invisibletouch.view.MainMenuActivity;
 
-/**
- * Created by Shahan Achira Perera.
- */
 public class SignalReceiver extends BroadcastReceiver {
 
     public static final String BOOT_COMPLETED = Intent.ACTION_BOOT_COMPLETED;
