@@ -462,6 +462,8 @@ public class Braille {
                 mNumericKeyBoard.add(Key.get('8'));
                 mNumericKeyBoard.add(Key.get('9'));
                 mNumericKeyBoard.add(Key.get('0'));
+                mNumericKeyBoard.add(Key.get('*'));
+                mNumericKeyBoard.add(Key.get('#'));
             }
 
             public Character get(BrailleCharacter c) {
