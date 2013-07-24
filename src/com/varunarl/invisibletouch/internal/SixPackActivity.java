@@ -86,7 +86,13 @@ public abstract class SixPackActivity extends BaseActivity {
 
     @Override
     protected void onAttachView(int id, View view) {
+        //Hidden implementation. Childs do not override unless required.
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mIsVibrationsOn = InvisibleTouchApplication.getInstance().getSettingsManager().getSettings().getVibrationEnabled();
     }
 
     @Override

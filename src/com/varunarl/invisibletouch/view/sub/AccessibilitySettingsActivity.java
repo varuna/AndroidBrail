@@ -39,7 +39,7 @@ public class AccessibilitySettingsActivity extends SettingsActivity {
 
     @Override
     public void onKeyOne() {
-        super.onKeyOne();
+//        super.onKeyOne();
         mSettingsManager.getSettings().setTTSEnabled(!mSettingsManager.getSettings().getTTSEnabled());
     }
 
