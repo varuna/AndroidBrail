@@ -5,6 +5,7 @@ import android.media.AudioManager;
 import android.os.RemoteException;
 import android.speech.tts.TextToSpeech;
 import android.telephony.TelephonyManager;
+import android.widget.Toast;
 
 import com.varunarl.invisibletouch.internal.InvisibleTouchApplication;
 import com.varunarl.invisibletouch.internal.ScreenHelper;
@@ -15,22 +16,22 @@ import com.varunarl.invisibletouch.utils.PhoneStateManager;
 
 import java.util.HashMap;
 
-public class InCallActivity extends SixPackActivity implements PhoneStateManager.INotify {
-    public static final String NUMBER = "com.varunarl.call.number";
+public class InCallActivity extends SixPackActivity {
+    public static final String NUMBER = "com.varunarl.invisibletouch.view.InCallActivity.NUMBER";
     private CallStatus mStatus;
 
     @Override
     protected void init() {
-        InvisibleTouchApplication.getInstance().getCallManager().registerPhoneStateListener(this);
-        mStatus = new CallStatus();
-        if (getIntent().hasExtra(NUMBER))
-            mStatus.mPhoneNumber = getIntent().getStringExtra(NUMBER);
-
         super.init();
+        mStatus = new CallStatus();
+        if (getIntent().hasExtra(NUMBER)) {
+            mStatus.mPhoneNumber = getIntent().getStringExtra(NUMBER);
+        }
+
         setViewText(0,"Mute",null);
         setViewText(1,"Speaker",null);
         setViewText(4,"End call",null);
-        setViewText(5,"Dial pad",null);
+        setViewText(5, "Dial pad", null);
     }
 
     @Override
@@ -183,14 +184,6 @@ public class InCallActivity extends SixPackActivity implements PhoneStateManager
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
         super.onKeySix();
-    }
-
-    @Override
-    public void onCallStateChanged(int state, String incomingNumber) {
-        if (state == TelephonyManager.CALL_STATE_IDLE) {
-            finish();
-            InvisibleTouchApplication.getInstance().getCallManager().unregisterPhoneStateListener();
-        }
     }
 
     private class CallStatus {

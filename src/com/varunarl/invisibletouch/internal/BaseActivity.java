@@ -125,7 +125,7 @@ public abstract class BaseActivity extends Activity implements IGestures,
                     onCameraKeyShortPress();
                     return true;
                 case KeyEvent.KEYCODE_HEADSETHOOK:
-                    Toast.makeText(this,"Headset",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Headset", Toast.LENGTH_SHORT).show();
                     return true;
                 default:
                     break;
@@ -185,7 +185,7 @@ public abstract class BaseActivity extends Activity implements IGestures,
 
     @Override
     protected void onPause() {
-        if (InvisibleTouchApplication.getInstance().isIncomingCallDetected())
+        if (InvisibleTouchApplication.getInstance().getCallManager().isCallScreenPrioritized())
             mStoppedFromNewScreen = true;
         super.onPause();
     }
@@ -194,17 +194,17 @@ public abstract class BaseActivity extends Activity implements IGestures,
     @Override
     protected void onStop() {
         if (!mStoppedFromNewScreen && !isFinishing) {
-//            Log.announce(
-//                    "Whoa.. we are losing screen. Signaling : " + SignalReceiver.HOME_SCREEN_LAUNCHED,
-//                    Level.WARNING);
+            Log.announce(
+                    "Whoa.. we are losing screen. Signaling : ",
+                    Level.WARNING);
 //            Intent i = new Intent(SignalReceiver.HOME_SCREEN_LAUNCHED);
 //            sendBroadcast(i);
             Intent i = new Intent(this, MainMenuActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
             PendingIntent pi = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
-            am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+100, pi);
+            am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 100, pi);
         }
         super.onStop();
     }

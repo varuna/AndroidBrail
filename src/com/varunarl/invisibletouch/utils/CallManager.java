@@ -25,6 +25,8 @@ public class CallManager {
     private com.android.internal.telephony.ITelephony mTelephonyService;
     private AudioManager mAudioManager;
     private TelephonyManager mTelephonyManager;
+    private InCallActivity mInCallScreen;
+    private Boolean isInCall = false;
 
     public CallManager(Context context) {
         mContext = context;
@@ -52,17 +54,16 @@ public class CallManager {
         mContext.registerReceiver(new CallStateListener(), intentFilterOutGoing, "android.permission.PROCESS_OUTGOING_CALLS", null);
     }
 
-    public static void startTelephoneInterface(Context context, String number, String name) {
-        Log.announce("Starting UI : " + number, false);
-        Intent i = new Intent(context, InCallActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    public void startTelephoneInterface(String number, String name) {
+        this.isInCall = true;
+        Intent i = new Intent(mContext, InCallActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         i.putExtra(InCallActivity.NUMBER, number);
         i.putExtra(FLAG_RINGING_CALLER_NAME, name);
 
-        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        PendingIntent pi = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
-        am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1000, pi);
+        AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+        PendingIntent pi = PendingIntent.getActivity(mContext, 0, i, PendingIntent.FLAG_ONE_SHOT);
+        am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 100, pi);
     }
 
     public void makeCall(String phoneNumber, BaseActivity mActivity) {
@@ -80,8 +81,6 @@ public class CallManager {
         mCallIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         mActivity.startActivity(mCallIntent);
     }
-
-
 
     public void endCall() throws RemoteException {
         mTelephonyService.endCall();
@@ -118,12 +117,20 @@ public class CallManager {
         mContext.unregisterReceiver(new CallStateListener());
     }
 
-    public void registerPhoneStateListener(PhoneStateManager.INotify callBack) {
-        mTelephonyManager.listen(new PhoneStateManager(callBack), PhoneStateListener.LISTEN_CALL_STATE);
+    private void unregisterPhoneStateListener() {
+        mTelephonyManager.listen(null, PhoneStateListener.LISTEN_CALL_STATE);
     }
 
-    public void unregisterPhoneStateListener() {
-        mTelephonyManager.listen(null, PhoneStateListener.LISTEN_CALL_STATE);
+    public boolean isCallScreenPrioritized() {
+        return this.isInCall;
+    }
+
+    public void registerInCallScreen(InCallActivity activity) {
+        this.mInCallScreen = activity;
+    }
+
+    public void forceCallEnded() {
+        mInCallScreen.finish();
     }
 
 }

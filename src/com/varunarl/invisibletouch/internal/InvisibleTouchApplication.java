@@ -20,7 +20,6 @@ public class InvisibleTouchApplication extends Application {
     private ContactManager mContactManager;
     private SettingsManager mSettingsManager;
     private ActivityResults mResultsManager;
-    private boolean incomingCallDetected;
     private boolean _KILL_SIGNAL_ = false;
 
     public static InvisibleTouchApplication getInstance() {
@@ -35,7 +34,6 @@ public class InvisibleTouchApplication extends Application {
         mSettingsManager = new SettingsManager(this);
         mCallManager = new CallManager(this);
         mContactManager = new ContactManager(this);
-        incomingCallDetected = false;
         mResultsManager = new ActivityResults();
     }
 
@@ -53,14 +51,6 @@ public class InvisibleTouchApplication extends Application {
 
     public SettingsManager getSettingsManager() {
         return mSettingsManager;
-    }
-
-    public boolean isIncomingCallDetected() {
-        return incomingCallDetected;
-    }
-
-    public void setIncomingCallDetected(boolean incomingCallDetected) {
-        this.incomingCallDetected = incomingCallDetected;
     }
 
     public void speak(String speech) {
