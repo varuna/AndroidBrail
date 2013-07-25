@@ -13,47 +13,46 @@ public class SettingsActivity extends SixPackActivity {
 
     protected SettingsManager mSettingsManager;
 
-
     @Override
     protected void init() {
         super.init();
         mSettingsManager = InvisibleTouchApplication.getInstance().getSettingsManager();
-        setViewText(0,"KeyTones","enable/disable key tones");
-        setViewText(1,"Vibrations","enable/disable vibrations");
-        setViewText(2,"Recovery","enable/disable system recovery");
-        setViewText(3,"TTS speed","Increase/decrease TTS speed");
-        setViewText(3,"TTS rate","Increase/decrease TTS rate");
-        setViewText(3,"TTS pitch","Increase/decrease TTS pitch");
+        setViewText(0, "Accessibility", null);
+        setViewText(1, "Vibrations", "enable/disable vibrations");
+        setViewText(2, "Keypad tones", "enable/disable keypad tones.");
+        setViewText(3, "Recovery", "enable/disable system recovery");
+        setViewText(4, "Factory reset", "Reset settings.");
+        setViewText(5, "More", "Settings");
     }
 
     @Override
     public void onLongKeyOne() {
-        Log.announce(ScreenHelper.SETTINGS_ACCESSIBILITY,true);
+        Log.announce(ScreenHelper.SETTINGS_ACCESSIBILITY, true);
     }
 
     @Override
     public void onLongKeyTwo() {
-        Log.announce(ScreenHelper.SETTINGS_VIBRATION_TOGGLE,true);
+        Log.announce(ScreenHelper.SETTINGS_VIBRATION_TOGGLE, true);
     }
 
     @Override
     public void onLongKeyThree() {
-        Log.announce(ScreenHelper.SETTINGS_RESET_FACTORY_DEFAULTS,true);
+        Log.announce(ScreenHelper.SETTINGS_KEYTONES, true);
     }
 
     @Override
     public void onLongKeyFour() {
-        Log.announce(ScreenHelper.SETTINGS_SYSTEM_RECOVERY,true);
+        Log.announce(ScreenHelper.SETTINGS_SYSTEM_RECOVERY, true);
     }
 
     @Override
     public void onLongKeyFive() {
-
+        Log.announce(ScreenHelper.SETTINGS_RESET_FACTORY_DEFAULTS, true);
     }
 
     @Override
     public void onLongKeySix() {
-        Log.announce(ScreenHelper.SETTINGS_MORE,true);
+        Log.announce(ScreenHelper.SETTINGS_MORE, true);
     }
 
     @Override
@@ -145,7 +144,7 @@ public class SettingsActivity extends SixPackActivity {
     @Override
     public void onKeyThree() {
         super.onKeyThree();
-        InvisibleTouchApplication.getInstance().getSettingsManager().restoreFactoryDefaults();
+        mSettingsManager.getSettings().setKeypadTonesEnable(!mSettingsManager.getSettings().getKeypadTonesEnabled());
     }
 
     @Override
@@ -157,7 +156,7 @@ public class SettingsActivity extends SixPackActivity {
     @Override
     public void onKeyFive() {
         super.onKeyFive();
-        //free slot
+        InvisibleTouchApplication.getInstance().getSettingsManager().restoreFactoryDefaults();
     }
 
     @Override

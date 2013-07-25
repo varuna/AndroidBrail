@@ -33,62 +33,49 @@ public class AccessibilitySettingsActivity extends SettingsActivity {
         else if (FLAG_EDIT_TTS_SPEED)
             settingsManager.getSettings().setTTSSpeed(settingsManager.getSettings().getTTSSpeed() + 0.2f);
         else if (FLAG_EDIT_TTS_PITCH)
-            settingsManager.getSettings().setTTSPitch(settingsManager.getSettings().getTTSPitch() +0.1f);
+            settingsManager.getSettings().setTTSPitch(settingsManager.getSettings().getTTSPitch() + 0.1f);
 
     }
 
     @Override
     public void onKeyOne() {
-//        super.onKeyOne();
-        mSettingsManager.getSettings().setTTSEnabled(!mSettingsManager.getSettings().getTTSEnabled());
-    }
-
-    @Override
-    public void onLongKeyOne() {
-        super.onLongKeyOne();
-        Log.announce(ScreenHelper.SETTINGS_TEXT_TO_SPEECH_TOGGLE,true);
-    }
-
-    @Override
-    public void onKeyTwo() {
-        super.onKeyTwo();
         FLAG_EDIT_TTS_VOLUME = true;
         FLAG_EDIT_TTS_SPEED = false;
         FLAG_EDIT_TTS_PITCH = false;
     }
 
     @Override
-    public void onLongKeyTwo() {
-        super.onLongKeyTwo();
-        Log.announce(ScreenHelper.SETTINGS_TEXT_TO_SPEECH_VOLUME,true);
+    public void onLongKeyOne() {
+        super.onLongKeyOne();
+        Log.announce(ScreenHelper.SETTINGS_TEXT_TO_SPEECH_VOLUME, true);
     }
 
     @Override
-    public void onKeyThree() {
-        super.onKeyThree();
+    public void onKeyTwo() {
+        super.onKeyTwo();
         FLAG_EDIT_TTS_VOLUME = false;
         FLAG_EDIT_TTS_SPEED = true;
         FLAG_EDIT_TTS_PITCH = false;
     }
 
     @Override
-    public void onLongKeyThree() {
-        super.onLongKeyThree();
-        Log.announce(ScreenHelper.SETTINGS_TEXT_TO_SPEECH_SPEED,true);
+    public void onLongKeyTwo() {
+        super.onLongKeyTwo();
+        Log.announce(ScreenHelper.SETTINGS_TEXT_TO_SPEECH_SPEED, true);
     }
 
     @Override
-    public void onKeyFour() {
-        super.onKeyFour();
+    public void onKeyThree() {
+        super.onKeyThree();
         FLAG_EDIT_TTS_VOLUME = false;
         FLAG_EDIT_TTS_SPEED = false;
         FLAG_EDIT_TTS_PITCH = true;
     }
 
     @Override
-    public void onLongKeyFour() {
-        super.onLongKeyFour();
-        Log.announce(ScreenHelper.SETTINGS_TEXT_TO_SPEECH_PITCH,true);
+    public void onLongKeyThree() {
+        super.onLongKeyThree();
+        Log.announce(ScreenHelper.SETTINGS_TEXT_TO_SPEECH_PITCH, true);
     }
 
     @Override
@@ -97,21 +84,13 @@ public class AccessibilitySettingsActivity extends SettingsActivity {
     }
 
     @Override
-    public void onLongKeyFive() {
-        Log.announce(ScreenHelper.ACCESSIBILITY_SETTINGS_SCREEN_HELPER,true);
-    }
-
-    @Override
-    public void onLongKeySix() {
-        Log.announce(ScreenHelper.ACCESSIBILITY_SETTINGS_SCREEN_HELPER,true);
-    }
-
-    @Override
     protected void init() {
         super.init();
-        setViewText(0,"Text to speech","enable/disable TTS feature");
-        setViewText(1,"Volume","Increase or decrease TTS volume");
-        setViewText(2,"Speed","Increase or decrease TTS speed");
-        setViewText(3,"Pitch","Increase or decrease TTS pitch");
+        setViewText(0, "Volume", "Increase or decrease TTS volume");
+        setViewText(1, "Speed", "Increase or decrease TTS speed");
+        setViewText(2, "Pitch", "Increase or decrease TTS pitch");
+        setViewText(3, null, null);
+        setViewText(4, null, null);
+        setViewText(5 , null, null);
     }
 }

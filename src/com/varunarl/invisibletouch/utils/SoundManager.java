@@ -35,18 +35,7 @@ public class SoundManager {
         private int DESELECT_SOUND = R.raw.deselect_tone;
 
         private void play(int sound) {
-            MediaPlayer.create(mContext, sound).start();
-        }
-
-        @TargetApi(16)
-        private void playSync(int[] sounds) {
-            if (sounds != null && sounds.length > 0) {
-                MediaPlayer mp = MediaPlayer.create(mContext, sounds[0]);
-
-                for (int sound : sounds) {
-                    mp.setNextMediaPlayer(MediaPlayer.create(mContext, sound));
-                }
-            }
+            playAsync(new int[]{sound});
         }
 
         private void playAsync(int[] sounds) {
@@ -111,6 +100,7 @@ public class SoundManager {
             if (currentId < mSounds.length) {
                 MediaPlayer mp = MediaPlayer.create(mContext, mSounds[currentId]);
                 mp.setOnCompletionListener(this);
+                mp.setVolume(0.2f,0.2f);
                 mp.start();
             }
         }

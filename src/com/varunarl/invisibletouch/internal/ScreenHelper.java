@@ -24,6 +24,7 @@ public class ScreenHelper {
     public static String SETTINGS_ACCESSIBILITY = "Tap on this to modify your accessibility settings.";
     public static String SETTINGS_SYSTEM_RECOVERY = "Tap on this to enable or disable the system recovery settings.";
     public static String SETTINGS_MORE = "Tap on this to activate more settings.";
+    public static String SETTINGS_KEYTONES = "Tap on this to enable or disable the keypad tones.";
 
     //PRIVATE LONG PRESS HELPER STRINGS : Used with static functions
     private static String INCALL_SCREEN_HELPER = "You are now in a call with ";

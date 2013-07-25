@@ -17,7 +17,8 @@ public abstract class SixPackActivity extends BaseActivity {
             _two_three;
     private TextView _one_one_title, _one_two_title, _one_three_title, _two_one_title, _two_two_title, _two_three_title;
     private TextView _one_one_summary, _one_two_summary, _one_three_summary, _two_one_summary, _two_two_summary, _two_three_summary;
-    private boolean mIsColorOnKeyboard, mIsVibrationsOn, mIsKeyTonesOn;
+    private boolean mIsColorOnKeyboard, mIsVibrationsOn;
+    protected boolean mIsKeyTonesOn;
 
     @Override
     protected void init() {
@@ -81,7 +82,7 @@ public abstract class SixPackActivity extends BaseActivity {
         //Setting default Six pack settings
         mIsColorOnKeyboard = false; //By default the keyboard colors will not appear
         mIsVibrationsOn = false; //By default the vibrations will not occur
-        mIsKeyTonesOn = true;
+        mIsKeyTonesOn = false;
     }
 
     @Override
@@ -282,61 +283,59 @@ public abstract class SixPackActivity extends BaseActivity {
     }
 
     public void setViewText(int index, String title, String summary) {
-        if (title != null && !title.equals(""))
-            switch (index) {
-                case 0:
-                    _one_one_title.setText(title);
-                    _one_one_title.setVisibility(View.VISIBLE);
-                    break;
-                case 1:
-                    _one_two_title.setText(title);
-                    _one_two_title.setVisibility(View.VISIBLE);
+        switch (index) {
+            case 0:
+                _one_one_title.setText(title);
+                _one_one_title.setVisibility(View.VISIBLE);
+                break;
+            case 1:
+                _one_two_title.setText(title);
+                _one_two_title.setVisibility(View.VISIBLE);
 
-                    break;
-                case 2:
-                    _one_three_title.setText(title);
-                    _one_three_title.setVisibility(View.VISIBLE);
-                    break;
-                case 3:
-                    _two_one_title.setText(title);
-                    _two_one_title.setVisibility(View.VISIBLE);
-                    break;
-                case 4:
-                    _two_two_title.setText(title);
-                    _two_two_title.setVisibility(View.VISIBLE);
-                    break;
-                case 5:
-                    _two_three_title.setText(title);
-                    _two_three_title.setVisibility(View.VISIBLE);
-                    break;
-            }
-        if (summary != null && !summary.equals(""))
-            switch (index) {
-                case 0:
-                    _one_one_summary.setText(summary);
-                    _one_one_summary.setVisibility(View.VISIBLE);
-                    break;
-                case 1:
-                    _one_two_summary.setText(summary);
-                    _one_two_summary.setVisibility(View.VISIBLE);
+                break;
+            case 2:
+                _one_three_title.setText(title);
+                _one_three_title.setVisibility(View.VISIBLE);
+                break;
+            case 3:
+                _two_one_title.setText(title);
+                _two_one_title.setVisibility(View.VISIBLE);
+                break;
+            case 4:
+                _two_two_title.setText(title);
+                _two_two_title.setVisibility(View.VISIBLE);
+                break;
+            case 5:
+                _two_three_title.setText(title);
+                _two_three_title.setVisibility(View.VISIBLE);
+                break;
+        }
+        switch (index) {
+            case 0:
+                _one_one_summary.setText(summary);
+                _one_one_summary.setVisibility(View.VISIBLE);
+                break;
+            case 1:
+                _one_two_summary.setText(summary);
+                _one_two_summary.setVisibility(View.VISIBLE);
 
-                    break;
-                case 2:
-                    _one_three_summary.setText(summary);
-                    _one_three_summary.setVisibility(View.VISIBLE);
-                    break;
-                case 3:
-                    _two_one_summary.setText(summary);
-                    _two_one_summary.setVisibility(View.VISIBLE);
-                    break;
-                case 4:
-                    _two_two_summary.setText(summary);
-                    _two_two_summary.setVisibility(View.VISIBLE);
-                    break;
-                case 5:
-                    _two_three_summary.setText(summary);
-                    _two_three_summary.setVisibility(View.VISIBLE);
-                    break;
-            }
+                break;
+            case 2:
+                _one_three_summary.setText(summary);
+                _one_three_summary.setVisibility(View.VISIBLE);
+                break;
+            case 3:
+                _two_one_summary.setText(summary);
+                _two_one_summary.setVisibility(View.VISIBLE);
+                break;
+            case 4:
+                _two_two_summary.setText(summary);
+                _two_two_summary.setVisibility(View.VISIBLE);
+                break;
+            case 5:
+                _two_three_summary.setText(summary);
+                _two_three_summary.setVisibility(View.VISIBLE);
+                break;
+        }
     }
 }

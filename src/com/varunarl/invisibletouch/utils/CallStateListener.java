@@ -27,10 +27,9 @@ public class CallStateListener extends BroadcastReceiver {
     }
 
     private void handleOutGoingCalls(Context context, Intent intent) {
-        String state = intent.getStringExtra(TelephonyManager.EXTRA_STATE);
-        if (state.equals(TelephonyManager.EXTRA_STATE_IDLE)) {
-            InvisibleTouchApplication.getInstance().getCallManager().forceCallEnded();
-        }
+        String number = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);
+        Contact c = resolveContact(context,number);
+        InvisibleTouchApplication.getInstance().getCallManager().startTelephoneInterface(c.getPhone(), c.getName());
     }
 
     private void handleIncomingCall(Context context, Intent intent) {
@@ -41,19 +40,26 @@ public class CallStateListener extends BroadcastReceiver {
 
             String number = intent
                     .getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
-            String name = "No name";
-            Uri uri = Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI,
-                    Uri.encode(number));
-            Cursor c = context.getContentResolver()
-                    .query(uri, new String[]{PhoneLookup.DISPLAY_NAME},
-                            null, null, null);
-            if (c.moveToFirst())
-                name = c.getString(c.getColumnIndex(PhoneLookup.DISPLAY_NAME));
+            Contact c = resolveContact(context, number);
 
-            InvisibleTouchApplication.getInstance().getCallManager().startTelephoneInterface(number, name);
+            InvisibleTouchApplication.getInstance().getCallManager().startTelephoneInterface(c.getPhone(), c.getName());
         } else if (state.equals(TelephonyManager.EXTRA_STATE_IDLE)) {
             InvisibleTouchApplication.getInstance().getCallManager().forceCallEnded();
         }
+    }
+
+    private Contact resolveContact(Context context, String number) {
+
+        Contact c = new Contact();
+        c.setPhone(number);
+        Uri uri = Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI,
+                Uri.encode(number));
+        Cursor cur = context.getContentResolver()
+                .query(uri, new String[]{PhoneLookup.DISPLAY_NAME},
+                        null, null, null);
+        if (cur.moveToFirst())
+            c.setName(cur.getString(cur.getColumnIndex(PhoneLookup.DISPLAY_NAME)));
+        return c;
     }
 
 

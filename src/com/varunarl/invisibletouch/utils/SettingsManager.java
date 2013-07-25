@@ -21,6 +21,7 @@ public class SettingsManager implements TextToSpeech.OnInitListener {
     public static final String PREF_KEY_TTS_VOLUME = "com.varunarl.invisibletouch.USER_PREFERENCE.TTS_VOLUME";
     public static final String PREF_KEY_TTS_SPEED = "com.varunarl.invisibletouch.USER_PREFERENCE.TTS_SPEED";
     public static final String PREF_KEY_TTS_PITCH = "com.varunarl.invisibletouch.USER_PREFERENCE.TTS_PITCH";
+    public static final String PREF_KEY_KEYTONES_ENABLE = "com.varunarl.invisibletouch.USER_PREFERENCE.ENABLE_KEYTONES";
     public static final String PREF_KEY_VIBRATION_ENABLE = "com.varunarl.invisibletouch.USER_PREFERENCE.ENABLE_VIBRATION";
     public static final String PREF_KEY_RECOVER_SYSTEM = "com.varunarl.invisibletouch.USER_PREFERENCE.RECOVER_SYSTEM";
     private static final String PREFERENCE_INTERNAL = "com.varunarl.invisibletouch.INTERNAL_PREFERENCE";
@@ -80,6 +81,7 @@ public class SettingsManager implements TextToSpeech.OnInitListener {
         writeToPreference(PREFERENCE_USER, PREF_KEY_RECOVER_SYSTEM, true);
         writeToPreference(PREFERENCE_USER, PREF_KEY_TTS_ENABLE, false);
         writeToPreference(PREFERENCE_USER, PREF_KEY_VIBRATION_ENABLE, true);
+        writeToPreference(PREFERENCE_USER,PREF_KEY_KEYTONES_ENABLE,true);
         AudioManager am = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
         getSettings().setTTSVolume(am.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
         if (isTTSReady()) {
@@ -242,6 +244,14 @@ public class SettingsManager implements TextToSpeech.OnInitListener {
         public void setTTSPitch(Float value) {
             getTTSEngine().setPitch(value);
             writeToPreference(PREFERENCE_USER, PREF_KEY_TTS_PITCH, value);
+        }
+
+        public boolean getKeypadTonesEnabled() {
+            return mSharedPreference.getBoolean(PREF_KEY_KEYTONES_ENABLE, false);
+        }
+
+        public void setKeypadTonesEnable(Boolean value){
+            writeToPreference(PREFERENCE_USER,PREF_KEY_KEYTONES_ENABLE,value);
         }
 
     }

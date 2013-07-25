@@ -44,7 +44,6 @@ public class Braille {
         public static final int ITALIC_DECIMAL_TYPE = 1020;
         public static final int NUMERAL_ACCENT_TYPE = 1030;
         public static final int LITERAL_TYPE = 1040;
-
         private Numeric mNumericKeyboard;
         private Upper mUpperCaseKeyboard;
         private Lower mLowerCaseKeyboard;
@@ -371,7 +370,7 @@ public class Braille {
                 switch (type) {
                     case NUMERIC_KEY_TYPE:
                         result = mNumericKeyboard.get(c);
-                        result = result >= 48 && result <= 57 ? result : '~';
+                        result = result >= 48 && result <= 57 || result == 42 || result == 35 ? result : '~';
                         break;
                     case UPPER_KEY_TYPE:
                         result = mUpperCaseKeyboard.get(c);

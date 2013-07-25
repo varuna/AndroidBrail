@@ -2,6 +2,7 @@ package com.varunarl.invisibletouch.utils;
 
 import android.content.Context;
 import android.widget.Toast;
+
 import com.varunarl.invisibletouch.braille.Braille;
 import com.varunarl.invisibletouch.braille.Braille.KeyBoard;
 import com.varunarl.invisibletouch.braille.BrailleCharacter;
@@ -41,14 +42,25 @@ public class InputManager {
                 Log.announce("Error character. skipping", Level.WARNING);
         }
 
-        public void buffer(Character c) {
-            mBuffer.append(c);
+        public void buffer(BrailleCharacter c, int type) {
+            if (!mKeyBoard.isControlCharacter(c)) {
+                Character ascii = mKeyBoard.get(c, type);
+                if (!ascii.equals('~')) {
+                    mBuffer.append(ascii);
+                }
+            }
         }
 
-        public void buffer(BrailleCharacter c, int type) {
-            Character ascii = mKeyBoard.get(c, type);
-            if (!ascii.equals('~'))
-                mBuffer.append(ascii);
+        public void forceBuffer(BrailleCharacter character, int type, Character[] chars) {
+            Character c = mKeyBoard.get(character, type);
+            for (Character x : chars)
+                if (x.equals(c)){
+                    mBuffer.append(c);
+                    return;
+                }else{
+                    buffer(character,type);
+                    return;
+                }
         }
 
         public void removeLast() {
@@ -77,6 +89,10 @@ public class InputManager {
 
         public String getText() {
             return mText;
+        }
+
+        public String getBufferedText() {
+            return mBuffer.toString();
         }
     }
 }

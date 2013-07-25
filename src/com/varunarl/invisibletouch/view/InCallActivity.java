@@ -27,6 +27,7 @@ public class InCallActivity extends SixPackActivity {
         if (getIntent().hasExtra(NUMBER)) {
             mStatus.mPhoneNumber = getIntent().getStringExtra(NUMBER);
         }
+        InvisibleTouchApplication.getInstance().getCallManager().registerInCallScreen(this);
 
         setViewText(0,"Mute",null);
         setViewText(1,"Speaker",null);
