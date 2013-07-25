@@ -12,13 +12,12 @@ import com.varunarl.invisibletouch.view.LockScreenActivity;
 public abstract class SixPackActivity extends BaseActivity {
 
     private final BrailleCharacter mTemplateCharacter = new BrailleCharacter();
-    protected boolean mIsColorOnKeyboard;
     private boolean ONE, TWO, THREE, FOUR, FIVE, SIX;
     private View _one_one, _one_two, _one_three, _two_one, _two_two,
             _two_three;
     private TextView _one_one_title, _one_two_title, _one_three_title, _two_one_title, _two_two_title, _two_three_title;
     private TextView _one_one_summary, _one_two_summary, _one_three_summary, _two_one_summary, _two_two_summary, _two_three_summary;
-    private boolean mIsVibrationsOn;
+    private boolean mIsColorOnKeyboard, mIsVibrationsOn, mIsKeyTonesOn;
 
     @Override
     protected void init() {
@@ -82,6 +81,7 @@ public abstract class SixPackActivity extends BaseActivity {
         //Setting default Six pack settings
         mIsColorOnKeyboard = false; //By default the keyboard colors will not appear
         mIsVibrationsOn = false; //By default the vibrations will not occur
+        mIsKeyTonesOn = true;
     }
 
     @Override
@@ -102,6 +102,8 @@ public abstract class SixPackActivity extends BaseActivity {
         if (mIsVibrationsOn)
             InvisibleTouchApplication.getInstance().vibrate(
                     mTemplateCharacter._one_one.getPattern());
+        if (mIsKeyTonesOn)
+            InvisibleTouchApplication.getInstance().getSoundsManager().getKeyTones().one(!ONE);
     }
 
     @Override
@@ -111,6 +113,8 @@ public abstract class SixPackActivity extends BaseActivity {
         if (mIsVibrationsOn)
             InvisibleTouchApplication.getInstance().vibrate(
                     mTemplateCharacter._one_two.getPattern());
+        if (mIsKeyTonesOn)
+            InvisibleTouchApplication.getInstance().getSoundsManager().getKeyTones().two(!TWO);
     }
 
     @Override
@@ -120,6 +124,8 @@ public abstract class SixPackActivity extends BaseActivity {
         if (mIsVibrationsOn)
             InvisibleTouchApplication.getInstance().vibrate(
                     mTemplateCharacter._one_three.getPattern());
+        if (mIsKeyTonesOn)
+            InvisibleTouchApplication.getInstance().getSoundsManager().getKeyTones().three(!THREE);
     }
 
     @Override
@@ -129,6 +135,8 @@ public abstract class SixPackActivity extends BaseActivity {
         if (mIsVibrationsOn)
             InvisibleTouchApplication.getInstance().vibrate(
                     mTemplateCharacter._two_one.getPattern());
+        if (mIsKeyTonesOn)
+            InvisibleTouchApplication.getInstance().getSoundsManager().getKeyTones().four(!FOUR);
     }
 
     @Override
@@ -138,6 +146,8 @@ public abstract class SixPackActivity extends BaseActivity {
         if (mIsVibrationsOn)
             InvisibleTouchApplication.getInstance().vibrate(
                     mTemplateCharacter._two_two.getPattern());
+        if (mIsKeyTonesOn)
+            InvisibleTouchApplication.getInstance().getSoundsManager().getKeyTones().five(!FIVE);
     }
 
     @Override
@@ -147,7 +157,8 @@ public abstract class SixPackActivity extends BaseActivity {
         if (mIsVibrationsOn)
             InvisibleTouchApplication.getInstance().vibrate(
                     mTemplateCharacter._two_three.getPattern());
-
+        if (mIsKeyTonesOn)
+            InvisibleTouchApplication.getInstance().getSoundsManager().getKeyTones().six(!SIX);
     }
 
     public void resetView() {
@@ -177,6 +188,10 @@ public abstract class SixPackActivity extends BaseActivity {
 
     public void setVibrations(boolean turnOn) {
         mIsVibrationsOn = turnOn;
+    }
+
+    public void setKeyTones(boolean on) {
+        mIsKeyTonesOn = on;
     }
 
     private void toggleColor(int index)

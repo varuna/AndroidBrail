@@ -18,9 +18,12 @@ public class SettingsActivity extends SixPackActivity {
     protected void init() {
         super.init();
         mSettingsManager = InvisibleTouchApplication.getInstance().getSettingsManager();
-        setViewText(0,"Accessibility",null);
+        setViewText(0,"KeyTones","enable/disable key tones");
         setViewText(1,"Vibrations","enable/disable vibrations");
         setViewText(2,"Recovery","enable/disable system recovery");
+        setViewText(3,"TTS speed","Increase/decrease TTS speed");
+        setViewText(3,"TTS rate","Increase/decrease TTS rate");
+        setViewText(3,"TTS pitch","Increase/decrease TTS pitch");
     }
 
     @Override
