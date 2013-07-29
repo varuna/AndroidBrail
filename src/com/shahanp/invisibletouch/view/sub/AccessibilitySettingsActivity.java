@@ -92,5 +92,18 @@ public class AccessibilitySettingsActivity extends SettingsActivity {
         setViewText(3, null, null);
         setViewText(4, null, null);
         setViewText(5 , null, null);
+        Log.announce(ScreenHelper.ACCESSIBILITY_ACTIVATE,true);
+    }
+
+    @Override
+    public void onVolumeDownKeyLongPress() {
+        Log.announce(ScreenHelper.ACCESSIBILITY_SCREEN_HELPER,true);
+        super.onVolumeDownKeyLongPress();
+    }
+
+    @Override
+    public void onVolumeUpKeyLongPress() {
+        //DATE AND TIME
+        super.onVolumeUpKeyLongPress();
     }
 }

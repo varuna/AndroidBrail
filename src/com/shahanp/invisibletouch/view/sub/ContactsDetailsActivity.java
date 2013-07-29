@@ -120,7 +120,6 @@ public class ContactsDetailsActivity extends SinglePackActivity {
             phone.setId(NUMBER_VIEW_ID);
             name.setText(mContact.getName());
             phone.setText(mContact.getPhone());
-
             mRootView.addView(name);
             mRootView.addView(phone);
         } else {

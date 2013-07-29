@@ -80,7 +80,7 @@ public class Contact implements Parcelable {
 
     @Override
     public String toString() {
-        return "Contact name is "+ getName() + " and Phone number is " +getPhone();
+        return getName() + getPhone();
     }
 
     @Override

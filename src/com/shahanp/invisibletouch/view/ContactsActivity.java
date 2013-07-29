@@ -89,8 +89,8 @@ public class ContactsActivity extends SixPackActivity {
             mCurrentContact = InvisibleTouchApplication.getInstance().getContactManager().getContact();
         }
         setViewData();
-        Log.announce(ScreenHelper.CONTACTS_ACTIVATE, true);
-        Log.announce(ScreenHelper.getContactDetailsActivityScreenHelper(mCurrentContact), true);
+        Log.announce(ScreenHelper.CONTACTS_ACTIVATE+ScreenHelper.getContactDetailsActivityScreenHelper(mCurrentContact), true);
+
     }
 
     @Override
@@ -195,8 +195,10 @@ public class ContactsActivity extends SixPackActivity {
                 .getInstance(getApplicationContext(), this);
         try {
             fav.addToFavourite(mCurrentContact.getName(), mCurrentContact.getPhone());
+            Log.announce("Added to favourite. ",true);
         } catch (FavouriteExistsException e) {
             e.printStackTrace();
+            Log.announce("Already added added to favourite. ",true);
         }
     }
 

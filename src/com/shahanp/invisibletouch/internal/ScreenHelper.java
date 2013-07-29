@@ -7,7 +7,7 @@ public class ScreenHelper {
     //SCREEN ACTIVATE HELPER STRINGS
     public static String MAIN_MENU_ACTIVATE = "Main menu.";
     public static String FAVOURITE_ACTIVATE = "Favourite contacts.";
-    public static String CALL_LOG_ACTIVATE = "Call log.";
+    public static String CALL_LOG_ACTIVATE = "Call log. ";
     public static String CONTACTS_ACTIVATE = "Contacts.";
     public static String DIAL_PAD_ACTIVATE = "Dial pad.";
     public static String LOCK_ACTIVATE = "Screen Locked.";
@@ -81,7 +81,7 @@ public class ScreenHelper {
             + "Button Six "      + "Add to favourite.";
 
 
-    public static String Others_SCREEN_HELPER=
+    public static String OTHERS_SCREEN_HELPER=
             "Others."          + "Six Packs Screen."
             + "Button One "      + "Action 1."
             + "Button Two "      + "Action 2."
@@ -101,17 +101,22 @@ public class ScreenHelper {
             + "Swipe Left to return."
             + "Hold the screen for the question.";
 
+    public static String ACCESSIBILITY_SCREEN_HELPER=
+            "Accessibility Settings."          + "Six Packs Screen."
+                    + "Button One "      + "Test to speech, volume Up and Down."
+                    + "Button Two "      + "Test to speech, speed increase and decrease."
+                    + "Button Three "    + "Test to speech, pitch Up and Down."
+                    + "Button Four, Five & Six are empty.";
 
     //PRIVATE LONG PRESS HELPER STRINGS : Used with static functions
     private static String INCALL_SCREEN_HELPER = "You are now in a call with ";
-    private static String CONTACT_DETAILS_SCREEN_HELPER = "Current contact details are; ";
 
     public static String getInCallActivityScreenHelper(String number) {
         return INCALL_SCREEN_HELPER + number;
     }
 
     public static String getContactDetailsActivityScreenHelper(Contact contact) {
-        return CONTACT_DETAILS_SCREEN_HELPER + contact.toString();
+        return contact.toString();
     }
 
 }
