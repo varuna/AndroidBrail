@@ -39,11 +39,13 @@ public class LockScreenActivity extends SinglePackActivity {
     @Override
     public void onDoubleSwipeRight() {
         finish();
+        Log.announce("Unlocked.", true);
     }
 
     @Override
     public void onDoubleSwipeLeft() {
         finish();
+        Log.announce("Unlocked.", true);
     }
 
     @Override
@@ -54,6 +56,7 @@ public class LockScreenActivity extends SinglePackActivity {
     @Override
     public void onDoubleSwipeUp() {
         finish();
+        Log.announce("Unlocked.", true);
     }
 
     @Override
@@ -64,6 +67,7 @@ public class LockScreenActivity extends SinglePackActivity {
     @Override
     public void onDoubleSwipeDown() {
         finish();
+        Log.announce("Unlocked.", true);
     }
 
     @Override
@@ -107,4 +111,8 @@ public class LockScreenActivity extends SinglePackActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         Log.announce(ScreenHelper.LOCK_ACTIVATE, true);
     }
+
+
+
+
 }

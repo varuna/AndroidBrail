@@ -59,10 +59,11 @@ public class KeyboardActivity extends SixPackActivity {
     @Override
     public void onSwipeRight() {
         Log.announce("onEnterGesture", Level.INFO);
+        Log.announce("a",true);
         mTextInputManager.buffer(mCurrentCharacter);
-
         mCurrentCharacter.reset();
         resetView();
+
     }
 
     @Override
@@ -71,6 +72,7 @@ public class KeyboardActivity extends SixPackActivity {
         mTextInputManager.removeLast();
         mCurrentCharacter.reset();
         resetView();
+        Log.announce("Back space.",true);
     }
 
     @Override
@@ -79,6 +81,7 @@ public class KeyboardActivity extends SixPackActivity {
     }
 
     @Override
+
     public void onDoubleSwipeLeft() {
         mTextInputManager.purge();
         mCurrentCharacter.reset();

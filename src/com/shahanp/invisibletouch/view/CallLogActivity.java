@@ -112,7 +112,9 @@ public class CallLogActivity extends SixPackActivity {
         mCurrentLog = readContact(mContacts);
         super.init();
         setViewData();
-        Log.announce(ScreenHelper.CALL_LOG_ACTIVATE, true);
+        Log.announce(ScreenHelper.CALL_LOG_ACTIVATE +
+                mCurrentLog.getName()+mCurrentLog.getPhone() +
+                mCurrentLog.typeInString() + mCurrentLog.timeInString(), true);
     }
 
     @Override
@@ -137,26 +139,31 @@ public class CallLogActivity extends SixPackActivity {
 
     @Override
     public void onLongKeyOne() {
+        Log.announce(ScreenHelper.CALL_LOG_ACTIVATE,true);
         onKeyOne();
     }
 
     @Override
     public void onLongKeyTwo() {
+        Log.announce(ScreenHelper.CALL_LOG_ACTIVATE,true);
         onKeyTwo();
     }
 
     @Override
     public void onLongKeyThree() {
+        Log.announce(ScreenHelper.CALL_LOG_ACTIVATE,true);
         onKeyThree();
     }
 
     @Override
     public void onLongKeyFour() {
+        Log.announce(ScreenHelper.CALL_LOG_ACTIVATE,true);
         onKeyFour();
     }
 
     @Override
     public void onLongKeyFive() {
+        Log.announce(ScreenHelper.CALL_LOG_ACTIVATE,true);
         Log.announce(ScreenHelper.CALL_LOG_ACTIVATE + " Dial.", true);
     }
 

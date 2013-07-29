@@ -25,7 +25,7 @@ public class DialPadActivity extends KeyboardActivity {
         mCallManager = app.getCallManager();
         setCharacterVisibility(true);
         setKeyTones(InvisibleTouchApplication.getInstance().getSettingsManager().getSettings().getKeypadTonesEnabled());
-        Log.announce(ScreenHelper.MAIN_MENU_ACTIVATE, true);
+        Log.announce(ScreenHelper.DIAL_PAD_ACTIVATE, true);
     }
 
     @Override
@@ -44,8 +44,8 @@ public class DialPadActivity extends KeyboardActivity {
     public void onSwipeRight() {
         mTextInputManager.forceBuffer(mCurrentCharacter, Braille.KeyBoard.NUMERIC_KEY_TYPE, new Character[]{'#','*'});
         mCurrentCharacter.reset();
-        Log.announce("onEnterGesture : " + mTextInputManager.getBufferedText(), false);
-        Log.announce("onEnterGesture : " + mTextInputManager.getBufferedText(), true);
+        Log.announce(mTextInputManager.getBufferedText(), false);
+        Log.announce(mTextInputManager.getBufferedText(), true);
         resetView();
     }
 
@@ -75,5 +75,6 @@ public class DialPadActivity extends KeyboardActivity {
     public void onVolumeUpKeyLongPress() {
 
     }
+
 }
 

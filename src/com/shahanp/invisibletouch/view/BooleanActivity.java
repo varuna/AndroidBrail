@@ -3,6 +3,7 @@ package com.shahanp.invisibletouch.view;
 import android.view.View;
 import com.shahanp.invisibletouch.internal.SinglePackActivity;
 import com.shahanp.invisibletouch.utils.Log;
+import com.shahanp.invisibletouch.internal.ScreenHelper;
 
 public class BooleanActivity extends SinglePackActivity {
 
@@ -13,6 +14,9 @@ public class BooleanActivity extends SinglePackActivity {
     protected void init() {
         mMessage = getIntent().getStringExtra(INTENT_FLAG_MESSAGE);
         super.init();
+        Log.announce(mMessage,false);
+        Log.announce(mMessage,true);
+
     }
 
     @Override
@@ -64,7 +68,7 @@ public class BooleanActivity extends SinglePackActivity {
 
     @Override
     public void onVolumeDownKeyLongPress() {
-
+        Log.announce(ScreenHelper.BOOLEAN_HELPER, true);
     }
 
     @Override
@@ -100,6 +104,7 @@ public class BooleanActivity extends SinglePackActivity {
     @Override
     public void onScreenLongPress() {
         Log.announce(mMessage,false);
+        Log.announce(mMessage,true);
 
     }
 

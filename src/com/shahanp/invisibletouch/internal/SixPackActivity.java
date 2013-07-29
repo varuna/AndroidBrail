@@ -82,7 +82,7 @@ public abstract class SixPackActivity extends BaseActivity {
         //Setting default Six pack settings
         mIsColorOnKeyboard = false; //By default the keyboard colors will not appear
         mIsVibrationsOn = false; //By default the vibrations will not occur
-        mIsKeyTonesOn = false;
+        mIsKeyTonesOn = false;  //By default the Key Tone will be de-active
     }
 
     @Override

@@ -35,7 +35,7 @@ public class ScreenHelper {
             + "Button Three "    + "Settings."
             + "Button Four "     + "Dial Pad."
             + "Button Five "     + "Contacts."
-            + "Button Six "      + "Alarm.";
+            + "Button Six "      + "Others.";
 
     public static String FAVOURITE_SCREEN_HELPER =
             "Favoutite Contacts."         + "Six Packs Screen."
@@ -68,7 +68,8 @@ public class ScreenHelper {
 
     public static String DIAL_PAD_SCREEN_HELPER=
             "Dial Pad."          + "Six Packs Screen."
-            + "Use six buttons as a braille type writer. And swipe to pass the value. Double swipe to dial";
+            + "Use six buttons as a braille type writer. And swipe to pass the value. Double swipe to dial"
+            + "Dial 0 1 0 1 0 0 0 1 to exit Invisible touch.";
 
     public static String CONTACTS_SCREEN_HELPER=
             "Contacts."          + "Six Packs Screen."
@@ -80,8 +81,8 @@ public class ScreenHelper {
             + "Button Six "      + "Add to favourite.";
 
 
-    public static String ALARM_SCREEN_HELPER=
-            "Alarm."          + "Six Packs Screen."
+    public static String Others_SCREEN_HELPER=
+            "Others."          + "Six Packs Screen."
             + "Button One "      + "Action 1."
             + "Button Two "      + "Action 2."
             + "Button Three "    + "Action 3."
@@ -93,6 +94,13 @@ public class ScreenHelper {
     public static String LOCK_SCREEN_HELPER =
             "Locked Screen."     + "Single Pack Screen."+
             "Double swipe to unlock the screen.";
+
+    public static String BOOLEAN_HELPER =
+            "Confirmation Screen."     + "Single Pack Screen."
+            + "Swipe Right to confirm."
+            + "Swipe Left to return."
+            + "Hold the screen for the question.";
+
 
     //PRIVATE LONG PRESS HELPER STRINGS : Used with static functions
     private static String INCALL_SCREEN_HELPER = "You are now in a call with ";

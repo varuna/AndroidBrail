@@ -148,5 +148,6 @@ public class FavouriteContactsActivity extends SixPackActivity {
         setViewText(4, mFavourites.get(3).first.isEmpty() ? "Empty" : mFavourites.get(3).first, mFavourites.get(3).second.isEmpty() ? "" : mFavourites.get(3).second);
         setViewText(2, mFavourites.get(4).first.isEmpty() ? "Empty" : mFavourites.get(4).first, mFavourites.get(4).second.isEmpty() ? "" : mFavourites.get(4).second);
         setViewText(5, mFavourites.get(5).first.isEmpty() ? "Empty" : mFavourites.get(5).first, mFavourites.get(5).second.isEmpty() ? "" : mFavourites.get(5).second);
+        Log.announce(ScreenHelper.FAVOURITE_ACTIVATE,true);
     }
 }

@@ -23,6 +23,7 @@ public class SettingsActivity extends SixPackActivity {
         setViewText(3, "Recovery", "enable/disable system recovery");
         setViewText(4, "Factory reset", "Reset settings.");
         setViewText(5, "More", "Settings");
+        Log.announce(ScreenHelper.SETTINGS_ACTIVATE,true);
     }
 
     @Override

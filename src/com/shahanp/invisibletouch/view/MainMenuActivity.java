@@ -153,7 +153,7 @@ public class MainMenuActivity extends SixPackActivity {
 
     @Override
     public void onLongKeySix() {
-        Log.announce(ScreenHelper.MAIN_MENU_ACTIVATE + "Alarm", true);
+        Log.announce(ScreenHelper.MAIN_MENU_ACTIVATE + "Others", true);
     }
 
     @Override
@@ -171,7 +171,7 @@ public class MainMenuActivity extends SixPackActivity {
         setViewText(2,"Settings",null);
         setViewText(3,"Dial Pad",null);
         setViewText(4,"Contacts",null);
-        setViewText(5,"Alarm",null);
+        setViewText(5,"Others",null);
         Log.announce(ScreenHelper.MAIN_MENU_ACTIVATE, true);
     }
 }
