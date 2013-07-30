@@ -12,6 +12,7 @@ import com.shahanp.invisibletouch.view.sub.AccessibilitySettingsActivity;
 public class SettingsActivity extends SixPackActivity {
 
     protected SettingsManager mSettingsManager;
+    private Boolean FLAG_ADJUST_RINGING_VOLUME = false;
 
     @Override
     protected void init() {
@@ -22,7 +23,7 @@ public class SettingsActivity extends SixPackActivity {
         setViewText(2, "Keypad tones", "enable/disable keypad tones.");
         setViewText(3, "Recovery", "enable/disable system recovery");
         setViewText(4, "Factory reset", "Reset settings.");
-        setViewText(5, "More", "Settings");
+        setViewText(5, "Ringing Volume", "increase/decrease");
         Log.announce(ScreenHelper.SETTINGS_ACTIVATE,true);
     }
 
@@ -53,7 +54,7 @@ public class SettingsActivity extends SixPackActivity {
 
     @Override
     public void onLongKeySix() {
-        Log.announce(ScreenHelper.SETTINGS_MORE, true);
+        Log.announce(ScreenHelper.SETTINGS_RINGING_VOLUME, true);
     }
 
     @Override
@@ -98,6 +99,8 @@ public class SettingsActivity extends SixPackActivity {
 
     @Override
     public void onVolumeDownKeyShortPress() {
+        if (FLAG_ADJUST_RINGING_VOLUME)
+            InvisibleTouchApplication.getInstance().getSettingsManager().getSettings().setRingingVolume(InvisibleTouchApplication.getInstance().getSettingsManager().getSettings().getRingingVolume() - 1);
     }
 
     @Override
@@ -107,6 +110,8 @@ public class SettingsActivity extends SixPackActivity {
 
     @Override
     public void onVolumeUpKeyShortPress() {
+        if (FLAG_ADJUST_RINGING_VOLUME)
+            InvisibleTouchApplication.getInstance().getSettingsManager().getSettings().setRingingVolume(InvisibleTouchApplication.getInstance().getSettingsManager().getSettings().getRingingVolume() + 1);
     }
 
     @Override
@@ -163,6 +168,7 @@ public class SettingsActivity extends SixPackActivity {
     @Override
     public void onKeySix() {
         super.onKeySix();
-        //Reserved for more settings.
+        FLAG_ADJUST_RINGING_VOLUME = !FLAG_ADJUST_RINGING_VOLUME;
+
     }
 }

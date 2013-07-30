@@ -24,7 +24,7 @@ public class ScreenHelper {
     public static String SETTINGS_RESET_FACTORY_DEFAULTS = "Tap on this to reset the factory default settings.";
     public static String SETTINGS_ACCESSIBILITY = "Tap on this to modify your accessibility settings.";
     public static String SETTINGS_SYSTEM_RECOVERY = "Tap on this to enable or disable the system recovery settings.";
-    public static String SETTINGS_MORE = "Tap on this to activate more settings.";
+    public static String SETTINGS_RINGING_VOLUME = "Tap on this to increase or decrease the ringing volume.";
     public static String SETTINGS_KEYTONES = "Tap on this to enable or disable the keypad tones.";
 
     //VOLUME DOWN LONG PRESS HELPER STRINGS

@@ -131,7 +131,6 @@ public abstract class BaseActivity extends Activity implements IGestures,
                     break;
             }
         }
-
         return super.onKeyDown(keyCode, event);
     }
 
