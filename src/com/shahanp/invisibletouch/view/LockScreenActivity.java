@@ -110,6 +110,8 @@ public class LockScreenActivity extends SinglePackActivity {
         super.init();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         Log.announce(ScreenHelper.LOCK_ACTIVATE, true);
+
+        setViewText("Locked","InvisibleTouchApplication lock down.");
     }
 
 
