@@ -2,122 +2,25 @@ package com.shahanp.invisibletouch.plugin;
 
 import android.content.Intent;
 
-import com.shahanp.invisibletouch.internal.SixPackActivity;
+import com.shahanp.invisibletouch.internal.BaseActivity;
 
-public class AlarmExtensionPlugin extends SixPackActivity implements IExtensionPlugin {
+public class AlarmExtensionPlugin implements IExtensionPlugin {
+
 
     @Override
-    public void startInterface(Intent intent) {
-
+    public void startInterface(BaseActivity context, Intent intent) {
+        Intent i = new Intent(context, AlarmExtension.class);
+        if (intent != null)
+            i.putExtras(intent);
+        context.startActivity(i);
     }
 
     @Override
     public MetaData getExtensionMetaData() {
-        return null;
-    }
+        MetaData metaData = new MetaData();
+        metaData._name = "Alarm";
+        metaData._description = "Alarm management";
 
-    @Override
-    public void onLongKeyOne() {
-
-    }
-
-    @Override
-    public void onLongKeyTwo() {
-
-    }
-
-    @Override
-    public void onLongKeyThree() {
-
-    }
-
-    @Override
-    public void onLongKeyFour() {
-
-    }
-
-    @Override
-    public void onLongKeyFive() {
-
-    }
-
-    @Override
-    public void onLongKeySix() {
-
-    }
-
-    @Override
-    public void onSwipeRight() {
-
-    }
-
-    @Override
-    public void onSwipeLeft() {
-
-    }
-
-    @Override
-    public void onDoubleSwipeRight() {
-
-    }
-
-    @Override
-    public void onDoubleSwipeLeft() {
-
-    }
-
-    @Override
-    public void onSwipeUp() {
-
-    }
-
-    @Override
-    public void onDoubleSwipeUp() {
-
-    }
-
-    @Override
-    public void onSwipeDown() {
-
-    }
-
-    @Override
-    public void onDoubleSwipeDown() {
-
-    }
-
-    @Override
-    public void onVolumeDownKeyShortPress() {
-
-    }
-
-    @Override
-    public void onVolumeDownKeyLongPress() {
-
-    }
-
-    @Override
-    public void onVolumeUpKeyShortPress() {
-
-    }
-
-    @Override
-    public void onVolumeUpKeyLongPress() {
-
-    }
-
-    @Override
-    public void onCameraKeyShortPress() {
-
-    }
-
-    @Override
-    public void onCameraKeyLongPress() {
-
-    }
-
-    @Override
-    public void onScreenLongPress() {
-
+        return metaData;
     }
 }

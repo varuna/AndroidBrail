@@ -36,8 +36,8 @@ public class CallLogActivity extends SixPackActivity {
 
     @Override
     public void onSwipeUp() {
-        if (!mContacts.isLast()) {
-            mContacts.moveToNext();
+        if (!mContacts.isFirst()) {
+            mContacts.moveToPrevious();
             mCurrentLog = readContact(mContacts);
         }
         setViewData();
@@ -51,8 +51,8 @@ public class CallLogActivity extends SixPackActivity {
 
     @Override
     public void onSwipeDown() {
-        if (!mContacts.isFirst()) {
-            mContacts.moveToPrevious();
+        if (!mContacts.isLast()) {
+            mContacts.moveToNext();
             mCurrentLog = readContact(mContacts);
         }
         setViewData();

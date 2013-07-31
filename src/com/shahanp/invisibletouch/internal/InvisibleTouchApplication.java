@@ -62,6 +62,10 @@ public class InvisibleTouchApplication extends Application {
         return mSoundsManager;
     }
 
+    public PluginManager getPluginManager(){
+        return mPluginManager;
+    }
+
     public void speak(String speech) {
         if (mSettingsManager.isTTSReady())
             mSettingsManager.getTTSEngine().speak(speech, TextToSpeech.QUEUE_FLUSH, null);

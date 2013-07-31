@@ -3,12 +3,15 @@ package com.shahanp.invisibletouch.plugin;
 
 import android.content.Intent;
 
+import com.shahanp.invisibletouch.internal.BaseActivity;
+
 public interface IExtensionPlugin {
-    void startInterface(Intent intent);
+    void startInterface(BaseActivity context, Intent intent);
+
     MetaData getExtensionMetaData();
 
-    class MetaData{
-        String _name;
-        String _description;
+    class MetaData {
+        public String _name;
+        public String _description;
     }
 }
