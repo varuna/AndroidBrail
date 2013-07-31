@@ -25,7 +25,6 @@ public class PluginManager {
         try {
             config.next();
             int event = config.getEventType();
-            int pluginId = 1000;
             while (event != XmlResourceParser.END_DOCUMENT) {
                 if (event == XmlResourceParser.START_TAG && config.getName().equals("plugin")) {
                     Plugin p = new Plugin();

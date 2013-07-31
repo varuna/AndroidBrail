@@ -8,10 +8,8 @@ public class AlarmExtensionPlugin implements IExtensionPlugin {
 
 
     @Override
-    public void startInterface(BaseActivity context, Intent intent) {
+    public void startInterface(BaseActivity context) {
         Intent i = new Intent(context, AlarmExtension.class);
-        if (intent != null)
-            i.putExtras(intent);
         context.startActivity(i);
     }
 
