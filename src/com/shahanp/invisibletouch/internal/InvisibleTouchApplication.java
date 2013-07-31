@@ -22,6 +22,7 @@ public class InvisibleTouchApplication extends Application {
     private SettingsManager mSettingsManager;
     private ActivityResults mResultsManager;
     private SoundManager mSoundsManager;
+    private PluginManager mPluginManager;
     private boolean _KILL_SIGNAL_ = false;
 
     public static InvisibleTouchApplication getInstance() {
@@ -38,6 +39,7 @@ public class InvisibleTouchApplication extends Application {
         mContactManager = new ContactManager(this);
         mSoundsManager = new SoundManager(this);
         mResultsManager = new ActivityResults();
+        mPluginManager = new PluginManager(this);
     }
 
     public TextInputManager getTextInputManager() {
@@ -58,6 +60,10 @@ public class InvisibleTouchApplication extends Application {
 
     public SoundManager getSoundsManager() {
         return mSoundsManager;
+    }
+
+    public PluginManager getPluginManager(){
+        return mPluginManager;
     }
 
     public void speak(String speech) {

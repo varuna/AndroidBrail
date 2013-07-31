@@ -131,29 +131,26 @@ public abstract class BaseActivity extends Activity implements IGestures,
                     break;
             }
         }
-
         return super.onKeyDown(keyCode, event);
     }
 
     @Override
     public boolean onKeyLongPress(int keyCode, KeyEvent event) {
-        if (event.isTracking()) {
-            switch (keyCode) {
-                case KeyEvent.KEYCODE_VOLUME_DOWN:
-                    onVolumeDownKeyLongPress();
-                    return true;
-                case KeyEvent.KEYCODE_VOLUME_UP:
-                    onVolumeUpKeyLongPress();
-                    return true;
-                case KeyEvent.KEYCODE_POWER:
-                    onPowerKeyLongPress();
-                    return true;
-                case KeyEvent.KEYCODE_CAMERA:
-                    onCameraKeyLongPress();
-                    return true;
-                default:
-                    break;
-            }
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+                onVolumeDownKeyLongPress();
+                return true;
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                onVolumeUpKeyLongPress();
+                return true;
+            case KeyEvent.KEYCODE_POWER:
+                onPowerKeyLongPress();
+                return true;
+            case KeyEvent.KEYCODE_CAMERA:
+                onCameraKeyLongPress();
+                return true;
+            default:
+                break;
         }
         return super.onKeyLongPress(keyCode, event);
     }

@@ -16,7 +16,6 @@ public class BooleanActivity extends SinglePackActivity {
         super.init();
         Log.announce(mMessage,false);
         Log.announce(mMessage,true);
-
     }
 
     @Override

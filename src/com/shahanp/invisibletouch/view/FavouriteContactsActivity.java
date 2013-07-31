@@ -1,11 +1,6 @@
 package com.shahanp.invisibletouch.view;
 
-import android.view.Gravity;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import com.shahanp.invisibletouch.R;
+import com.shahanp.invisibletouch.internal.InvisibleTouchApplication;
 import com.shahanp.invisibletouch.internal.ScreenHelper;
 import com.shahanp.invisibletouch.internal.SixPackActivity;
 import com.shahanp.invisibletouch.utils.FavouriteContacts;
@@ -79,37 +74,37 @@ public class FavouriteContactsActivity extends SixPackActivity {
 
     @Override
     public void onKeyOne() {
-        mFavourites.callFavourite(0);
+        mFavourites.callFavourite(0, this);
         super.onKeyOne();
     }
 
     @Override
     public void onKeyTwo() {
-        mFavourites.callFavourite(1);
+        mFavourites.callFavourite(1, this);
         super.onKeyTwo();
     }
 
     @Override
     public void onKeyThree() {
-        mFavourites.callFavourite(2);
+        mFavourites.callFavourite(2, this);
         super.onKeyThree();
     }
 
     @Override
     public void onKeyFour() {
-        mFavourites.callFavourite(3);
+        mFavourites.callFavourite(3, this);
         super.onKeyFour();
     }
 
     @Override
     public void onKeyFive() {
-        mFavourites.callFavourite(4);
+        mFavourites.callFavourite(4, this);
         super.onKeyFive();
     }
 
     @Override
     public void onKeySix() {
-        mFavourites.callFavourite(5);
+        mFavourites.callFavourite(5, this);
         super.onKeySix();
     }
 
@@ -139,7 +134,7 @@ public class FavouriteContactsActivity extends SixPackActivity {
 
     @Override
     protected void init() {
-        mFavourites = FavouriteContacts.getInstance(getApplicationContext(), this);
+        mFavourites = InvisibleTouchApplication.getInstance().getContactManager().getFavouriteContacts();
         super.init();
 
         setViewText(0, mFavourites.get(0).first.isEmpty() ? "Empty" : mFavourites.get(0).first, mFavourites.get(0).second.isEmpty() ? "" : mFavourites.get(0).second);
@@ -148,6 +143,6 @@ public class FavouriteContactsActivity extends SixPackActivity {
         setViewText(4, mFavourites.get(3).first.isEmpty() ? "Empty" : mFavourites.get(3).first, mFavourites.get(3).second.isEmpty() ? "" : mFavourites.get(3).second);
         setViewText(2, mFavourites.get(4).first.isEmpty() ? "Empty" : mFavourites.get(4).first, mFavourites.get(4).second.isEmpty() ? "" : mFavourites.get(4).second);
         setViewText(5, mFavourites.get(5).first.isEmpty() ? "Empty" : mFavourites.get(5).first, mFavourites.get(5).second.isEmpty() ? "" : mFavourites.get(5).second);
-        Log.announce(ScreenHelper.FAVOURITE_ACTIVATE,true);
+        Log.announce(ScreenHelper.FAVOURITE_ACTIVATE, true);
     }
 }

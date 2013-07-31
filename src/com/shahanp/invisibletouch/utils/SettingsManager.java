@@ -22,6 +22,7 @@ public class SettingsManager implements TextToSpeech.OnInitListener {
     public static final String PREF_KEY_KEYTONES_ENABLE = "com.shahanp.invisibletouch.USER_PREFERENCE.ENABLE_KEYTONES";
     public static final String PREF_KEY_VIBRATION_ENABLE = "com.shahanp.invisibletouch.USER_PREFERENCE.ENABLE_VIBRATION";
     public static final String PREF_KEY_RECOVER_SYSTEM = "com.shahanp.invisibletouch.USER_PREFERENCE.RECOVER_SYSTEM";
+    public static final String PREF_KEY_RINGING_VOLUME = "com.shahanp.invisibletouch.USER_PREFERENCE.RINGING_VOLUME";
     private static final String PREFERENCE_INTERNAL = "com.shahanp.invisibletouch.INTERNAL_PREFERENCE";
     private static final String PREF_KEY_INTERNAL_RECOVER_SYSTEM = "com.shahanp.invisibletouch.INTERNAL_PREFERENCE.ENABLE_TTS";
     private Context mContext;
@@ -79,9 +80,10 @@ public class SettingsManager implements TextToSpeech.OnInitListener {
         writeToPreference(PREFERENCE_USER, PREF_KEY_RECOVER_SYSTEM, true);
         writeToPreference(PREFERENCE_USER, PREF_KEY_TTS_ENABLE, false);
         writeToPreference(PREFERENCE_USER, PREF_KEY_VIBRATION_ENABLE, true);
-        writeToPreference(PREFERENCE_USER,PREF_KEY_KEYTONES_ENABLE,true);
+        writeToPreference(PREFERENCE_USER, PREF_KEY_KEYTONES_ENABLE, true);
         AudioManager am = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
         getSettings().setTTSVolume(am.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
+        getSettings().setRingingVolume(am.getStreamMaxVolume(AudioManager.STREAM_RING));
         if (isTTSReady()) {
             getSettings().setTTSSpeed(1.0f);
             getSettings().setTTSPitch(1.0f);
@@ -248,8 +250,18 @@ public class SettingsManager implements TextToSpeech.OnInitListener {
             return mSharedPreference.getBoolean(PREF_KEY_KEYTONES_ENABLE, false);
         }
 
-        public void setKeypadTonesEnable(Boolean value){
-            writeToPreference(PREFERENCE_USER,PREF_KEY_KEYTONES_ENABLE,value);
+        public void setKeypadTonesEnable(Boolean value) {
+            writeToPreference(PREFERENCE_USER, PREF_KEY_KEYTONES_ENABLE, value);
+        }
+
+        public int getRingingVolume() {
+            return mSharedPreference.getInt(PREF_KEY_RINGING_VOLUME, 0);
+        }
+
+        public void setRingingVolume(Integer value) {
+            AudioManager am = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+            am.setStreamVolume(AudioManager.STREAM_RING, value, 0);
+            writeToPreference(PREFERENCE_USER, PREF_KEY_RINGING_VOLUME, value);
         }
 
     }

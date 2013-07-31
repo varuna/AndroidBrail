@@ -97,6 +97,15 @@
                 android:name=".view.sub.AccessibilitySettingsActivity"
                 android:screenOrientation="portrait">
         </activity>
+        <activity
+                android:name=".view.ExtensionApplicationsActivity"
+                android:screenOrientation="portrait">
+        </activity>
+        <activity
+                android:name=".plugin.AlarmExtension"
+                android:screenOrientation="portrait">
+        </activity>
+
     </application>
 
 </manifest>
