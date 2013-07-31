@@ -125,7 +125,7 @@ public class MainMenuActivity extends SixPackActivity {
 
     @Override
     public void onScreenLongPress() {
-
+        Log.announce(ScreenHelper.MAIN_MENU_SCREEN_HELPER, true);
     }
 
     @Override

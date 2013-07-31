@@ -64,7 +64,7 @@ public class ScreenHelper {
             + "Button Three "    + "Key pad tone on off."
             + "Button Four "     + "Auto recovery enable or disable."
             + "Button Five "     + "Reset settings."
-            + "Button Six "      + "More settings.";
+            + "Button Six "      + "Ringing Volume.";
 
     public static String DIAL_PAD_SCREEN_HELPER=
             "Dial Pad."          + "Six Packs Screen."

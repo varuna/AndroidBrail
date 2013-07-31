@@ -197,7 +197,7 @@ public class ContactsActivity extends SixPackActivity {
             Log.announce("Added to favourite. ",true);
         } catch (FavouriteExistsException e) {
             e.printStackTrace();
-            Log.announce("Already added added to favourite. ",true);
+            Log.announce("Already a favourite Contact. ",true);
         }
     }
 
