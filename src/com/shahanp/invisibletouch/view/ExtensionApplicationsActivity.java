@@ -2,8 +2,10 @@ package com.shahanp.invisibletouch.view;
 
 import com.shahanp.invisibletouch.internal.InvisibleTouchApplication;
 import com.shahanp.invisibletouch.internal.PluginManager;
+import com.shahanp.invisibletouch.internal.ScreenHelper;
 import com.shahanp.invisibletouch.internal.SixPackActivity;
 import com.shahanp.invisibletouch.plugin.IExtensionPlugin;
+import com.shahanp.invisibletouch.utils.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,7 @@ public class ExtensionApplicationsActivity extends SixPackActivity {
                 e.printStackTrace();
             }
         }
+        Log.announce(ScreenHelper.OTHERS_ACTIVATE,true);
     }
 
     @Override
@@ -135,7 +138,7 @@ public class ExtensionApplicationsActivity extends SixPackActivity {
 
     @Override
     public void onVolumeDownKeyLongPress() {
-
+        Log.announce(ScreenHelper.OTHERS_SCREEN_HELPER,true);
     }
 
     @Override

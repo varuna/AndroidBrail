@@ -61,6 +61,7 @@ public class DialPadActivity extends KeyboardActivity {
         } else {
             Log.announce(mPhoneNumber + " Dialing",true);
             mCallManager.makeCall(mPhoneNumber, this);
+            Log.announce(mPhoneNumber,true);
         }
         mTextInputManager.purge();
         mCurrentCharacter.reset();

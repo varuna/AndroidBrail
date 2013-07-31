@@ -53,7 +53,7 @@ public class SettingsActivity extends SixPackActivity {
 
     @Override
     public void onLongKeySix() {
-        Log.announce(ScreenHelper.SETTINGS_MORE, true);
+      Log.announce(ScreenHelper.SETTINGS_RINGING_VOLUME, true);
     }
 
     @Override

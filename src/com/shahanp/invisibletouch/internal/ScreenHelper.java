@@ -12,6 +12,7 @@ public class ScreenHelper {
     public static String DIAL_PAD_ACTIVATE = "Dial pad.";
     public static String LOCK_ACTIVATE = "Screen Locked.";
     public static String SETTINGS_ACTIVATE = "Settings.";
+    public static String OTHERS_ACTIVATE = "Others.";
     public static String ACCESSIBILITY_ACTIVATE  = "Accessibility settings.";
 
 
@@ -53,7 +54,7 @@ public class ScreenHelper {
             + "Button One "      + "Name."
             + "Button Two "      + "Phone Number."
             + "Button Three "    + "Call Type."
-            + "Button Four "     + "Date and time."
+            + "Button Four "     + "Time."
             + "Button Five "     + "Dial."
             + "Button Six "      + "Remove record.";
 
@@ -68,8 +69,10 @@ public class ScreenHelper {
 
     public static String DIAL_PAD_SCREEN_HELPER=
             "Dial Pad."          + "Six Packs Screen."
-            + "Use six buttons as a braille type writer. And swipe to pass the value. Double swipe to dial"
-            + "Dial 0 1 0 1 0 0 0 1 to exit Invisible touch.";
+            + "Use six buttons as a braille type writer. And swipe to pass the value. Double swipe to dial."
+            +"Swipe Left to Backspace."
+            +"Double Swipe to Return."
+            + " To exit Invisible touch Dial 0 1 0 1 0 0 0 1 .";
 
     public static String CONTACTS_SCREEN_HELPER=
             "Contacts."          + "Six Packs Screen."
@@ -83,13 +86,8 @@ public class ScreenHelper {
 
     public static String OTHERS_SCREEN_HELPER=
             "Others."          + "Six Packs Screen."
-            + "Button One "      + "Action 1."
-            + "Button Two "      + "Action 2."
-            + "Button Three "    + "Action 3."
-            + "Button Four "     + "Action 4."
-            + "Button Five "     + "Action 5."
-            + "Button Six "      + "Action 6.";
-
+            + "Button One "      + "Alarm."
+            + "Button Two, Three, Four, Five & Six are Empty.";
 
     public static String LOCK_SCREEN_HELPER =
             "Locked Screen."     + "Single Pack Screen."+
@@ -103,10 +101,10 @@ public class ScreenHelper {
 
     public static String ACCESSIBILITY_SCREEN_HELPER=
             "Accessibility Settings."          + "Six Packs Screen."
-                    + "Button One "      + "Test to speech, volume Up and Down."
-                    + "Button Two "      + "Test to speech, speed increase and decrease."
-                    + "Button Three "    + "Test to speech, pitch Up and Down."
-                    + "Button Four, Five & Six are empty.";
+            + "Button One "      + "Test to speech, volume Up and Down."
+            + "Button Two "      + "Test to speech, speed increase and decrease."
+            + "Button Three "    + "Test to speech, pitch Up and Down."
+            + "Button Four, Five & Six are empty.";
 
     //PRIVATE LONG PRESS HELPER STRINGS : Used with static functions
     private static String INCALL_SCREEN_HELPER = "You are now in a call with ";
@@ -119,4 +117,8 @@ public class ScreenHelper {
         return contact.toString();
     }
 
+    //EMPTY ACTION BUTTON HELP
+    public static String EMPTY_ACTION_BUTTON = "Empty. Not an Active Button.";
+
 }
+
