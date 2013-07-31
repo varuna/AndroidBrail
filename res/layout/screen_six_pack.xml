@@ -13,6 +13,7 @@
 
         <LinearLayout
                 android:id="@+id/item_one_one"
+                android:padding="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -27,6 +28,7 @@
                     android:text="Title"
                     android:textColor="@android:color/white"
                     android:id="@+id/item_one_one_title"
+                    android:gravity="center"
                     android:layout_gravity="center"/>
 
             <TextView
@@ -49,6 +51,7 @@
 
         <LinearLayout
                 android:id="@+id/item_two_one"
+                android:padding="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -63,6 +66,7 @@
                     android:text="Title"
                     android:textColor="@android:color/white"
                     android:id="@+id/item_two_one_title"
+                    android:gravity="center"
                     android:layout_gravity="center"/>
 
             <TextView
@@ -91,6 +95,7 @@
 
         <LinearLayout
                 android:id="@+id/item_one_two"
+                android:padding="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -105,6 +110,7 @@
                     android:text="Title"
                     android:textColor="@android:color/white"
                     android:id="@+id/item_one_two_title"
+                    android:gravity="center"
                     android:layout_gravity="center"/>
 
             <TextView
@@ -127,6 +133,7 @@
 
         <LinearLayout
                 android:id="@+id/item_two_two"
+                android:padding="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -141,6 +148,7 @@
                     android:text="Title"
                     android:textColor="@android:color/white"
                     android:id="@+id/item_two_two_title"
+                    android:gravity="center"
                     android:layout_gravity="center"
                     />
 
@@ -170,6 +178,7 @@
 
         <LinearLayout
                 android:id="@+id/item_one_three"
+                android:padding="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -184,6 +193,7 @@
                     android:text="Title"
                     android:textColor="@android:color/white"
                     android:id="@+id/item_one_three_title"
+                    android:gravity="center"
                     android:layout_gravity="center"/>
 
             <TextView
@@ -206,6 +216,7 @@
 
         <LinearLayout
                 android:id="@+id/item_two_three"
+                android:padding="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -220,6 +231,7 @@
                     android:text="Title"
                     android:textColor="@android:color/white"
                     android:id="@+id/item_two_three_title"
+                    android:gravity="center"
                     android:layout_gravity="center"/>
 
             <TextView

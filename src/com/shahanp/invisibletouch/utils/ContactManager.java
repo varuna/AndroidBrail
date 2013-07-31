@@ -14,15 +14,21 @@ public class ContactManager {
     public static final String ACTION_DELETE_CONTACT = "com.shahanp.invisibletouch.contact.ACTION_DELETE_CONTACT";
     public static final String ACTION_UPDATE_CONTACT = "com.shahanp.invisibletouch.contact.ACTION_UPDATE_CONTACT";
     public static final String INTENT_FLAG_CONTACT = "com.shahanp.invisibletouch.contactmanager.INTENT_FLAG_CONTACT";
-
     private Cursor mContactsCursor;
     private Context mContext;
+    private FavouriteContacts mFavouriteContacts;
 
     public ContactManager(Context context) {
         mContext = context;
         mContactsCursor = mContext.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
                 null, null, null);
         mContactsCursor.moveToFirst();
+
+        mFavouriteContacts = new FavouriteContacts(mContext);
+    }
+
+    public FavouriteContacts getFavouriteContacts() {
+        return mFavouriteContacts;
     }
 
     public Contact moveToFirstContact() {

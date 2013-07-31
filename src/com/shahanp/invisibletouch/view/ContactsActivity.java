@@ -191,8 +191,7 @@ public class ContactsActivity extends SixPackActivity {
 
     @Override
     public void onKeySix() {
-        FavouriteContacts fav = FavouriteContacts
-                .getInstance(getApplicationContext(), this);
+        FavouriteContacts fav = InvisibleTouchApplication.getInstance().getContactManager().getFavouriteContacts();
         try {
             fav.addToFavourite(mCurrentContact.getName(), mCurrentContact.getPhone());
         } catch (FavouriteExistsException e) {

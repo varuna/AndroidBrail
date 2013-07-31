@@ -108,7 +108,7 @@ public class CallLogActivity extends SixPackActivity {
     protected void init() {
         this.mContacts = getContentResolver().query(CallLog.Calls.CONTENT_URI,
                 null, null, null, null);
-        this.mContacts.moveToFirst();
+        this.mContacts.moveToLast();
         mCurrentLog = readContact(mContacts);
         super.init();
         setViewData();
