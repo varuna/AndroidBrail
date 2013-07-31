@@ -1,13 +1,23 @@
 package com.shahanp.invisibletouch.view;
 
+import android.graphics.Color;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.shahanp.invisibletouch.internal.ScreenHelper;
 import com.shahanp.invisibletouch.internal.SinglePackActivity;
+import com.shahanp.invisibletouch.utils.Contact;
 import com.shahanp.invisibletouch.utils.Log;
 
 public class LockScreenActivity extends SinglePackActivity {
+
+    private LinearLayout mRootView;
+    private Contact mContact;
+    private int NAME_VIEW_ID = 1000;
+    private int NUMBER_VIEW_ID = 1001;
 
     // Double Swipe unlock the screen
 

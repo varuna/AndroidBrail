@@ -33,6 +33,8 @@ public class InCallActivity extends SixPackActivity {
         setViewText(1,"Speaker",null);
         setViewText(4,"End call",null);
         setViewText(5, "Dial pad", null);
+
+        Log.announce(mStatus.mPhoneNumber,true);
     }
 
     @Override
@@ -79,6 +81,7 @@ public class InCallActivity extends SixPackActivity {
         try {
             InvisibleTouchApplication.getInstance().getCallManager().endCall();
             finish();
+            Log.announce("Call Ended",true);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -173,6 +176,7 @@ public class InCallActivity extends SixPackActivity {
         try {
             InvisibleTouchApplication.getInstance().getCallManager().endCall();
             finish();
+            Log.announce("Call Ended",true);
         } catch (RemoteException e) {
             e.printStackTrace();
         }

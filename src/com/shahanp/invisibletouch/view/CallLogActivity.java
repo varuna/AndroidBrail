@@ -210,7 +210,7 @@ public class CallLogActivity extends SixPackActivity {
         setViewText(0,"Name",mCurrentLog.getName());
         setViewText(1,"Phone Number",mCurrentLog.getPhone());
         setViewText(2,"Type",mCurrentLog.typeInString());
-        setViewText(3,"Date & Time",mCurrentLog.timeInString());
+        setViewText(3,"Time",mCurrentLog.timeInString());
         setViewText(4,"Dial",null);
         setViewText(5,"Remove Record",null);
     }
