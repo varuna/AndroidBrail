@@ -11,9 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PluginManager {
-
+    public static final String FLAG_REQUEST_FOREGROUND = "com.shahanp.invisibletouch.internal.pluginmanager.REQUEST_FOREGROUND";
     private Context mContext;
     private List<Plugin> mPluginMap;
+    private boolean mPluginForegroundRequested = false;
 
     public PluginManager(InvisibleTouchApplication context) {
         mContext = context;
@@ -51,17 +52,29 @@ public class PluginManager {
         return null;
     }
 
-    public int getPluginsCount(){
+    public int getPluginsCount() {
         return mPluginMap.size();
     }
 
-    public List<Plugin> getPlugins(){
+    public List<Plugin> getPlugins() {
         return mPluginMap;
     }
 
     private void initPlugins() {
         XmlResourceParser config = mContext.getResources().getXml(R.xml.pluginconfig);
         mPluginMap = parse(config);
+    }
+
+    public void clearPluginForegroundRequest() {
+        mPluginForegroundRequested = false;
+    }
+
+    public void requestForeground() {
+        mPluginForegroundRequested = true;
+    }
+
+    public boolean getForegroundRequestByPlugins() {
+        return mPluginForegroundRequested;
     }
 
     public class Plugin {

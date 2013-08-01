@@ -7,4 +7,10 @@ public abstract class PluginSixPackActivity extends SixPackActivity{
     public void onSwipeLeft() {
         finish();
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+    }
 }
