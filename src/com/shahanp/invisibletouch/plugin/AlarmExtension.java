@@ -32,8 +32,8 @@ public class AlarmExtension extends PluginSixPackActivity {
         }
         mAlarms = new ArrayList<Long>();
         alarmId = initAlarms();
-
-        mCurrentAlarm.editTime(mAlarms.get(alarmId));
+        if (mAlarms.size() > 0)
+            mCurrentAlarm.editTime(mAlarms.get(alarmId));
     }
 
     private int initAlarms() {
