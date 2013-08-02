@@ -106,8 +106,8 @@ public class InvisibleTouchApplication extends Application {
     }
 
     public void forceQuitApp(BaseActivity context) {
-        context.finish();
         _KILL_SIGNAL_ = true;
+        context.finish();
     }
 
     public boolean shouldKillApp() {

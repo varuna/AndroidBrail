@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import com.shahanp.invisibletouch.utils.Log;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,19 +30,53 @@ public class AlarmExtension extends PluginSixPackActivity {
         if (action != null && action.equals(FIRE_ALARM)) {
             mMode = MODE.RINGING;
         } else {
-            mMode = MODE.CONFIG;
+            mMode = MODE.VIEW;
         }
         mAlarms = new ArrayList<Long>();
         alarmId = initAlarms();
-        if (mAlarms.size() > 0)
+        if (mAlarms.size() > 0) {
+            mCurrentAlarm = new ScheduleAlarm();
             mCurrentAlarm.editTime(mAlarms.get(alarmId));
+        }
+
+        setScreenTitles();
     }
 
     private int initAlarms() {
         int i;
         for (i = 0; i < mSchedular.getAlarmCount(); i++)
             mAlarms.add(mSchedular.getAlarmFromPersistanceStorage(i));
-        return i;
+        return i - 1;
+    }
+
+    private void setScreenTitles() {
+        switch (mMode) {
+            case VIEW:
+                setViewText(0, "New Alarm", null);
+                setViewText(1, "Edit Alarm", null);
+                setViewText(2, "Delete Alarm", null);
+                setViewText(3, "Time", null);
+                setViewText(4, "Date", null);
+                setViewText(5, null, null);
+                break;
+            case CONFIG:
+                setViewText(0, "Edit Year", null);
+                setViewText(1, "Edit Month", null);
+                setViewText(2, "Edit Date", null);
+                setViewText(3, "Edit Hours", null);
+                setViewText(4, "Edit Minutes", null);
+                setViewText(5, "Save Alarm", null);
+                break;
+            case RINGING:
+                setViewText(0, null, null);
+                setViewText(1, null, null);
+                setViewText(2, null, null);
+                setViewText(3, null, null);
+                setViewText(4, null, null);
+                setViewText(5, null, null);
+
+                break;
+        }
     }
 
     @Override
@@ -49,6 +85,7 @@ public class AlarmExtension extends PluginSixPackActivity {
         if (mMode == MODE.VIEW) {
             mMode = MODE.CONFIG;
             alarmId++;
+            setScreenTitles();
         }
         if (mMode == MODE.CONFIG) {
             mType = EDITTYPE.YEAR;
@@ -60,6 +97,7 @@ public class AlarmExtension extends PluginSixPackActivity {
         super.onKeyTwo();
         if (mMode == MODE.VIEW) {
             mMode = MODE.CONFIG;
+            setScreenTitles();
         }
         if (mMode == MODE.CONFIG) {
             mType = EDITTYPE.MONTH;
@@ -81,7 +119,7 @@ public class AlarmExtension extends PluginSixPackActivity {
     public void onKeyFour() {
         super.onKeyFour();
         if (mMode == MODE.VIEW) {
-
+            Log.announce("Time is : " + mCurrentAlarm.getValue(EDITTYPE.HOURS) + ":" + mCurrentAlarm.getValue(EDITTYPE.MINUTES), false);
         }
         if (mMode == MODE.CONFIG) {
             mType = EDITTYPE.HOURS;
@@ -92,7 +130,7 @@ public class AlarmExtension extends PluginSixPackActivity {
     public void onKeyFive() {
         super.onKeyFive();
         if (mMode == MODE.VIEW) {
-
+            Log.announce("Date is : " + mCurrentAlarm.getValue(EDITTYPE.YEAR) + "/" + mCurrentAlarm.getValue(EDITTYPE.MONTH) + "/" + mCurrentAlarm.getValue(EDITTYPE.DATE), false);
         }
         if (mMode == MODE.CONFIG) {
             mType = EDITTYPE.MINUTES;
@@ -107,7 +145,10 @@ public class AlarmExtension extends PluginSixPackActivity {
         }
         if (mMode == MODE.CONFIG) {
             mSchedular.scheduleAlarm(this);
+            initAlarms();
+            mMode = MODE.VIEW;
         }
+        setScreenTitles();
     }
 
     @Override
@@ -121,7 +162,13 @@ public class AlarmExtension extends PluginSixPackActivity {
             else
                 initAlarms();
         }
-        super.onSwipeLeft();
+        if (mMode == MODE.VIEW)
+            super.onSwipeLeft();
+        if (mMode != MODE.VIEW) {
+            mMode = MODE.VIEW;
+        }
+
+        setScreenTitles();
     }
 
     @Override
@@ -139,7 +186,7 @@ public class AlarmExtension extends PluginSixPackActivity {
         }
         if (mMode == MODE.CONFIG) {
             //New Alarm
-            if (alarmId == mAlarms.size()) {
+            if (alarmId >= mAlarms.size()) {
                 mSchedular.setValue(mSchedular.getValue(mType) + 1, mType);
             } else {
                 //Edit current
