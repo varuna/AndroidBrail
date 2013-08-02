@@ -2,6 +2,7 @@ package com.shahanp.invisibletouch.internal;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 
@@ -14,6 +15,8 @@ import com.shahanp.invisibletouch.utils.SoundManager;
 import java.util.HashMap;
 
 public class InvisibleTouchApplication extends Application {
+
+    public final static boolean PRODUCTION = true;
 
     private static InvisibleTouchApplication instance;
     private TextInputManager mTextInputManager;
@@ -62,7 +65,7 @@ public class InvisibleTouchApplication extends Application {
         return mSoundsManager;
     }
 
-    public PluginManager getPluginManager(){
+    public PluginManager getPluginManager() {
         return mPluginManager;
     }
 
@@ -115,6 +118,11 @@ public class InvisibleTouchApplication extends Application {
         _KILL_SIGNAL_ = false;
     }
 
+    public boolean isLicenceAccepted() {
+        SharedPreferences pref = getSharedPreferences(LicenceAgreementActivity.LICENCE_PREFERENCE, MODE_PRIVATE);
+        return pref.getBoolean(LicenceAgreementActivity.LICENCE_PREF_KEY, false);
+    }
+
     public class ActivityResults {
         private int mResult = -1;
         private Bundle mResultsData = null;
@@ -136,7 +144,5 @@ public class InvisibleTouchApplication extends Application {
                 mResult = result;
             }
         }
-
-
     }
 }

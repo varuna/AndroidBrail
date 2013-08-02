@@ -1,9 +1,9 @@
 package com.shahanp.invisibletouch.view;
 
 import android.content.Intent;
-import android.view.View;
 
 import com.shahanp.invisibletouch.internal.InvisibleTouchApplication;
+import com.shahanp.invisibletouch.internal.LicenceAgreementActivity;
 import com.shahanp.invisibletouch.internal.ScreenHelper;
 import com.shahanp.invisibletouch.internal.SixPackActivity;
 import com.shahanp.invisibletouch.utils.Log;
@@ -55,9 +55,9 @@ public class MainMenuActivity extends SixPackActivity {
 
     }
 
-        @Override
-        public void onVolumeDownKeyLongPress() {
-            Log.announce(ScreenHelper.MAIN_MENU_SCREEN_HELPER, true);
+    @Override
+    public void onVolumeDownKeyLongPress() {
+        Log.announce(ScreenHelper.MAIN_MENU_SCREEN_HELPER, true);
     }
 
     @Override
@@ -163,17 +163,22 @@ public class MainMenuActivity extends SixPackActivity {
         super.onResume();
         if (InvisibleTouchApplication.getInstance().shouldKillApp())
             InvisibleTouchApplication.getInstance().killed();
+
+        if (!InvisibleTouchApplication.getInstance().isLicenceAccepted()) {
+            Intent i = new Intent(this, LicenceAgreementActivity.class);
+            startActivity(i);
+        }
     }
 
     @Override
     protected void init() {
         super.init();
-        setViewText(0,"Favourite Contacts",null);
-        setViewText(1,"Call log",null);
-        setViewText(2,"Settings",null);
-        setViewText(3,"Dial Pad",null);
-        setViewText(4,"Contacts",null);
-        setViewText(5,"Others",null);
+        setViewText(0, "Favourite Contacts", null);
+        setViewText(1, "Call log", null);
+        setViewText(2, "Settings", null);
+        setViewText(3, "Dial Pad", null);
+        setViewText(4, "Contacts", null);
+        setViewText(5, "Others", null);
         Log.announce(ScreenHelper.MAIN_MENU_ACTIVATE, true);
     }
 }
