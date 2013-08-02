@@ -46,7 +46,7 @@ public class LicenceAgreementActivity extends SinglePackActivity {
 
     @Override
     public void onSwipeLeft() {
-        finish();
+        InvisibleTouchApplication.getInstance().forceQuitApp(this);
     }
 
     @Override
