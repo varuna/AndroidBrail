@@ -16,7 +16,7 @@ import java.util.HashMap;
 
 public class InvisibleTouchApplication extends Application {
 
-    public final static boolean PRODUCTION = true;
+    public final static boolean PRODUCTION = false;
 
     private static InvisibleTouchApplication instance;
     private TextInputManager mTextInputManager;

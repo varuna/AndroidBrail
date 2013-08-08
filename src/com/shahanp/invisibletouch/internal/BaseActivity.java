@@ -190,25 +190,6 @@ public abstract class BaseActivity extends Activity implements IGestures,
         super.onPause();
     }
 
-    @SuppressLint("InlinedApi")
-    @Override
-    protected void onStop() {
-        if (!mStoppedFromNewScreen && !isFinishing && !InvisibleTouchApplication.getInstance().getPluginManager().getForegroundRequestByPlugins()) {
-            Log.announce(
-                    "Whoa.. we are losing screen. Signaling : ",
-                    Level.WARNING);
-//            Intent i = new Intent(SignalReceiver.HOME_SCREEN_LAUNCHED);
-//            sendBroadcast(i);
-            Intent i = new Intent(this, MainMenuActivity.class);
-//            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-            PendingIntent pi = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
-            am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 100, pi);
-        }
-        super.onStop();
-    }
-
     @Override
     public void onBackPressed() {
     }
