@@ -1,9 +1,6 @@
 package com.shahanp.invisibletouch.internal;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.GestureDetector;
@@ -17,7 +14,6 @@ import android.widget.Toast;
 import com.shahanp.invisibletouch.R;
 import com.shahanp.invisibletouch.utils.Log;
 import com.shahanp.invisibletouch.utils.Log.Level;
-import com.shahanp.invisibletouch.view.MainMenuActivity;
 
 public abstract class BaseActivity extends Activity implements IGestures,
         IBrailleKeyboard, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
@@ -158,22 +154,14 @@ public abstract class BaseActivity extends Activity implements IGestures,
         return super.onKeyLongPress(keyCode, event);
     }
 
-    @Override
     public void startActivity(Intent intent) {
         mStoppedFromNewScreen = true;
         super.startActivity(intent);
     }
 
-    @Override
     public void startActivityForResult(Intent intent, int requestCode) {
         mStoppedFromNewScreen = true;
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         super.startActivityForResult(intent, requestCode);
-    }
-
-    public void setActivityResult(int result) {
-        InvisibleTouchApplication.getInstance().setResult(result);
-        setResult(result);
     }
 
     @Override

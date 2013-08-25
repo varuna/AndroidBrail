@@ -3,6 +3,7 @@ package com.shahanp.invisibletouch.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Pair;
+import android.widget.Toast;
 
 import com.shahanp.invisibletouch.internal.BaseActivity;
 import com.shahanp.invisibletouch.internal.InvisibleTouchApplication;
@@ -122,4 +123,9 @@ public class FavouriteContacts {
             InvisibleTouchApplication.getInstance().getCallManager().makeCall(tele, activity);
         }
     }
+
+    public void removeFromFavourites(int index) {
+        addToFavourite(index, "", "");
+    }
+
 }

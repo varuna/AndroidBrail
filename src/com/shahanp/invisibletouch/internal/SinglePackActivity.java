@@ -1,6 +1,5 @@
 package com.shahanp.invisibletouch.internal;
 
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -11,12 +10,13 @@ public abstract class SinglePackActivity extends BaseActivity {
 
     private TextView mTitle;
     private TextView mSummary;
+
     @Override
     protected void init() {
         setContentView(R.layout.screen_single_pack);
         LinearLayout _one_one = (LinearLayout) findViewById(R.id.item_one_one);
-        mTitle = (TextView)findViewById(R.id.item_title);
-        mSummary = (TextView)findViewById(R.id.item_summary);
+        mTitle = (TextView) findViewById(R.id.item_title);
+        mSummary = (TextView) findViewById(R.id.item_summary);
         _one_one.setClickable(true);
         _one_one.setOnClickListener(this);
         onAttachView(R.id.item_one_one, _one_one);

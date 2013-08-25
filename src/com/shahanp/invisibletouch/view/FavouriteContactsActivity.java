@@ -1,5 +1,8 @@
 package com.shahanp.invisibletouch.view;
 
+import android.content.Intent;
+import android.widget.Toast;
+
 import com.shahanp.invisibletouch.internal.InvisibleTouchApplication;
 import com.shahanp.invisibletouch.internal.ScreenHelper;
 import com.shahanp.invisibletouch.internal.SixPackActivity;
@@ -8,6 +11,8 @@ import com.shahanp.invisibletouch.utils.Log;
 
 public class FavouriteContactsActivity extends SixPackActivity {
 
+    private final int REQUEST_REMOVE_FAVOURITE_CONTACT = 12469;
+    private final String CONTACT_INDEX = "com.shahanp.invisibletouch.view.favouritecontactsactivity.CONTACT_INDEX";
     private FavouriteContacts mFavourites;
 
     @Override
@@ -69,7 +74,7 @@ public class FavouriteContactsActivity extends SixPackActivity {
 
     @Override
     public void onScreenLongPress() {
-        Log.announce(ScreenHelper.FAVOURITE_SCREEN_HELPER, true);
+//        Log.announce(ScreenHelper.FAVOURITE_SCREEN_HELPER, true);
     }
 
     @Override
@@ -110,26 +115,62 @@ public class FavouriteContactsActivity extends SixPackActivity {
 
     @Override
     public void onLongKeyOne() {
+        requestRemove(0, mFavourites.get(0).second);
     }
 
     @Override
     public void onLongKeyTwo() {
+        requestRemove(1, mFavourites.get(1).second);
     }
 
     @Override
     public void onLongKeyThree() {
+        requestRemove(2, mFavourites.get(2).second);
     }
 
     @Override
     public void onLongKeyFour() {
+        requestRemove(3, mFavourites.get(3).second);
     }
 
     @Override
     public void onLongKeyFive() {
+        requestRemove(4, mFavourites.get(4).second);
     }
 
     @Override
     public void onLongKeySix() {
+        requestRemove(5, mFavourites.get(5).second);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_REMOVE_FAVOURITE_CONTACT && resultCode == RESULT_OK) {
+            mFavourites.removeFromFavourites(data.getIntExtra(CONTACT_INDEX, 0));
+            setViewText(data.getIntExtra(CONTACT_INDEX, 0), "Empty", "");
+        }
+    }
+
+    private void requestRemove(int index, String phone) {
+        Intent intent = new Intent(this, BooleanActivity.class);
+        intent.putExtra(CONTACT_INDEX, index);
+        intent.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE, "Do you want to remove " + phone + ", from favourite contacts ?");
+        intent.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE_TITLE, "Remove Favourite");
+        intent.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE_SUMMARY, "Remove " + phone + " ?");
+        startActivityForResult(intent, REQUEST_REMOVE_FAVOURITE_CONTACT);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setViewText(0, mFavourites.get(0).first.isEmpty() ? "Empty" : mFavourites.get(0).first, mFavourites.get(0).second.isEmpty() ? "" : mFavourites.get(0).second);
+        setViewText(1, mFavourites.get(1).first.isEmpty() ? "Empty" : mFavourites.get(1).first, mFavourites.get(1).second.isEmpty() ? "" : mFavourites.get(1).second);
+        setViewText(2, mFavourites.get(2).first.isEmpty() ? "Empty" : mFavourites.get(2).first, mFavourites.get(2).second.isEmpty() ? "" : mFavourites.get(2).second);
+        setViewText(3, mFavourites.get(3).first.isEmpty() ? "Empty" : mFavourites.get(3).first, mFavourites.get(3).second.isEmpty() ? "" : mFavourites.get(3).second);
+        setViewText(4, mFavourites.get(4).first.isEmpty() ? "Empty" : mFavourites.get(4).first, mFavourites.get(4).second.isEmpty() ? "" : mFavourites.get(4).second);
+        setViewText(5, mFavourites.get(5).first.isEmpty() ? "Empty" : mFavourites.get(5).first, mFavourites.get(5).second.isEmpty() ? "" : mFavourites.get(5).second);
+
+
     }
 
     @Override
@@ -138,10 +179,10 @@ public class FavouriteContactsActivity extends SixPackActivity {
         super.init();
 
         setViewText(0, mFavourites.get(0).first.isEmpty() ? "Empty" : mFavourites.get(0).first, mFavourites.get(0).second.isEmpty() ? "" : mFavourites.get(0).second);
-        setViewText(3, mFavourites.get(1).first.isEmpty() ? "Empty" : mFavourites.get(1).first, mFavourites.get(1).second.isEmpty() ? "" : mFavourites.get(1).second);
-        setViewText(1, mFavourites.get(2).first.isEmpty() ? "Empty" : mFavourites.get(2).first, mFavourites.get(2).second.isEmpty() ? "" : mFavourites.get(2).second);
-        setViewText(4, mFavourites.get(3).first.isEmpty() ? "Empty" : mFavourites.get(3).first, mFavourites.get(3).second.isEmpty() ? "" : mFavourites.get(3).second);
-        setViewText(2, mFavourites.get(4).first.isEmpty() ? "Empty" : mFavourites.get(4).first, mFavourites.get(4).second.isEmpty() ? "" : mFavourites.get(4).second);
+        setViewText(1, mFavourites.get(1).first.isEmpty() ? "Empty" : mFavourites.get(1).first, mFavourites.get(1).second.isEmpty() ? "" : mFavourites.get(1).second);
+        setViewText(2, mFavourites.get(2).first.isEmpty() ? "Empty" : mFavourites.get(2).first, mFavourites.get(2).second.isEmpty() ? "" : mFavourites.get(2).second);
+        setViewText(3, mFavourites.get(3).first.isEmpty() ? "Empty" : mFavourites.get(3).first, mFavourites.get(3).second.isEmpty() ? "" : mFavourites.get(3).second);
+        setViewText(4, mFavourites.get(4).first.isEmpty() ? "Empty" : mFavourites.get(4).first, mFavourites.get(4).second.isEmpty() ? "" : mFavourites.get(4).second);
         setViewText(5, mFavourites.get(5).first.isEmpty() ? "Empty" : mFavourites.get(5).first, mFavourites.get(5).second.isEmpty() ? "" : mFavourites.get(5).second);
         Log.announce(ScreenHelper.FAVOURITE_ACTIVATE, true);
     }

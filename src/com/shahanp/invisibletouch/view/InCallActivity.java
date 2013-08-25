@@ -180,7 +180,6 @@ public class InCallActivity extends SixPackActivity {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        super.onKeyFive();
     }
 
     @Override

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
+import android.widget.Toast;
 
 import com.shahanp.invisibletouch.internal.InvisibleTouchApplication;
 
@@ -24,6 +25,8 @@ public class SettingsManager implements TextToSpeech.OnInitListener {
     public static final String PREF_KEY_RECOVER_SYSTEM = "com.shahanp.invisibletouch.USER_PREFERENCE.RECOVER_SYSTEM";
     public static final String PREF_KEY_RINGING_VOLUME = "com.shahanp.invisibletouch.USER_PREFERENCE.RINGING_VOLUME";
     private static final String PREFERENCE_INTERNAL = "com.shahanp.invisibletouch.INTERNAL_PREFERENCE";
+    private static final String PREFERENCE_INTERNAL_PRECONFIG = "com.shahanp.invisibletouch.INTERNAL_PRECONFIG_PREFERENCE";
+    private static final String PREFERENCE_INTERNAL_PRECONFIG_INIT = "com.shahanp.invisibletouch.INTERNAL_PRECONFIG_INITIALIZED_PREFERENCE";
     private static final String PREF_KEY_INTERNAL_RECOVER_SYSTEM = "com.shahanp.invisibletouch.INTERNAL_PREFERENCE.ENABLE_TTS";
     private Context mContext;
     private TextToSpeech mTTS;
@@ -34,12 +37,17 @@ public class SettingsManager implements TextToSpeech.OnInitListener {
 
     public SettingsManager(Context context) {
         this.mContext = context;
-        UserSettings settings = getSettings();
 
+        PreConfig config = new PreConfig();
+        config.rememberConfig();
+
+        UserSettings settings = getSettings();
         settings.setVibrationEnabled(settings.getVibrationEnabled());
         settings.setSystemRecovery(settings.getSystemRecovery());
         settings.setTTSVolume(settings.getTTSVolume());
+        settings.setRingingVolume(settings.getRingingVolume());
         settings.setTTSEnabled(settings.getTTSEnabled());
+        settings.setKeypadTonesEnable(settings.getKeypadTonesEnabled());
         if (isTTSReady()) {
             settings.setTTSPitch(settings.getTTSPitch());
             settings.setTTSSpeed(settings.getTTSSpeed());
@@ -81,7 +89,7 @@ public class SettingsManager implements TextToSpeech.OnInitListener {
         writeToPreference(PREFERENCE_USER, PREF_KEY_TTS_ENABLE, false);
         writeToPreference(PREFERENCE_USER, PREF_KEY_VIBRATION_ENABLE, true);
         writeToPreference(PREFERENCE_USER, PREF_KEY_KEYTONES_ENABLE, true);
-        AudioManager am = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+        AudioManager am = (AudioManager) InvisibleTouchApplication.getInstance().getSystemService(Context.AUDIO_SERVICE);
         getSettings().setTTSVolume(am.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
         getSettings().setRingingVolume(am.getStreamMaxVolume(AudioManager.STREAM_RING));
         if (isTTSReady()) {
@@ -127,6 +135,11 @@ public class SettingsManager implements TextToSpeech.OnInitListener {
         if (!this._TTS_SERVICE_READY_ || mTTS == null) {
             mTTS = new TextToSpeech(mContext, this);
         }
+    }
+
+    public void resetDeviceConfigurations() {
+        PreConfig config = new PreConfig();
+        config.resetPreConfig();
     }
 
     @Override
@@ -202,7 +215,8 @@ public class SettingsManager implements TextToSpeech.OnInitListener {
         }
 
         public int getTTSVolume() {
-            return mSharedPreference.getInt(PREF_KEY_TTS_VOLUME, 0);
+            AudioManager am = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+            return mSharedPreference.getInt(PREF_KEY_TTS_VOLUME, am.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
         }
 
         public void setTTSVolume(Integer value) {
@@ -247,7 +261,7 @@ public class SettingsManager implements TextToSpeech.OnInitListener {
         }
 
         public boolean getKeypadTonesEnabled() {
-            return mSharedPreference.getBoolean(PREF_KEY_KEYTONES_ENABLE, false);
+            return mSharedPreference.getBoolean(PREF_KEY_KEYTONES_ENABLE, true);
         }
 
         public void setKeypadTonesEnable(Boolean value) {
@@ -255,7 +269,8 @@ public class SettingsManager implements TextToSpeech.OnInitListener {
         }
 
         public int getRingingVolume() {
-            return mSharedPreference.getInt(PREF_KEY_RINGING_VOLUME, 0);
+            AudioManager am = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+            return mSharedPreference.getInt(PREF_KEY_RINGING_VOLUME, am.getStreamMaxVolume(AudioManager.STREAM_RING));
         }
 
         public void setRingingVolume(Integer value) {
@@ -264,5 +279,30 @@ public class SettingsManager implements TextToSpeech.OnInitListener {
             writeToPreference(PREFERENCE_USER, PREF_KEY_RINGING_VOLUME, value);
         }
 
+    }
+
+    class PreConfig {
+        void rememberConfig() {
+            Boolean isInit = (Boolean) readFromPreference(PREFERENCE_INTERNAL_PRECONFIG_INIT, PREFERENCE_INTERNAL_PRECONFIG_INIT);
+            if (isInit == null || !isInit) {
+                AudioManager am = (AudioManager) InvisibleTouchApplication.getInstance().getSystemService(Context.AUDIO_SERVICE);
+                writeToPreference(PREFERENCE_INTERNAL_PRECONFIG, PREF_KEY_RINGING_VOLUME, am.getStreamVolume(AudioManager.STREAM_RING));
+                writeToPreference(PREFERENCE_INTERNAL_PRECONFIG, PREF_KEY_TTS_VOLUME, am.getStreamVolume(AudioManager.STREAM_MUSIC));
+                writeToPreference(PREFERENCE_INTERNAL_PRECONFIG_INIT, PREFERENCE_INTERNAL_PRECONFIG_INIT, true);
+                Toast.makeText(InvisibleTouchApplication.getInstance(), "Remembered", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        void resetPreConfig() {
+            Boolean isInit = (Boolean) readFromPreference(PREFERENCE_INTERNAL_PRECONFIG_INIT, PREFERENCE_INTERNAL_PRECONFIG_INIT);
+            if (isInit != null && isInit) {
+                AudioManager am = (AudioManager) InvisibleTouchApplication.getInstance().getSystemService(Context.AUDIO_SERVICE);
+                Integer ringVolume = (Integer) readFromPreference(PREFERENCE_INTERNAL_PRECONFIG, PREF_KEY_RINGING_VOLUME);
+                Integer ttsVolume = (Integer) readFromPreference(PREFERENCE_INTERNAL_PRECONFIG, PREF_KEY_TTS_VOLUME);
+
+                am.setStreamVolume(AudioManager.STREAM_RING, ringVolume, 0);
+                am.setStreamVolume(AudioManager.STREAM_MUSIC, ttsVolume, 0);
+            }
+        }
     }
 }

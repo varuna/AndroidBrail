@@ -23,7 +23,6 @@ public class InvisibleTouchApplication extends Application {
     private CallManager mCallManager;
     private ContactManager mContactManager;
     private SettingsManager mSettingsManager;
-    private ActivityResults mResultsManager;
     private SoundManager mSoundsManager;
     private PluginManager mPluginManager;
     private boolean _KILL_SIGNAL_ = false;
@@ -41,7 +40,6 @@ public class InvisibleTouchApplication extends Application {
         mCallManager = new CallManager(this);
         mContactManager = new ContactManager(this);
         mSoundsManager = new SoundManager(this);
-        mResultsManager = new ActivityResults();
         mPluginManager = new PluginManager(this);
     }
 
@@ -89,25 +87,10 @@ public class InvisibleTouchApplication extends Application {
         }
     }
 
-    public Bundle getData() {
-        return mResultsManager.getData();
-    }
-
-    public void setData(Bundle data) {
-        mResultsManager.setData(data);
-    }
-
-    public int getResult() {
-        return mResultsManager.getResult();
-    }
-
-    public void setResult(int result) {
-        mResultsManager.setResult(result);
-    }
-
     public void forceQuitApp(BaseActivity context) {
         _KILL_SIGNAL_ = true;
         context.finish();
+        mSettingsManager.resetDeviceConfigurations();
     }
 
     public boolean shouldKillApp() {
@@ -123,26 +106,4 @@ public class InvisibleTouchApplication extends Application {
         return pref.getBoolean(LicenceAgreementActivity.LICENCE_PREF_KEY, false);
     }
 
-    public class ActivityResults {
-        private int mResult = -1;
-        private Bundle mResultsData = null;
-
-        public Bundle getData() {
-            return mResultsData;
-        }
-
-        public void setData(Bundle data) {
-            mResultsData = data;
-        }
-
-        public int getResult() {
-            return mResult;
-        }
-
-        public void setResult(int result) {
-            if (result == Activity.RESULT_CANCELED || result == Activity.RESULT_OK) {
-                mResult = result;
-            }
-        }
-    }
 }

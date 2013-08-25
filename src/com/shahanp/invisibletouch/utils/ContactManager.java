@@ -1,12 +1,14 @@
 package com.shahanp.invisibletouch.utils;
 
-import android.content.ContentValues;
+import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.Data;
+
+import java.util.ArrayList;
 
 public class ContactManager {
 
@@ -37,15 +39,11 @@ public class ContactManager {
         return getContact();
     }
 
-    public Contact moveToLastContact() {
-        if (mContactsCursor != null)
-            mContactsCursor.moveToLast();
-        return getContact();
-    }
-
     public Contact nextContact() {
         if (mContactsCursor != null && !mContactsCursor.isLast())
             mContactsCursor.moveToNext();
+        if (mContactsCursor.isLast())
+            return null;
         return getContact();
     }
 
@@ -53,10 +51,6 @@ public class ContactManager {
         if (mContactsCursor != null && !mContactsCursor.isFirst())
             mContactsCursor.moveToPrevious();
         return getContact();
-    }
-
-    public boolean isListOver() {
-        return mContactsCursor.isAfterLast();
     }
 
     public Contact getContact() {
@@ -76,13 +70,30 @@ public class ContactManager {
         if (find(contact).equals(contact))
             return false;
         else {
-            ContentValues values = new ContentValues();
-            values.put(Data.RAW_CONTACT_ID, contact.hashCode());
-            values.put(Data.MIMETYPE, Phone.CONTENT_ITEM_TYPE);
-            values.put(Phone.DISPLAY_NAME, contact.getName());
-            values.put(Phone.NUMBER, contact.getPhone());
-            values.put(Phone.TYPE, Phone.TYPE_CUSTOM);
-            mContext.getContentResolver().insert(Data.CONTENT_URI, values);
+            ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
+            int rawContactInsertIndex = ops.size();
+
+            ops.add(ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI)
+                    .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null)
+                    .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null).build());
+            ops.add(ContentProviderOperation
+                    .newInsert(Data.CONTENT_URI)
+                    .withValueBackReference(Data.RAW_CONTACT_ID, rawContactInsertIndex)
+                    .withValue(Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
+                    .withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, contact.getName())
+                    .build());
+            ops.add(ContentProviderOperation
+                    .newInsert(Data.CONTENT_URI)
+                    .withValueBackReference(
+                            ContactsContract.Data.RAW_CONTACT_ID, rawContactInsertIndex)
+                    .withValue(Data.MIMETYPE, Phone.CONTENT_ITEM_TYPE)
+                    .withValue(Phone.NUMBER, contact.getPhone())
+                    .withValue(Phone.TYPE, Phone.TYPE_MOBILE).build());
+            try {
+                mContext.getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             return true;
         }
@@ -109,10 +120,11 @@ public class ContactManager {
         Contact mSearch = moveToFirstContact();
         if (mSearch.equals(contact))
             return mSearch;
-        while (!isListOver()) {
+        while (mSearch != null) {
             mSearch = nextContact();
-            if (mSearch.equals(contact))
+            if (mSearch != null && mSearch.equals(contact)) {
                 return mSearch;
+            }
         }
         return new Contact();
     }

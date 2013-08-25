@@ -8,25 +8,31 @@ import com.shahanp.invisibletouch.internal.ScreenHelper;
 public class BooleanActivity extends SinglePackActivity {
 
     public static final String INTENT_FLAG_MESSAGE = "com.shahanp.invisibletouch.view.booleanactivity.MESSAGE";
+    public static final String INTENT_FLAG_MESSAGE_TITLE = "com.shahanp.invisibletouch.view.booleanactivity.MESSAGE.TITLE";
+    public static final String INTENT_FLAG_MESSAGE_SUMMARY = "com.shahanp.invisibletouch.view.booleanactivity.MESSAGE.SUMMARY";
 
     private String mMessage;
     @Override
     protected void init() {
-        mMessage = getIntent().getStringExtra(INTENT_FLAG_MESSAGE);
         super.init();
+        mMessage = getIntent().getStringExtra(INTENT_FLAG_MESSAGE);
+        String title = getIntent().getStringExtra(INTENT_FLAG_MESSAGE_TITLE);
+        String summary = getIntent().getStringExtra(INTENT_FLAG_MESSAGE_SUMMARY);
+        setViewText(title,summary);
+        Log.announce(title+" : "+summary, Log.Level.INFO);
         Log.announce(mMessage,false);
         Log.announce(mMessage,true);
     }
 
     @Override
     public void onSwipeRight() {
-        setActivityResult(RESULT_OK);
+        setResult(RESULT_OK,getIntent());
         finish();
     }
 
     @Override
     public void onSwipeLeft() {
-        setActivityResult(RESULT_CANCELED);
+        setResult(RESULT_CANCELED);
         finish();
     }
 

@@ -39,13 +39,12 @@ public class ContactModifyActivity extends KeyboardActivity {
         } else if (action.equals(ContactManager.ACTION_DELETE_CONTACT)) {
             mContact = getIntent().getParcelableExtra(Contact.PARCELABLE_CONTACT);
             setVibrations(false);
-            setCharacterVisibility(false);
         } else {
             finish();
             return;
         }
-        setCharacterVisibility(true);
         super.init();
+        setCharacterVisibility(true);
     }
 
     @Override
@@ -63,14 +62,15 @@ public class ContactModifyActivity extends KeyboardActivity {
         super.onDoubleSwipeRight();
         String text = mTextInputManager.getText();
         Intent i = new Intent(this, BooleanActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
         int req = -1;
         if (mStage == Contact.STAGE_NEW_NAME || mStage == Contact.STAGE_UPDATE_NAME) {
             i.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE, "You have typed " + text + " as contact name");
+            i.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE_TITLE, text);
             req = REQUEST_CONTACT_ADD_NAME;
         } else if (mStage == Contact.STAGE_NEW_PHONE || mStage == Contact.STAGE_UPDATE_NAME) {
             i.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE, "You have typed " + text + " as contact phone number");
+            i.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE_TITLE, mContact.getName());
+            i.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE_SUMMARY, text);
             req = REQUEST_CONTACT_ADD_PHONE;
         }
         startActivityForResult(i, req);
@@ -78,7 +78,6 @@ public class ContactModifyActivity extends KeyboardActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        resultCode = InvisibleTouchApplication.getInstance().getResult();
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_CONTACT_ADD_NAME) {
                 mContact.setName(mTextInputManager.getText());
@@ -88,6 +87,7 @@ public class ContactModifyActivity extends KeyboardActivity {
                 mStage = Contact.STAGE_COMPLETE_CONTACT;
             } else if (requestCode == REQUEST_CONTACT_COMPLETE) {
                 mContactManager.addNewContact(mContact);
+                Log.announce("COmplete", Log.Level.INFO);
                 finish();
                 return;
             } else if (requestCode == REQUEST_CONTACT_DELETE) {
@@ -114,6 +114,7 @@ public class ContactModifyActivity extends KeyboardActivity {
             }
         }
         mTextInputManager.purge();
+        Log.announce("results received " + String.valueOf(resultCode == RESULT_OK) + " "+ mStage, Log.Level.INFO);
 
         if (mStage == Contact.STAGE_COMPLETE_CONTACT) {
             Intent i = new Intent(this, BooleanActivity.class);
@@ -127,14 +128,20 @@ public class ContactModifyActivity extends KeyboardActivity {
         if (getIntent().getAction().equals(ContactManager.ACTION_DELETE_CONTACT)) {
             Intent i = new Intent(this, BooleanActivity.class);
             i.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE, "Do you want to delete the contact ?" + mContact.toString());
+            i.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE_TITLE, mContact.getName());
+            i.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE_TITLE, mContact.getPhone());
             startActivityForResult(i, REQUEST_CONTACT_DELETE);
         } else if (getIntent().getAction().equals(ContactManager.ACTION_UPDATE_CONTACT)) {
             Intent i = new Intent(this, BooleanActivity.class);
             if (mStage == Contact.STAGE_NEW_NAME) {
                 i.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE, "Do you want to update the contact name ?" + mContact.getName());
+                i.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE_TITLE, mContact.getName());
+                i.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE_TITLE, mContact.getPhone());
                 startActivityForResult(i, REQUEST_CONTACT_MODIFY_NAME);
             } else if (mStage == Contact.STAGE_NEW_PHONE) {
                 i.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE, "Do you want to update the contact phone ?" + mContact.getPhone());
+                i.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE_TITLE, mContact.getName());
+                i.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE_TITLE, mContact.getPhone());
                 startActivityForResult(i, REQUEST_CONTACT_MODIFY_NAME);
             }
 
