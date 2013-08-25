@@ -71,7 +71,7 @@ public abstract class BaseActivity extends Activity implements IGestures,
                 if (mCurrentGesture == GESTURE_TAP)
                     onKeyOne();
                 else if (mCurrentGesture == GESTURE_LONGTAP)
-                    onKeyOne();
+                    onLongKeyOne();
                 break;
             case R.id.item_one_two:
                 if (mCurrentGesture == GESTURE_TAP)
