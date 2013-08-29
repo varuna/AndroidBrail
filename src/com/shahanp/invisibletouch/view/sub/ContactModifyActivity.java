@@ -26,9 +26,9 @@ public class ContactModifyActivity extends KeyboardActivity {
 
     @Override
     protected void init() {
+        super.init();
         app = InvisibleTouchApplication.getInstance();
         mContactManager = app.getContactManager();
-
         String action = getIntent().getAction();
         if (action.equals(ContactManager.ACTION_NEW_CONTACT)) {
             mContact = new Contact();
@@ -38,12 +38,15 @@ public class ContactModifyActivity extends KeyboardActivity {
             mStage = Contact.STAGE_NEW_NAME;
         } else if (action.equals(ContactManager.ACTION_DELETE_CONTACT)) {
             mContact = getIntent().getParcelableExtra(Contact.PARCELABLE_CONTACT);
-            setVibrations(false);
+            Intent i = new Intent(this, BooleanActivity.class);
+            i.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE, "Do you want to remove contact, " + mContact.getName() + ", " + mContact.getPhone());
+            i.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE_TITLE, "Delete contact");
+            i.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE_SUMMARY, mContact.getName() + "." + mContact.getPhone());
+            startActivityForResult(i,REQUEST_CONTACT_DELETE);
         } else {
             finish();
             return;
         }
-        super.init();
         setCharacterVisibility(true);
     }
 
@@ -87,11 +90,10 @@ public class ContactModifyActivity extends KeyboardActivity {
                 mStage = Contact.STAGE_COMPLETE_CONTACT;
             } else if (requestCode == REQUEST_CONTACT_COMPLETE) {
                 mContactManager.addNewContact(mContact);
-                Log.announce("COmplete", Log.Level.INFO);
                 finish();
                 return;
             } else if (requestCode == REQUEST_CONTACT_DELETE) {
-                mContactManager.deleteContact(mContact);
+                mContactManager.deleteContact(mContact.getName(),mContact.getPhone());
                 finish();
                 return;
             } else if (requestCode == REQUEST_CONTACT_MODIFY_NAME) {
@@ -114,7 +116,7 @@ public class ContactModifyActivity extends KeyboardActivity {
             }
         }
         mTextInputManager.purge();
-        Log.announce("results received " + String.valueOf(resultCode == RESULT_OK) + " "+ mStage, Log.Level.INFO);
+        Log.announce("results received " + String.valueOf(resultCode == RESULT_OK) + " " + mStage, Log.Level.INFO);
 
         if (mStage == Contact.STAGE_COMPLETE_CONTACT) {
             Intent i = new Intent(this, BooleanActivity.class);

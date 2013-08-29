@@ -17,12 +17,16 @@ import com.shahanp.invisibletouch.view.sub.ContactsDetailsActivity;
 public class ContactsActivity extends SixPackActivity {
 
     private Contact mCurrentContact;
+    private Contact mPreviousContact;
 
     @Override
     public void onSwipeUp() {
+        mPreviousContact = mCurrentContact;
         mCurrentContact = InvisibleTouchApplication.getInstance().getContactManager().nextContact();
-        setViewData();
-        Log.announce(ScreenHelper.getContactDetailsActivityScreenHelper(mCurrentContact), true);
+        if (!mPreviousContact.equals(mCurrentContact)) {
+            setViewData();
+            Log.announce(ScreenHelper.getContactDetailsActivityScreenHelper(mCurrentContact), true);
+        }
     }
 
     @Override
@@ -32,9 +36,12 @@ public class ContactsActivity extends SixPackActivity {
 
     @Override
     public void onSwipeDown() {
+        mPreviousContact = mCurrentContact;
         mCurrentContact = InvisibleTouchApplication.getInstance().getContactManager().previousContact();
-        setViewData();
-        Log.announce(ScreenHelper.getContactDetailsActivityScreenHelper(mCurrentContact), true);
+        if (!mPreviousContact.equals(mCurrentContact)) {
+            setViewData();
+            Log.announce(ScreenHelper.getContactDetailsActivityScreenHelper(mCurrentContact), true);
+        }
     }
 
     @Override
@@ -44,7 +51,7 @@ public class ContactsActivity extends SixPackActivity {
 
     @Override
     public void onSwipeRight() {
-        Log.announce(ScreenHelper.getContactDetailsActivityScreenHelper(mCurrentContact) + " Dialing",true);
+        Log.announce(ScreenHelper.getContactDetailsActivityScreenHelper(mCurrentContact) + " Dialing", true);
         InvisibleTouchApplication.getInstance().getCallManager().makeCall(mCurrentContact.getPhone(), this);
     }
 
@@ -89,7 +96,7 @@ public class ContactsActivity extends SixPackActivity {
             mCurrentContact = InvisibleTouchApplication.getInstance().getContactManager().getContact();
         }
         setViewData();
-        Log.announce(ScreenHelper.CONTACTS_ACTIVATE+ScreenHelper.getContactDetailsActivityScreenHelper(mCurrentContact), true);
+        Log.announce(ScreenHelper.CONTACTS_ACTIVATE + ScreenHelper.getContactDetailsActivityScreenHelper(mCurrentContact), true);
 
     }
 
@@ -118,37 +125,37 @@ public class ContactsActivity extends SixPackActivity {
 
     @Override
     public void onLongKeyOne() {
-        Log.announce(ScreenHelper.CONTACTS_ACTIVATE+ "Update Contact.", true);
+        Log.announce(ScreenHelper.CONTACTS_ACTIVATE + "Update Contact.", true);
 
     }
 
     @Override
     public void onLongKeyTwo() {
-        Log.announce(ScreenHelper.CONTACTS_ACTIVATE+ "Call" + ScreenHelper.getContactDetailsActivityScreenHelper(mCurrentContact) , true);
+        Log.announce(ScreenHelper.CONTACTS_ACTIVATE + "Call" + ScreenHelper.getContactDetailsActivityScreenHelper(mCurrentContact), true);
 
     }
 
     @Override
     public void onLongKeyThree() {
-        Log.announce(ScreenHelper.CONTACTS_ACTIVATE+ "Delete Contact.", true);
+        Log.announce(ScreenHelper.CONTACTS_ACTIVATE + "Delete Contact.", true);
 
     }
 
     @Override
     public void onLongKeyFour() {
-        Log.announce(ScreenHelper.CONTACTS_ACTIVATE+ "New Contact.", true);
+        Log.announce(ScreenHelper.CONTACTS_ACTIVATE + "New Contact.", true);
 
     }
 
     @Override
     public void onLongKeyFive() {
-        Log.announce(ScreenHelper.CONTACTS_ACTIVATE+ "Show Details.", true);
+        Log.announce(ScreenHelper.CONTACTS_ACTIVATE + "Show Details.", true);
 
     }
 
     @Override
     public void onLongKeySix() {
-        Log.announce(ScreenHelper.CONTACTS_ACTIVATE+ "Add to favourite.", true);
+        Log.announce(ScreenHelper.CONTACTS_ACTIVATE + "Add to favourite.", true);
 
     }
 
@@ -167,9 +174,9 @@ public class ContactsActivity extends SixPackActivity {
 
     @Override
     public void onKeyThree() {
-        Intent i = new Intent(this, BooleanActivity.class);
+        Intent i = new Intent(this, ContactModifyActivity.class);
         i.setAction(ContactManager.ACTION_DELETE_CONTACT);
-        i.putExtra(ContactManager.INTENT_FLAG_CONTACT, mCurrentContact);
+        i.putExtra(Contact.PARCELABLE_CONTACT, mCurrentContact);
         startActivity(i);
     }
 
@@ -194,19 +201,19 @@ public class ContactsActivity extends SixPackActivity {
         FavouriteContacts fav = InvisibleTouchApplication.getInstance().getContactManager().getFavouriteContacts();
         try {
             fav.addToFavourite(mCurrentContact.getName(), mCurrentContact.getPhone());
-            Log.announce("Added to favourite. ",true);
+            Log.announce("Added to favourite. ", true);
         } catch (FavouriteExistsException e) {
             e.printStackTrace();
-            Log.announce("Already a favourite Contact. ",true);
+            Log.announce("Already a favourite Contact. ", true);
         }
     }
 
-    private void setViewData(){
-        setViewText(0,"Update contact",mCurrentContact.getName());
-        setViewText(1,"Call contact",mCurrentContact.getPhone());
-        setViewText(2,"Delete contact",null);
-        setViewText(3,"New contact",null);
-        setViewText(4,"Show details",null);
-        setViewText(5,"Add to favourite",null);
+    private void setViewData() {
+        setViewText(0, "Update contact", mCurrentContact.getName());
+        setViewText(1, "Call contact", mCurrentContact.getPhone());
+        setViewText(2, "Delete contact", null);
+        setViewText(3, "New contact", null);
+        setViewText(4, "Show details", null);
+        setViewText(5, "Add to favourite", null);
     }
 }
