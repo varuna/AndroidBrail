@@ -48,6 +48,7 @@ public class ContactModifyActivity extends KeyboardActivity {
             return;
         }
         setCharacterVisibility(true);
+        setKeyTones(true);
     }
 
     @Override
