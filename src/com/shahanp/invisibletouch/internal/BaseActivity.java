@@ -18,6 +18,7 @@ import com.shahanp.invisibletouch.utils.Log.Level;
 public abstract class BaseActivity extends Activity implements IGestures,
         IBrailleKeyboard, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
 
+    public final static String INTENT_FLAG_LAST_SCREEN_NAME = "com.shahanp.invisibletouch.internal.BaseActivity.LAST_SCREEN_NAME";
     protected final static int GESTURE_TAP = 0;
     protected final static int GESTURE_LONGTAP = 1;
     protected final static int GESTURE_SWIPE = 2;
@@ -185,6 +186,8 @@ public abstract class BaseActivity extends Activity implements IGestures,
     @Override
     public void finish() {
         isFinishing = true;
+        if (getIntent().getStringExtra(INTENT_FLAG_LAST_SCREEN_NAME) != null)
+            Log.announce(getIntent().getStringExtra(INTENT_FLAG_LAST_SCREEN_NAME), true);
         super.finish();
     }
 

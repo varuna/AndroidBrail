@@ -2,6 +2,7 @@ package com.shahanp.invisibletouch.view;
 
 import android.content.Intent;
 
+import com.shahanp.invisibletouch.internal.BaseActivity;
 import com.shahanp.invisibletouch.internal.InvisibleTouchApplication;
 import com.shahanp.invisibletouch.internal.ScreenHelper;
 import com.shahanp.invisibletouch.internal.SixPackActivity;
@@ -133,6 +134,7 @@ public class SettingsActivity extends SixPackActivity {
     public void onKeyOne() {
         super.onKeyOne();
         Intent accessibilityIntent = new Intent(this, AccessibilitySettingsActivity.class);
+        accessibilityIntent.putExtra(BaseActivity.INTENT_FLAG_LAST_SCREEN_NAME,ScreenHelper.SETTINGS_ACTIVATE);
         startActivity(accessibilityIntent);
     }
 

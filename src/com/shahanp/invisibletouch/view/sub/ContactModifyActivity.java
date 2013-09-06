@@ -58,6 +58,8 @@ public class ContactModifyActivity extends KeyboardActivity {
             mTextInputManager.buffer(mCurrentCharacter, Braille.KeyBoard.NUMERIC_KEY_TYPE);
         mCurrentCharacter.reset();
         resetView();
+        String textTyped = mTextInputManager.getBufferedText();
+        Log.announce(textTyped.charAt(textTyped.length() - 1) + "", true);
     }
 
     @Override

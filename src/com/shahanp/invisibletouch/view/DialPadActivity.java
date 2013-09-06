@@ -42,10 +42,10 @@ public class DialPadActivity extends KeyboardActivity {
 
     @Override
     public void onSwipeRight() {
-        mTextInputManager.forceBuffer(mCurrentCharacter, Braille.KeyBoard.NUMERIC_KEY_TYPE, new Character[]{'#','*'});
+        mTextInputManager.forceBuffer(mCurrentCharacter, Braille.KeyBoard.NUMERIC_KEY_TYPE, new Character[]{'#', '*'});
         mCurrentCharacter.reset();
-        Log.announce(mTextInputManager.getBufferedText(), false);
-        Log.announce(mTextInputManager.getBufferedText(), true);
+        String textTyped = mTextInputManager.getBufferedText();
+        Log.announce(textTyped.charAt(textTyped.length() - 1) + "", true);
         resetView();
     }
 
@@ -55,13 +55,13 @@ public class DialPadActivity extends KeyboardActivity {
         mPhoneNumber = mTextInputManager.getText();
         if (mPhoneNumber.equals("01010001")) {
             mStoppedFromNewScreen = true;
-            Log.announce("Invisible Touch Exit",true);
+            Log.announce("Invisible Touch Exit", true);
             InvisibleTouchApplication.getInstance().forceQuitApp(this);
 
         } else {
-            Log.announce(mPhoneNumber + " Dialing",true);
+            Log.announce(mPhoneNumber + " Dialing", true);
             mCallManager.makeCall(mPhoneNumber, this);
-            Log.announce(mPhoneNumber,true);
+            Log.announce(mPhoneNumber, true);
         }
         mTextInputManager.purge();
         mCurrentCharacter.reset();

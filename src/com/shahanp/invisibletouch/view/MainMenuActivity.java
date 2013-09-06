@@ -2,6 +2,7 @@ package com.shahanp.invisibletouch.view;
 
 import android.content.Intent;
 
+import com.shahanp.invisibletouch.internal.BaseActivity;
 import com.shahanp.invisibletouch.internal.InvisibleTouchApplication;
 import com.shahanp.invisibletouch.internal.LicenceAgreementActivity;
 import com.shahanp.invisibletouch.internal.ScreenHelper;
@@ -73,6 +74,7 @@ public class MainMenuActivity extends SixPackActivity {
     @Override
     public void onKeyOne() {
         Intent i = new Intent(this, FavouriteContactsActivity.class);
+        i.putExtra(BaseActivity.INTENT_FLAG_LAST_SCREEN_NAME,ScreenHelper.MAIN_MENU_ACTIVATE);
         startActivity(i);
         super.onKeyOne();
 
@@ -81,6 +83,7 @@ public class MainMenuActivity extends SixPackActivity {
     @Override
     public void onKeyTwo() {
         Intent i = new Intent(this, CallLogActivity.class);
+        i.putExtra(BaseActivity.INTENT_FLAG_LAST_SCREEN_NAME,ScreenHelper.MAIN_MENU_ACTIVATE);
         startActivity(i);
         super.onKeyTwo();
     }
@@ -88,20 +91,23 @@ public class MainMenuActivity extends SixPackActivity {
     @Override
     public void onKeyThree() {
         Intent i = new Intent(this, SettingsActivity.class);
+        i.putExtra(BaseActivity.INTENT_FLAG_LAST_SCREEN_NAME,ScreenHelper.MAIN_MENU_ACTIVATE);
         startActivity(i);
         super.onKeyThree();
     }
 
     @Override
     public void onKeyFour() {
-        Intent in = new Intent(this, DialPadActivity.class);
-        startActivity(in);
+        Intent i = new Intent(this, DialPadActivity.class);
+        i.putExtra(BaseActivity.INTENT_FLAG_LAST_SCREEN_NAME,ScreenHelper.MAIN_MENU_ACTIVATE);
+        startActivity(i);
         super.onKeyFour();
     }
 
     @Override
     public void onKeyFive() {
         Intent i = new Intent(this, ContactsActivity.class);
+        i.putExtra(BaseActivity.INTENT_FLAG_LAST_SCREEN_NAME,ScreenHelper.MAIN_MENU_ACTIVATE);
         startActivity(i);
         super.onKeyFive();
     }
@@ -109,6 +115,7 @@ public class MainMenuActivity extends SixPackActivity {
     @Override
     public void onKeySix() {
         Intent i = new Intent(this, ExtensionApplicationsActivity.class);
+        i.putExtra(BaseActivity.INTENT_FLAG_LAST_SCREEN_NAME,ScreenHelper.MAIN_MENU_ACTIVATE);
         startActivity(i);
         super.onKeySix();
     }
@@ -166,6 +173,7 @@ public class MainMenuActivity extends SixPackActivity {
 
         if (!InvisibleTouchApplication.getInstance().isLicenceAccepted()) {
             Intent i = new Intent(this, LicenceAgreementActivity.class);
+            i.putExtra(BaseActivity.INTENT_FLAG_LAST_SCREEN_NAME,ScreenHelper.MAIN_MENU_ACTIVATE);
             startActivity(i);
         }
     }

@@ -3,6 +3,7 @@ package com.shahanp.invisibletouch.view;
 import android.content.Intent;
 import android.view.View;
 
+import com.shahanp.invisibletouch.internal.BaseActivity;
 import com.shahanp.invisibletouch.internal.InvisibleTouchApplication;
 import com.shahanp.invisibletouch.internal.ScreenHelper;
 import com.shahanp.invisibletouch.internal.SixPackActivity;
@@ -164,6 +165,7 @@ public class ContactsActivity extends SixPackActivity {
         Intent i = new Intent(this, ContactModifyActivity.class);
         i.setAction(ContactManager.ACTION_UPDATE_CONTACT);
         i.putExtra(ContactManager.INTENT_FLAG_CONTACT, mCurrentContact);
+        i.putExtra(BaseActivity.INTENT_FLAG_LAST_SCREEN_NAME,ScreenHelper.CONTACTS_ACTIVATE);
         startActivity(i);
     }
 
@@ -177,6 +179,7 @@ public class ContactsActivity extends SixPackActivity {
         Intent i = new Intent(this, ContactModifyActivity.class);
         i.setAction(ContactManager.ACTION_DELETE_CONTACT);
         i.putExtra(Contact.PARCELABLE_CONTACT, mCurrentContact);
+        i.putExtra(BaseActivity.INTENT_FLAG_LAST_SCREEN_NAME,ScreenHelper.CONTACTS_ACTIVATE);
         startActivity(i);
     }
 
@@ -184,6 +187,7 @@ public class ContactsActivity extends SixPackActivity {
     public void onKeyFour() {
         Intent i = new Intent(this, ContactModifyActivity.class);
         i.setAction(ContactManager.ACTION_NEW_CONTACT);
+        i.putExtra(BaseActivity.INTENT_FLAG_LAST_SCREEN_NAME,ScreenHelper.CONTACTS_ACTIVATE);
         startActivity(i);
     }
 
@@ -192,6 +196,7 @@ public class ContactsActivity extends SixPackActivity {
         Intent i = new Intent(ContactsActivity.this,
                 ContactsDetailsActivity.class);
         i.putExtra(ContactManager.INTENT_FLAG_CONTACT, mCurrentContact);
+        i.putExtra(BaseActivity.INTENT_FLAG_LAST_SCREEN_NAME,ScreenHelper.CONTACTS_ACTIVATE);
         startActivity(i);
 
     }

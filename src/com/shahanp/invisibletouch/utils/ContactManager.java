@@ -23,7 +23,7 @@ public class ContactManager {
     public ContactManager(Context context) {
         mContext = context;
         mContactsCursor = mContext.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
-                null, null,  Phone.DISPLAY_NAME + " ASC");
+                null, null, Phone.DISPLAY_NAME + " ASC");
         mContactsCursor.moveToFirst();
 
         mFavouriteContacts = new FavouriteContacts(mContext);
