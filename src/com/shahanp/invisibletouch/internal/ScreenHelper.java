@@ -2,6 +2,9 @@ package com.shahanp.invisibletouch.internal;
 
 import com.shahanp.invisibletouch.utils.Contact;
 
+import java.util.Calendar;
+import java.util.Locale;
+
 public class ScreenHelper {
 
     //SCREEN ACTIVATE HELPER STRINGS
@@ -108,7 +111,28 @@ public class ScreenHelper {
 
     //PRIVATE LONG PRESS HELPER STRINGS : Used with static functions
     private static String INCALL_SCREEN_HELPER = "You are now in a call with ";
+    //1 hours 2 minutes 3 day 4 date 5date prefix 6 month 7 year
+    private static  String DATE_TIME_HELPER = "Its %1$d,%2$d, %3$s %4$d%5$s of %6$s, %7$d";
 
+    public static String getTimeHelperString()
+    {
+        Calendar calendar = Calendar.getInstance();
+        int hours = calendar.get(Calendar.HOUR);
+        int minutes = calendar.get(Calendar.MINUTE);
+        String day = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG,
+                Locale.US);
+        int date = calendar.get(Calendar.DATE);
+        String prefix = "th";
+        if (date % 4 == 1)
+            prefix = "st";
+        else if (date % 4 == 2)
+            prefix = "nd";
+        else if (date % 4 == 3)
+            prefix = "rd";
+        String month = calendar.getDisplayName(Calendar.MONTH,Calendar.LONG,Locale.US);
+        int year  = calendar.get(Calendar.YEAR);
+        return String.format(DATE_TIME_HELPER,hours,minutes,day,date,prefix,month,year);
+    }
     public static String getInCallActivityScreenHelper(String number) {
         return INCALL_SCREEN_HELPER + number;
     }

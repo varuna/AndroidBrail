@@ -68,7 +68,7 @@ public class MainMenuActivity extends SixPackActivity {
 
     @Override
     public void onVolumeUpKeyLongPress() {
-
+        Log.announce(ScreenHelper.getTimeHelperString(),true);
     }
 
     @Override
