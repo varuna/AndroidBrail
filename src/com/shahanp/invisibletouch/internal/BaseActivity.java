@@ -191,6 +191,12 @@ public abstract class BaseActivity extends Activity implements IGestures,
         super.finish();
     }
 
+    public void quit()
+    {
+        isFinishing = true;
+        super.finish();
+    }
+
     @Override
     public boolean onSingleTapConfirmed(MotionEvent motionEvent) {
         mCurrentGesture = GESTURE_TAP;

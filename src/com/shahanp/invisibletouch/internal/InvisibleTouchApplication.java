@@ -89,7 +89,7 @@ public class InvisibleTouchApplication extends Application {
 
     public void forceQuitApp(BaseActivity context) {
         _KILL_SIGNAL_ = true;
-        context.finish();
+        context.quit();
         mSettingsManager.resetDeviceConfigurations();
     }
 

@@ -4,21 +4,19 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.os.RemoteException;
 import android.speech.tts.TextToSpeech;
-import android.telephony.TelephonyManager;
-import android.widget.Toast;
 
 import com.shahanp.invisibletouch.internal.InvisibleTouchApplication;
 import com.shahanp.invisibletouch.internal.ScreenHelper;
 import com.shahanp.invisibletouch.internal.SixPackActivity;
 import com.shahanp.invisibletouch.utils.CallManager;
 import com.shahanp.invisibletouch.utils.Log;
-import com.shahanp.invisibletouch.utils.PhoneStateManager;
 
 import java.util.HashMap;
 
 public class InCallActivity extends SixPackActivity {
     public static final String NUMBER = "com.shahanp.invisibletouch.view.InCallActivity.NUMBER";
     private CallStatus mStatus;
+    private HashMap<String, String> params;
 
     @Override
     protected void init() {
@@ -29,12 +27,28 @@ public class InCallActivity extends SixPackActivity {
         }
         InvisibleTouchApplication.getInstance().getCallManager().registerInCallScreen(this);
 
-        setViewText(0,"Mute",null);
-        setViewText(1,"Speaker",null);
-        setViewText(4,"End call",null);
+        setViewText(0, "Mute", null);
+        setViewText(1, "Speaker", null);
+        setViewText(4, "End call", null);
         setViewText(5, "Dial pad", null);
 
-        Log.announce(mStatus.mPhoneNumber,true);
+        Log.announce(mStatus.mPhoneNumber, true);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        params = new HashMap<String, String>(1);
+        params.put(TextToSpeech.Engine.KEY_PARAM_STREAM,
+                String.valueOf(AudioManager.STREAM_VOICE_CALL));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        params = new HashMap<String, String>(1);
+        params.put(TextToSpeech.Engine.KEY_PARAM_STREAM,
+                String.valueOf(AudioManager.STREAM_MUSIC));
     }
 
     @Override
@@ -81,7 +95,7 @@ public class InCallActivity extends SixPackActivity {
         try {
             InvisibleTouchApplication.getInstance().getCallManager().endCall();
             finish();
-            Log.announce("Call Ended",true);
+            Log.announce("Call Ended", true);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -176,7 +190,7 @@ public class InCallActivity extends SixPackActivity {
         try {
             InvisibleTouchApplication.getInstance().getCallManager().endCall();
             finish();
-            Log.announce("Call Ended",true);
+            Log.announce("Call Ended", true);
         } catch (RemoteException e) {
             e.printStackTrace();
         }

@@ -84,6 +84,7 @@ public class ContactModifyActivity extends KeyboardActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.announce("Request code : "+ requestCode +" : "+REQUEST_CONTACT_DELETE, Log.Level.INFO);
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_CONTACT_ADD_NAME) {
                 mContact.setName(mTextInputManager.getText());
@@ -96,6 +97,7 @@ public class ContactModifyActivity extends KeyboardActivity {
                 finish();
                 return;
             } else if (requestCode == REQUEST_CONTACT_DELETE) {
+                Log.announce("DELETE contact", Log.Level.INFO);
                 mContactManager.deleteContact(mContact.getName(),mContact.getPhone());
                 finish();
                 return;

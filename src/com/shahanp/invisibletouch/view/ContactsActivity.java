@@ -176,11 +176,11 @@ public class ContactsActivity extends SixPackActivity {
 
     @Override
     public void onKeyThree() {
-        Intent i = new Intent(this, ContactModifyActivity.class);
-        i.setAction(ContactManager.ACTION_DELETE_CONTACT);
-        i.putExtra(Contact.PARCELABLE_CONTACT, mCurrentContact);
-        i.putExtra(BaseActivity.INTENT_FLAG_LAST_SCREEN_NAME,ScreenHelper.CONTACTS_ACTIVATE);
-        startActivity(i);
+        Intent i = new Intent(ContactsActivity.this, BooleanActivity.class);
+        i.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE, "Do you want to remove contact, " + mCurrentContact.getName() + ", " + mCurrentContact.getPhone());
+        i.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE_TITLE, "Delete contact");
+        i.putExtra(BooleanActivity.INTENT_FLAG_MESSAGE_SUMMARY, mCurrentContact.getName() + "." + mCurrentContact.getPhone());
+        startActivityForResult(i,ContactModifyActivity.REQUEST_CONTACT_DELETE);
     }
 
     @Override
@@ -220,5 +220,13 @@ public class ContactsActivity extends SixPackActivity {
         setViewText(3, "New contact", null);
         setViewText(4, "Show details", null);
         setViewText(5, "Add to favourite", null);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ContactModifyActivity.REQUEST_CONTACT_DELETE) {
+            Log.announce("DELETE contact", Log.Level.INFO);
+            InvisibleTouchApplication.getInstance().getContactManager().deleteContact(mCurrentContact.getName(), mCurrentContact.getPhone());
+        }
     }
 }

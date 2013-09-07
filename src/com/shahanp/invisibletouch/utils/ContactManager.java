@@ -22,11 +22,15 @@ public class ContactManager {
 
     public ContactManager(Context context) {
         mContext = context;
-        mContactsCursor = mContext.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
-                null, null, Phone.DISPLAY_NAME + " ASC");
+        mContactsCursor = getContactsCursor();
         mContactsCursor.moveToFirst();
 
         mFavouriteContacts = new FavouriteContacts(mContext);
+    }
+
+    private Cursor getContactsCursor() {
+        return mContext.getContentResolver().query(Phone.CONTENT_URI, null,
+                null, null, Phone.DISPLAY_NAME + " ASC");
     }
 
     public FavouriteContacts getFavouriteContacts() {
@@ -65,83 +69,81 @@ public class ContactManager {
     }
 
     public boolean addNewContact(Contact contact) {
-        if (find(contact).equals(contact))
-            return false;
-        else {
-            ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
-            int rawContactInsertIndex = ops.size();
+//        if (find(contact).equals(contact))
+//            return false;
+//        else {
+        ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
+        int rawContactInsertIndex = ops.size();
 
-            ops.add(ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI)
-                    .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null)
-                    .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null).build());
-            ops.add(ContentProviderOperation
-                    .newInsert(Data.CONTENT_URI)
-                    .withValueBackReference(Data.RAW_CONTACT_ID, rawContactInsertIndex)
-                    .withValue(Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
-                    .withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, contact.getName())
-                    .build());
-            ops.add(ContentProviderOperation
-                    .newInsert(Data.CONTENT_URI)
-                    .withValueBackReference(
-                            ContactsContract.Data.RAW_CONTACT_ID, rawContactInsertIndex)
-                    .withValue(Data.MIMETYPE, Phone.CONTENT_ITEM_TYPE)
-                    .withValue(Phone.NUMBER, contact.getPhone())
-                    .withValue(Phone.TYPE, Phone.TYPE_MOBILE).build());
-            try {
-                mContext.getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return true;
+        ops.add(ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI)
+                .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null)
+                .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null).build());
+        ops.add(ContentProviderOperation
+                .newInsert(Data.CONTENT_URI)
+                .withValueBackReference(Data.RAW_CONTACT_ID, rawContactInsertIndex)
+                .withValue(Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, contact.getName())
+                .build());
+        ops.add(ContentProviderOperation
+                .newInsert(Data.CONTENT_URI)
+                .withValueBackReference(
+                        ContactsContract.Data.RAW_CONTACT_ID, rawContactInsertIndex)
+                .withValue(Data.MIMETYPE, Phone.CONTENT_ITEM_TYPE)
+                .withValue(Phone.NUMBER, contact.getPhone())
+                .withValue(Phone.TYPE, Phone.TYPE_MOBILE).build());
+        try {
+            mContext.getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+        mContactsCursor = getContactsCursor();
+
+        return true;
+//        }
     }
 
     public boolean updateContact(Contact contact) {
-        if (find(contact).equals(contact))
-            return false;
-        else {
-            ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
-            int rawContactInsertIndex = ops.size();
+//        if (find(contact).equals(contact))
+//            return false;
+//        else {
+        ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
+        int rawContactInsertIndex = ops.size();
 
-            ops.add(ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI)
-                    .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null)
-                    .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null).build());
-            ops.add(ContentProviderOperation
-                    .newUpdate(Data.CONTENT_URI)
-                    .withValueBackReference(Data.RAW_CONTACT_ID, rawContactInsertIndex)
-                    .withValue(Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
-                    .withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, contact.getName())
-                    .build());
-            ops.add(ContentProviderOperation
-                    .newUpdate(Data.CONTENT_URI)
-                    .withValueBackReference(
-                            ContactsContract.Data.RAW_CONTACT_ID, rawContactInsertIndex)
-                    .withValue(Data.MIMETYPE, Phone.CONTENT_ITEM_TYPE)
-                    .withValue(Phone.NUMBER, contact.getPhone())
-                    .withValue(Phone.TYPE, Phone.TYPE_MOBILE).build());
-            try {
-                mContext.getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return true;
+        ops.add(ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI)
+                .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null)
+                .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null).build());
+        ops.add(ContentProviderOperation
+                .newUpdate(Data.CONTENT_URI)
+                .withValueBackReference(Data.RAW_CONTACT_ID, rawContactInsertIndex)
+                .withValue(Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, contact.getName())
+                .build());
+        ops.add(ContentProviderOperation
+                .newUpdate(Data.CONTENT_URI)
+                .withValueBackReference(
+                        ContactsContract.Data.RAW_CONTACT_ID, rawContactInsertIndex)
+                .withValue(Data.MIMETYPE, Phone.CONTENT_ITEM_TYPE)
+                .withValue(Phone.NUMBER, contact.getPhone())
+                .withValue(Phone.TYPE, Phone.TYPE_MOBILE).build());
+        try {
+            mContext.getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return true;
+//        }
 
     }
 
     public Contact find(Contact contact) {
-        Contact current = getContact();
-        Contact result = _find(contact);
-        _find(current);
-        return result;
-    }
-
-    private Contact _find(Contact contact) {
         Contact mSearch = moveToFirstContact();
+        Contact mPreviouse = null;
         if (mSearch.equals(contact))
             return mSearch;
-        while (mSearch != null) {
+        while (mSearch != mPreviouse) {
+            Log.announce("Stuck", Log.Level.WARNING);
+            mPreviouse = mSearch;
             mSearch = nextContact();
             if (mSearch != null && mSearch.equals(contact)) {
                 return mSearch;
@@ -183,6 +185,7 @@ public class ContactManager {
     public boolean deleteContact(String name, String phone) {
         Uri contactUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phone));
         Cursor cur = mContext.getContentResolver().query(contactUri, null, null, null, null);
+        Log.announce(cur.getCount()+" : found contacts", Log.Level.INFO);
         try {
             if (cur.moveToFirst()) {
                 do {
